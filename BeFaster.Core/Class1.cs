@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿
 using System.Threading.Tasks;
 
 namespace BeFaster.Core
 {
-    public class Class1
+    public interface ISumService
     {
+        Task<int> Add(int x, int y);
     }
 }
+
