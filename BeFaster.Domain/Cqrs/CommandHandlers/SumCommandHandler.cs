@@ -14,10 +14,16 @@ namespace BeFaster.Domain.Cqrs.CommandHandlers
         {
             _beFasterService = beFasterService ?? throw new ArgumentNullException(nameof(beFasterService));
         }
-        protected override Task<SumCommandResult> ProcessCommandAsync(SumCommand request)
+        protected override async Task<SumCommandResult> ProcessCommandAsync(SumCommand request)
         {
-            throw new NotImplementedException();
+            SumCommandResult result = null;
+
+            _logger.LogInformation($"Sum command received, command={JsonConvert.SerializeObject(command)}");
+            _logger.LogInformation($"Validating sum command");
+
+            return result;
         }
     }
 }
+
 
