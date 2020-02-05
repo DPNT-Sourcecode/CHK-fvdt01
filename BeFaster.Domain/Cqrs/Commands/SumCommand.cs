@@ -1,4 +1,4 @@
-﻿namespace BeFaster.Core
+﻿namespace BeFaster.Domain
 {
     public class SumCommand : ISumCommand
     {

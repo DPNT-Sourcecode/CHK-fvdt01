@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace BeFaster.Core
 {
-    public interface ISumService
+    public interface IBeFasterService
     {
-        Task<int> Add(int x, int y);
+        Task<int> Sum(ISumCommand command);
     }
 }
