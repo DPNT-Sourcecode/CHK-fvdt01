@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using BeFaster.Core;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 
@@ -6,10 +7,12 @@ namespace BeFaster.Domain.Cqrs.CommandHandlers
 {
     public class SumCommandHandler : CommandHandler<SumCommand, SumCommandResult>
     {
-        protected ILogger _logger;
-        public SumCommandHandler(ILogger logger) 
+        private readonly IBeFasterService _beFasterService;
+
+        public SumCommandHandler(ILogger logger,
+                                 IBeFasterService beFasterService) : base(logger)
         {
-            _logger = logger?? new ArgumentNullException(nameof(logger));
+            _beFasterService = beFasterService ?? throw new ArgumentNullException(nameof(beFasterService));
         }
         protected override Task<SumCommandResult> ProcessCommandAsync(SumCommand request)
         {
@@ -17,3 +20,4 @@ namespace BeFaster.Domain.Cqrs.CommandHandlers
         }
     }
 }
+
