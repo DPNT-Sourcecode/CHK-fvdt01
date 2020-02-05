@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using BeFaster.Core.Cqrs;
 
-namespace BeFaster.Core
+namespace BeFaster.Domain
 {
     public class SumCommandResult : IResult
     {
