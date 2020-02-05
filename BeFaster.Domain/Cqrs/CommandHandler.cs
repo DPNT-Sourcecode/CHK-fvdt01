@@ -1,9 +1,8 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using BeFaster.Core.Cqrs;
+using BeFaster.Core.Cqrs.CommandHandlers;
+using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BeFaster.Domain.Cqrs
@@ -72,4 +71,4 @@ namespace BeFaster.Domain.Cqrs
 
         protected abstract Task<TResult> ProcessCommandAsync(TRequest request);
     }
-}
+}
