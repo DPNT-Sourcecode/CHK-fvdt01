@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BeFaster.Domain.Cqrs.CommandHandlers
 {
-    class SumCommandHandler
+    public class SumCommandHandler : CommandHandler<SumCommand,SumCommandResult>
     {
     }
 }
