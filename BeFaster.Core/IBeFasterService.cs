@@ -7,5 +7,4 @@ namespace BeFaster.Core
     {
         Task<int> Add(int x, int y);
     }
-}
-
+}
