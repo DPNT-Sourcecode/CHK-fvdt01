@@ -1,20 +1,20 @@
 ﻿using System.Collections.Generic;
 using BeFaster.Core.Cqrs;
 
-namespace BeFaster.Domain
+namespace BeFaster.Domain.Cqrs
 {
-    public class SumCommandResult : IResult
+    public class CalculateSumResult : IResult
     {
-        public SumCommandResult()
+        public CalculateSumResult()
         {
 
         }
-        public SumCommandResult(IDictionary<string, string> errors)
+        public CalculateSumResult(IDictionary<string, string> errors)
         {
             Errors = errors;
             HasErrors = errors.Count > 0 ? true : false;
         }
-
+        public int Result { get; set; }
         public IDictionary<string, string> Errors { get; set; }
         public bool HasErrors { get; set; }
     }

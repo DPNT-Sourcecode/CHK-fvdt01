@@ -1,15 +1,21 @@
 ﻿using BeFaster.App.Solutions.SUM;
-using NUnit.Framework;
+using Xunit;
+
 
 namespace BeFaster.App.Tests.Solutions.SUM
 {
-    [TestFixture]
-    public class SumSolutionTest
+    public class SumSolutionTests 
     {
-        [TestCase(1, 1, ExpectedResult = 2)]
-        public int ComputeSum(int x, int y)
+        [Theory]
+        [InlineData(1, 2, 3)]
+        [InlineData(-4, -6, -10)]
+        [InlineData(-2, 2, 0)]
+        [InlineData(int.MinValue, -1, int.MaxValue)]
+        public async void CanAdd(int x, int y, int expected)
         {
-            return SumSolution.Sum(x, y);
+            var result = await SumSolution.Sum(x, y);
+
+            Assert.Equal(expected, result);
         }
     }
 }
