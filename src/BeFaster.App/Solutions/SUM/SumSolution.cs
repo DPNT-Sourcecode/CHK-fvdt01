@@ -13,8 +13,9 @@ namespace BeFaster.App.Solutions.SUM
 
             var command = new CalculateSumCommand { Input1 = x, Input2 = y };
             var result = await service.SumAsync(command);
-
+            
             return result.Result;
         }
     }
 }
+
