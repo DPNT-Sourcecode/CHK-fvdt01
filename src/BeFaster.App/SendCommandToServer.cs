@@ -14,6 +14,7 @@ using TDL.Client;
 using TDL.Client.Runner;
 using Microsoft.Extensions.DependencyInjection;
 
+
 namespace BeFaster.App
 {
     internal class SendCommandToServer
@@ -86,3 +87,4 @@ namespace BeFaster.App
         }
     }
 }
+
