@@ -99,7 +99,7 @@
     <Compile Include="Solutions\SUM\CalculatorServiceTests.cs" />
     <Compile Include="Solutions\SUM\CalculateSumValidatorTests.cs" />
     <Compile Include="Solutions\SUM\SumCommandHandlerTests.cs" />
-    <Compile Include="Solutions\SUM\SumSolutionTest.cs" />
+    <Compile Include="Solutions\SUM\AppTests.cs" />
     <Compile Include="Solutions\TST\OneTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

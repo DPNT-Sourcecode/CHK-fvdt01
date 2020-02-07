@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 
 namespace BeFaster.Domain.Services
 {
-    public class BeFasterService : IBeFasterService
+    public class GatewayService : IGatewayService
     {
         private readonly IMediator _mediator;
 
-        public BeFasterService(IMediator mediator)
+        public GatewayService(IMediator mediator)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
-        public async Task<CalculateSumResult> Sum(CalculateSumCommand command)
+        public async Task<CalculateSumResult> CalculateSum(CalculateSumCommand command)
         {
             var result = await _mediator.Send(command);
             return result;

@@ -1,5 +1,4 @@
-﻿
-using BeFaster.Domain;
+﻿using BeFaster.Domain;
 using BeFaster.Domain.Cqrs;
 using BeFaster.Domain.Cqrs.Validators;
 using FluentAssertions;
@@ -15,7 +14,7 @@ namespace BeFaster.App.Tests.Solutions.SUM
         public void CalculateSumCommandValidator_ReturnsNoErrors_WhenCommandValid(int? param1, int? param2, int expected)
         {
             //arrange
-            var command = new CalculateSumCommand {Input1= param1, Input2=param2};
+            var command = new CalculateSumCommand {Param1= param1, Param2=param2};
 
             //act
             var validator = new CalculateSumCommandValidator();
@@ -31,7 +30,7 @@ namespace BeFaster.App.Tests.Solutions.SUM
         public void CalculateSumCommandValidator_ReturnsError_WhenParam1Empty(int? param1, int? param2)
         {
             //arrange
-            var command = new CalculateSumCommand { Input1=param1, Input2= param2};
+            var command = new CalculateSumCommand { Param1=param1, Param2= param2};
 
             //act
             var validator = new CalculateSumCommandValidator();
@@ -40,9 +39,9 @@ namespace BeFaster.App.Tests.Solutions.SUM
             //assert
             result.Errors.Count.Should().Equals(1);
             result.Errors.FirstOrDefault().ErrorCode
-                                          .Should().Equals(ValidationErrors.Input1IsRequired.Code);
+                                          .Should().Equals(ValidationErrors.Param1IsRequired.Code);
             result.Errors.FirstOrDefault().ErrorMessage
-                                        .Should().Equals(ValidationErrors.Input1IsRequired.Message);
+                                          .Should().Equals(ValidationErrors.Param1IsRequired.Message);
         }
 
         [Theory]
@@ -50,7 +49,7 @@ namespace BeFaster.App.Tests.Solutions.SUM
         public void CalculateSumCommandValidator_ReturnsError_WhenParam2Empty(int? param1, int? param2)
         {
             //arrange
-            var command = new CalculateSumCommand { Input1 = param1, Input2 = param2 };
+            var command = new CalculateSumCommand { Param1 = param1, Param2 = param2 };
             
             //act
             var validator = new CalculateSumCommandValidator();
@@ -59,9 +58,47 @@ namespace BeFaster.App.Tests.Solutions.SUM
             //assert
             result.Errors.Count.Should().Equals(1);
             result.Errors.FirstOrDefault().ErrorCode
-                                          .Should().Equals(ValidationErrors.Input2IsRequired.Code);
+                                          .Should().Equals(ValidationErrors.Param2IsRequired.Code);
             result.Errors.FirstOrDefault().ErrorMessage
-                                        .Should().Equals(ValidationErrors.Input2IsRequired.Message);
+                                          .Should().Equals(ValidationErrors.Param2IsRequired.Message);
+        }
+
+        [Theory]
+        [InlineData(-1, 200)]
+        public void CalculateSumCommandValidator_ReturnsError_WhenParam1LessThanZero(int? param1, int? param2)
+        {
+            //arrange
+            var command = new CalculateSumCommand { Param1 = param1, Param2 = param2 };
+
+            //act
+            var validator = new CalculateSumCommandValidator();
+            var result = validator.Validate(command);
+
+            //assert
+            result.Errors.Count.Should().Equals(1);
+            result.Errors.FirstOrDefault().ErrorCode
+                                          .Should().Equals(ValidationErrors.Param1IsRequired.Code);
+            result.Errors.FirstOrDefault().ErrorMessage
+                                          .Should().Equals(ValidationErrors.Param1IsRequired.Message);
+        }
+
+        [Theory]
+        [InlineData(1, 200)]
+        public void CalculateSumCommandValidator_ReturnsError_WhenParam2GreaterThan100(int? param1, int? param2)
+        {
+            //arrange
+            var command = new CalculateSumCommand { Param1 = param1, Param2 = param2 };
+
+            //act
+            var validator = new CalculateSumCommandValidator();
+            var result = validator.Validate(command);
+
+            //assert
+            result.Errors.Count.Should().Equals(1);
+            result.Errors.FirstOrDefault().ErrorCode
+                                          .Should().Equals(ValidationErrors.Param2IsInvalid.Code);
+            result.Errors.FirstOrDefault().ErrorMessage
+                                          .Should().Equals(ValidationErrors.Param2IsInvalid.Message);
         }
     }
 }

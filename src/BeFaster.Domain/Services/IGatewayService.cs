@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 
 namespace BeFaster.Domain.Services
 {
-    public interface IBeFasterService
+    public interface IGatewayService
     {
-        Task<CalculateSumResult> Sum(CalculateSumCommand command);
+        Task<CalculateSumResult> CalculateSum(CalculateSumCommand command);
     }
 }

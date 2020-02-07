@@ -24,7 +24,7 @@ namespace BeFaster.App
             services.AddSingleton<ILoggerFactory, LoggerFactory>()
                     .AddSingleton(typeof(ILogger<>), typeof(Logger<>))
                     .AddSingleton<ICalculatorService, CalculatorService>()
-                    .AddSingleton<IBeFasterService, BeFasterService>()                    
+                    .AddSingleton<IGatewayService, GatewayService>()                    
                     .BuildServiceProvider();
                         
             services.AddMediatR(Assembly.GetExecutingAssembly(), Assembly.GetAssembly(typeof(CalculateSumCommand)));

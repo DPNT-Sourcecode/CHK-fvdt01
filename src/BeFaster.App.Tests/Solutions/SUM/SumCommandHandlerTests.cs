@@ -60,7 +60,7 @@ namespace BeFaster.App.Tests.Solutions.SUM
             //arrange
             var logger = Substitute.For<ILogger<CalculateSumCommandHandler>>();            
             var calculatorService = Substitute.For<ICalculatorService>();
-            var command = new CalculateSumCommand { Input1 = 2, Input2 = 1 };
+            var command = new CalculateSumCommand { Param1 = 2, Param2 = 1 };
             var commandHandler = new CalculateSumCommandHandler(logger, calculatorService);
 
             //act

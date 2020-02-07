@@ -2,7 +2,7 @@
 {
     public interface ICalculateSumCommand
     {
-        int? Input1 { get; set; }
-        int? Input2 { get; set; }
+        int? Param1 { get; set; }
+        int? Param2 { get; set; }
     }
 }
