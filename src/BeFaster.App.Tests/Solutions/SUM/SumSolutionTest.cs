@@ -13,7 +13,7 @@ namespace BeFaster.App.Tests.Solutions.SUM
         [InlineData(int.MinValue, -1, int.MaxValue)]
         public async void CanAdd(int x, int y, int expected)
         {
-            var result = await SumSolution.Sum(x, y);
+            var result = SumSolution.Sum(x, y);
 
             Assert.Equal(expected, result);
         }

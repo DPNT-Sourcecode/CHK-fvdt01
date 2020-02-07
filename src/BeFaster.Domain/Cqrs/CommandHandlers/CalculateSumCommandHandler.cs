@@ -39,8 +39,8 @@ namespace BeFaster.Domain.Cqrs
                 return result;
             }
 
-            var total = await _calculatorService.Add(command.Input1.Value, 
-                                                     command.Input2.Value);       
+            var total =  await _calculatorService.Add(command.Input1.Value, 
+                                                  command.Input2.Value);       
             
             result = new CalculateSumResult { Result = total};
 

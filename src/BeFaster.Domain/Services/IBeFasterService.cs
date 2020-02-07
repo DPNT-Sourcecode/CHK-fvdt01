@@ -6,6 +6,6 @@ namespace BeFaster.Domain.Services
 {
     public interface IBeFasterService
     {
-        Task<CalculateSumResult> SumAsync(CalculateSumCommand command);
+        Task<CalculateSumResult> Sum(CalculateSumCommand command);
     }
 }

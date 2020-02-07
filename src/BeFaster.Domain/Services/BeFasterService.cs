@@ -14,7 +14,7 @@ namespace BeFaster.Domain.Services
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
-        public async Task<CalculateSumResult> SumAsync(CalculateSumCommand command)
+        public async Task<CalculateSumResult> Sum(CalculateSumCommand command)
         {
             var result = await _mediator.Send(command);
             return result;
