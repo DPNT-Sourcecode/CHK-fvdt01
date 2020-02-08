@@ -44,9 +44,15 @@ namespace BeFaster.Domain.Services
             var total = sku.Price * aggregateSku.Count;
             if (sku.SpecialOffer != null)
             {
-                total = sku.SpecialOffer.Quantity == aggregateSku.Count ?
-                        sku.SpecialOffer.Price :
-                        total;
+                if (aggregateSku.Count >= sku.SpecialOffer.Quantity)
+                {
+                    var quantityAtOfferPrice= aggregateSku.Count/sku.SpecialOffer.Quantity;
+                    var quantityAtStandardPrice =  aggregateSku.Count % sku.SpecialOffer.Quantity;
+
+                    var offerSubTotal = quantityAtOfferPrice * sku.SpecialOffer.Price;
+                    var standardSubTotal = quantityAtStandardPrice * sku.Price;
+                    total = offerSubTotal + standardSubTotal;
+                }
             }
 
             return total;

@@ -32,5 +32,14 @@ namespace BeFaster.App.Tests.Solutions.CHK
 
             Assert.Equal(expected, result);
         }
+
+        [Theory]
+        [InlineData("AAAAAAA", 310)]
+        public void App_CheckoutReturnsResult_WhenMultipleSpecialOffersApplied(string skus, int expected)
+        {
+            var result = CheckoutSolution.Checkout(skus);
+
+            Assert.Equal(expected, result);
+        }
     }
 }

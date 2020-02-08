@@ -107,6 +107,24 @@ namespace BeFaster.App.Tests.Solutions.CHK
         }
 
         [Theory]
+        [InlineData("AAAAAA", 310)]
+        public void CheckoutCommandHandlerHandle_ReturnsResult_WhenMultipleSpecialOffersValid(string skus, int expected)
+        {
+            //arrange
+            var logger = Substitute.For<ILogger<CheckoutCommandHandler>>();
+            var service = Substitute.For<IShoppingBasketService>();
+            var repository = Substitute.For<ISkuRepository>();
+            var command = new CheckoutCommand { Skus = skus };
+            var commandHandler = new CheckoutCommandHandler(logger, repository, service);
+
+            //act
+            Action action = async () => await commandHandler.Handle(command, default);
+
+            //assert
+            action.Should().Equals(expected);
+        }
+
+        [Theory]
         [InlineData("ZZZ", -1)]
         public void CheckoutCommandHandlerHandle_ReturnsError_WhenSkuInvalid(string skus, int expected)
         {

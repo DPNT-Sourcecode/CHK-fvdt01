@@ -51,5 +51,21 @@ namespace BeFaster.App.Tests.Solutions.CHK
             //assert
             action.Should().Equals(expected);
         }
+
+        [Theory]
+        [InlineData("aaaaaaa", 310)]
+        public void ShoppingBasketService_CalculateItemTotalReturnsResult_WhenMultipleSpecialOffersApply(string skus, int expected)
+        {
+            //arrange
+            var logger = Substitute.For<ILogger<ShoppingBasketService>>();
+            var repository = Substitute.For<ISkuRepository>();
+
+            //act
+            var service = new ShoppingBasketService(logger, repository);
+            Action action = async () => await service.Checkout(skus);
+
+            //assert
+            action.Should().Equals(expected);
+        }
     }
 }
