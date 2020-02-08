@@ -41,5 +41,14 @@ namespace BeFaster.App.Tests.Solutions.CHK
 
             Assert.Equal(expected, result);
         }
+
+        [Theory]
+        [InlineData("BB", 45)]
+        public void App_CheckoutReturnsResult_WhenBSpecialOfferApplied(string skus, int expected)
+        {
+            var result = CheckoutSolution.Checkout(skus);
+
+            Assert.Equal(expected, result);
+        }
     }
 }
