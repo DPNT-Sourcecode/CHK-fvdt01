@@ -27,10 +27,10 @@ namespace BeFaster.App.Tests.Solutions.HLO
 
         [Theory]
         [InlineData("John", "Hello, John!")]
-        public void HelloCommandValidator_ReturnsNoErrors_WhenFriendNamePassed(string friendName, string expected)
+        public void HelloCommandValidator_ReturnsNoErrors_WhenMessagePassed(string message, string expected)
         {
             //arrange
-            var command = new HelloCommand { Message = friendName };
+            var command = new HelloCommand { Message = message };
 
             //act
             var validator = new HelloCommandValidator();
@@ -61,4 +61,5 @@ namespace BeFaster.App.Tests.Solutions.HLO
         }
     }
 }
+
 

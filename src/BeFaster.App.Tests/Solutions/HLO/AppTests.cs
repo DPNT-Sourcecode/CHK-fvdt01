@@ -20,9 +20,9 @@ namespace BeFaster.App.Tests.Solutions.HLO
 
         [Theory]
         [InlineData("John", "Hello, John!")]
-        public void App_HelloReturnsResult_WhenValidParams(string friendName, string expected)
+        public void App_HelloReturnsResult_WhenValidParams(string message, string expected)
         {
-            var result = HelloSolution.Hello(friendName);
+            var result = HelloSolution.Hello(message);
 
             Assert.Equal(expected, result);
         }
@@ -39,4 +39,5 @@ namespace BeFaster.App.Tests.Solutions.HLO
         }
     }
 }
+
 

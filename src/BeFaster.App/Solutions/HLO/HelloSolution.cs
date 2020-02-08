@@ -8,12 +8,12 @@ namespace BeFaster.App.Solutions.HLO
 {
     public static class HelloSolution
     {
-        public static string Hello(string friendName)
+        public static string Hello(string message)
         {
             var runtime = new Runtime();
             var service = runtime.GetInstance<IGatewayService>();
 
-            var command = new HelloCommand { Message=friendName };
+            var command = new HelloCommand { Message=message };
             var helloResult = service.Hello(command).Result;
 
             if (helloResult.HasErrors)
@@ -25,3 +25,4 @@ namespace BeFaster.App.Solutions.HLO
         }
     }
 }
+

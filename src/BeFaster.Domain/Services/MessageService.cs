@@ -14,15 +14,16 @@ namespace BeFaster.Domain.Services
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public Task<string> Hello(string friend)
+        public Task<string> Hello(string message)
         {
-            if(string.IsNullOrEmpty(friend))
+            if(string.IsNullOrEmpty(message))
                 return Task.FromResult($"Hello, World!");            
             else
-                return Task.FromResult($"Hello, {friend}!");
+                return Task.FromResult($"Hello, {message}!");
         }
     }
 }
+
 
 
 
