@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cqrs\Commands\IHelloCommand.cs" />
     <Compile Include="Cqrs\IResult.cs" />
     <Compile Include="Cqrs\ICommand.cs" />
     <Compile Include="Cqrs\ICommandHandler.cs" />
@@ -52,6 +53,7 @@
     <Compile Include="Services\ICalculatorService.cs" />
     <Compile Include="Models\IError.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IMessageService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

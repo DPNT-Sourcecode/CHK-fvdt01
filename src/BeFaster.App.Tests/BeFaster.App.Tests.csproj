@@ -96,6 +96,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Solutions\HLO\AppTests.cs" />
+    <Compile Include="Solutions\HLO\HelloCommandValidatorTests.cs" />
+    <Compile Include="Solutions\HLO\MessageServiceTests.cs" />
+    <Compile Include="Solutions\HLO\HelloCommandHandlerTests.cs" />
     <Compile Include="Solutions\SUM\CalculatorServiceTests.cs" />
     <Compile Include="Solutions\SUM\CalculateSumValidatorTests.cs" />
     <Compile Include="Solutions\SUM\SumCommandHandlerTests.cs" />
@@ -127,6 +131,7 @@
   <ItemGroup>
     <Analyzer Include="..\..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

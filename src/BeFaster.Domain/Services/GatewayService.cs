@@ -19,5 +19,11 @@ namespace BeFaster.Domain.Services
             var result = await _mediator.Send(command);
             return result;
         }
+
+        public async Task<HelloResult> Hello(HelloCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return result;
+        }
     }
 }
