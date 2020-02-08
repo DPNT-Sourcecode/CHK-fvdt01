@@ -28,6 +28,7 @@ namespace BeFaster.App
                     .AddSingleton<ICalculatorService, CalculatorService>()
                     .AddSingleton<IMessageService, MessageService>()
                     .AddSingleton<ISkuRepository, SkuRepositoryInMemory>()
+                    .AddSingleton<ISpecialOfferRepository, SpecialOfferRepositoryInMemory>()
                     .AddSingleton<IShoppingBasketService, ShoppingBasketService>()
                     .AddSingleton<IGatewayService, GatewayService>()                    
                     .BuildServiceProvider();

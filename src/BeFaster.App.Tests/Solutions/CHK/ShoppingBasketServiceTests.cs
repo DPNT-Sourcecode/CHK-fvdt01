@@ -14,23 +14,40 @@ namespace BeFaster.App.Tests.Solutions.CHK
         public void ShoppingBasketServiceContructor_ThrowsArgumentException_WhenLoggerNull()
         {
             //arrange            
-            var respository = Substitute.For<ISkuRepository>();
-            
+            var skuRepository = Substitute.For<ISkuRepository>();
+            var specialOfferRepository = Substitute.For<ISpecialOfferRepository>();
+
             //act
-            Action action = () => new ShoppingBasketService(null, respository);
+            Action action = () => new ShoppingBasketService(null, skuRepository, specialOfferRepository);
             
             //assert
             action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
-        public void ShoppingBasketServiceContructor_ThrowsArgumentException_WhenRepositoryNull()
+        public void ShoppingBasketServiceContructor_ThrowsArgumentException_WhenSkuRepositoryNull()
         {
             //arrange            
             var logger = Substitute.For<ILogger<ShoppingBasketService>>();
+            var skuRepository = Substitute.For<ISkuRepository>();
+            var specialOfferRepository = Substitute.For<ISpecialOfferRepository>();
 
             //act
-            Action action = () => new ShoppingBasketService(logger, null);
+            Action action = () => new ShoppingBasketService(logger, null, specialOfferRepository);
+
+            //assert
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void ShoppingBasketServiceContructor_ThrowsArgumentException_WhenSpecialOfferRepositoryNull()
+        {
+            //arrange            
+            var logger = Substitute.For<ILogger<ShoppingBasketService>>();
+            var skuRepository = Substitute.For<ISkuRepository>();
+            
+            //act
+            Action action = () => new ShoppingBasketService(logger, skuRepository, null);
 
             //assert
             action.Should().Throw<ArgumentNullException>();
@@ -42,10 +59,11 @@ namespace BeFaster.App.Tests.Solutions.CHK
         {
             //arrange
             var logger = Substitute.For<ILogger<ShoppingBasketService>>();
-            var repository = Substitute.For<ISkuRepository>();
+            var skuRepository = Substitute.For<ISkuRepository>();
+            var specialOfferRepository = Substitute.For<ISpecialOfferRepository>();
 
             //act
-            var service = new ShoppingBasketService(logger, repository);           
+            var service = new ShoppingBasketService(logger, skuRepository, specialOfferRepository);           
             Action action = async () => await service.Checkout(skus);
 
             //assert
@@ -58,10 +76,45 @@ namespace BeFaster.App.Tests.Solutions.CHK
         {
             //arrange
             var logger = Substitute.For<ILogger<ShoppingBasketService>>();
-            var repository = Substitute.For<ISkuRepository>();
+            var skuRepository = Substitute.For<ISkuRepository>();
+            var specialOfferRepository = Substitute.For<ISpecialOfferRepository>();
 
             //act
-            var service = new ShoppingBasketService(logger, repository);
+            var service = new ShoppingBasketService(logger, skuRepository, specialOfferRepository);
+            Action action = async () => await service.Checkout(skus);
+
+            //assert
+            action.Should().Equals(expected);
+        }
+
+        [Theory]
+        [InlineData("BB", 45)]
+        public void ShoppingBasketService_CalculateItemTotalReturnsResult_WhenBBSpecialOffersApply(string skus, int expected)
+        {
+            //arrange
+            var logger = Substitute.For<ILogger<ShoppingBasketService>>();
+            var skuRepository = Substitute.For<ISkuRepository>();
+            var specialOfferRepository = Substitute.For<ISpecialOfferRepository>();
+
+            //act
+            var service = new ShoppingBasketService(logger, skuRepository, specialOfferRepository);
+            Action action = async () => await service.Checkout(skus);
+
+            //assert
+            action.Should().Equals(expected);
+        }
+
+        [Theory]
+        [InlineData("AAAAAAAA", 330)]
+        public void ShoppingBasketService_CalculateItemTotalReturnsResult_When3A5ASpecialOffersApply(string skus, int expected)
+        {
+            //arrange
+            var logger = Substitute.For<ILogger<ShoppingBasketService>>();
+            var skuRepository = Substitute.For<ISkuRepository>();
+            var specialOfferRepository = Substitute.For<ISpecialOfferRepository>();
+
+            //act
+            var service = new ShoppingBasketService(logger, skuRepository, specialOfferRepository);
             Action action = async () => await service.Checkout(skus);
 
             //assert

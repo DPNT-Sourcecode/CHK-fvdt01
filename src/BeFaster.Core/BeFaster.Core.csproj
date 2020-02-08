@@ -54,6 +54,7 @@
     <Compile Include="Data\ISkuItem.cs" />
     <Compile Include="Data\ISkuRepository.cs" />
     <Compile Include="Data\ISpecialOffer.cs" />
+    <Compile Include="Data\ISpecialOfferRepository.cs" />
     <Compile Include="Services\ICalculatorService.cs" />
     <Compile Include="Models\IError.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

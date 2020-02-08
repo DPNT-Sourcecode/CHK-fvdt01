@@ -12,10 +12,11 @@ namespace BeFaster.Data
         public SkuRepositoryInMemory()
         {
             _items = new List<ISkuItem>();
-            _items.Add(new SkuItem { SKU = "A", Price = 50, SpecialOffer = new SpecialOffer { Sku="A", Price=130, Quantity=3 } });
-            _items.Add(new SkuItem { SKU = "B", Price = 30, SpecialOffer = new SpecialOffer { Sku = "B", Price =45, Quantity =2 } });
-            _items.Add(new SkuItem { SKU = "C", Price = 20, SpecialOffer = null });
-            _items.Add(new SkuItem { SKU = "D", Price = 15, SpecialOffer = null });
+            _items.Add(new SkuItem { SKU = "A", Price = 50});
+            _items.Add(new SkuItem { SKU = "B", Price = 30});
+            _items.Add(new SkuItem { SKU = "C", Price = 20});
+            _items.Add(new SkuItem { SKU = "D", Price = 15});
+            _items.Add(new SkuItem { SKU = "E", Price = 40 });
         }
         public Task<List<ISkuItem>> GetAll()
         {

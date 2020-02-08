@@ -34,8 +34,17 @@ namespace BeFaster.App.Tests.Solutions.CHK
         }
 
         [Theory]
-        [InlineData("AAAAAAA", 310)]
-        public void App_CheckoutReturnsResult_WhenMultipleSpecialOffersApplied(string skus, int expected)
+        [InlineData("AAAAAAAAA", 380)]
+        public void App_CheckoutReturnsResult_When3A5ASpecialOffersApplied(string skus, int expected)
+        {
+            var result = CheckoutSolution.Checkout(skus);
+
+            Assert.Equal(expected, result);
+        }
+
+        [Theory]
+        [InlineData("AAABBBEE", 255)]
+        public void App_CheckoutReturnsResult_When3A3B2ESpecialOffersApplied(string skus, int expected)
         {
             var result = CheckoutSolution.Checkout(skus);
 
@@ -45,6 +54,15 @@ namespace BeFaster.App.Tests.Solutions.CHK
         [Theory]
         [InlineData("BB", 45)]
         public void App_CheckoutReturnsResult_WhenBSpecialOfferApplied(string skus, int expected)
+        {
+            var result = CheckoutSolution.Checkout(skus);
+
+            Assert.Equal(expected, result);
+        }
+
+        [Theory]
+        [InlineData("AAAAA", 200)]
+        public void App_CheckoutReturnsResult_When5ASpecialOfferApplied(string skus, int expected)
         {
             var result = CheckoutSolution.Checkout(skus);
 

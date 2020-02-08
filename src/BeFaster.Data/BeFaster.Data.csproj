@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="SkuItem.cs" />
+    <Compile Include="SpecialOfferRepositoryInMemory.cs" />
     <Compile Include="SkuRepositoryInMemory.cs" />
     <Compile Include="SpecialOffer.cs" />
   </ItemGroup>
