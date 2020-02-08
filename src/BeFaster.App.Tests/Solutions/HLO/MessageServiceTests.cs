@@ -25,7 +25,7 @@ namespace BeFaster.App.Tests.Solutions.HLO
         }
 
         [Theory]
-        [InlineData("John", "Hello world John")]
+        [InlineData("John", "Hello, World!")]
         public void MessageServiceHello_ReturnsResult_WithValidParams(string message, string expected)
         {
             //arrange
@@ -40,5 +40,3 @@ namespace BeFaster.App.Tests.Solutions.HLO
         }
     }
 }
-
-

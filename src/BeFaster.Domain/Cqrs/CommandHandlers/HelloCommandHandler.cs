@@ -26,7 +26,7 @@ namespace BeFaster.Domain.Cqrs
                 throw new ArgumentNullException(nameof(command));
 
             HelloResult result = null;
-            _logger.LogInformation("Hello worldCommand request received,{@command}", command);
+            _logger.LogInformation("Hello command request received,{@command}", command);
 
             var sumCommandValidator = new HelloCommandValidator();
             var validationErrors = sumCommandValidator.Validate(command);
@@ -47,5 +47,3 @@ namespace BeFaster.Domain.Cqrs
         }
     }
 }
-
-

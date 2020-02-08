@@ -10,7 +10,7 @@ namespace BeFaster.App.Tests.Solutions.HLO
     public class AppTests
     {
         [Theory]
-        [InlineData("John", "Hello world John")]
+        [InlineData("John", "Hello, World!")]
         public void App_HelloReturnsResult_WhenValidParams(string message, string expected)
         {
             var result = HelloSolution.Hello(message);
@@ -30,5 +30,3 @@ namespace BeFaster.App.Tests.Solutions.HLO
         }
     }
 }
-
-

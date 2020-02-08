@@ -10,7 +10,7 @@ namespace BeFaster.App.Tests.Solutions.HLO
     public class HelloCommandValidatorTests
     {
         [Theory]
-        [InlineData("John", "Hello world John")]
+        [InlineData("John", "Hello, World!")]
         public void HelloCommandValidator_ReturnsNoErrors_WhenCommandValid(string message, string expected)
         {
             //arrange
@@ -45,5 +45,3 @@ namespace BeFaster.App.Tests.Solutions.HLO
         }
     }
 }
-
-
