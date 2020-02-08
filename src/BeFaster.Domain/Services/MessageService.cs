@@ -19,9 +19,10 @@ namespace BeFaster.Domain.Services
             if(string.IsNullOrEmpty(friend))
                 return Task.FromResult($"Hello, World!");            
             else
-                return Task.FromResult($"Hello, {friend}");
+                return Task.FromResult($"Hello, {friend}!");
         }
     }
 }
+
 
 
