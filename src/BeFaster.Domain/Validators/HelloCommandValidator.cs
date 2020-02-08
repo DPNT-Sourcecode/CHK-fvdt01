@@ -9,9 +9,10 @@ namespace BeFaster.Domain.Cqrs.Validators
         public HelloCommandValidator()
         {
             RuleFor(x => x.Message)
-                .NotEmpty()
+                .NotNull()
                 .WithErrorCode(ValidationErrors.MessageIsRequired.Code.ToString())
                 .WithMessage(ValidationErrors.MessageIsRequired.Message);          
         }
     }
 }
+
