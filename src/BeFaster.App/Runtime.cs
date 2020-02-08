@@ -1,4 +1,6 @@
-﻿using BeFaster.Core.Services;
+﻿using BeFaster.Core.Data;
+using BeFaster.Core.Services;
+using BeFaster.Data;
 using BeFaster.Domain.Cqrs;
 using BeFaster.Domain.Services;
 using MediatR;
@@ -25,11 +27,14 @@ namespace BeFaster.App
                     .AddSingleton(typeof(ILogger<>), typeof(Logger<>))
                     .AddSingleton<ICalculatorService, CalculatorService>()
                     .AddSingleton<IMessageService, MessageService>()
+                    .AddSingleton<ISkuRepository, SkuRepositoryInMemory>()
+                    .AddSingleton<IShoppingBasketService, ShoppingBasketService>()
                     .AddSingleton<IGatewayService, GatewayService>()                    
                     .BuildServiceProvider();
                         
-            services.AddMediatR(Assembly.GetExecutingAssembly(), Assembly.GetAssembly(typeof(CalculateSumCommand)));
+            services.AddMediatR(Assembly.GetExecutingAssembly(), Assembly.GetAssembly(typeof(CalculateSumCommand)));            
             services.AddMediatR(Assembly.GetExecutingAssembly(), Assembly.GetAssembly(typeof(HelloCommand)));
+            services.AddMediatR(Assembly.GetExecutingAssembly(), Assembly.GetAssembly(typeof(CheckoutCommand)));
             _serviceProvider = services.BuildServiceProvider();            
         }
 

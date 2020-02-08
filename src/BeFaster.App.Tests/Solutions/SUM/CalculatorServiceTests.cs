@@ -1,11 +1,9 @@
 ﻿using BeFaster.Core.Services;
-using BeFaster.Domain.Cqrs;
 using BeFaster.Domain.Services;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using System;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace BeFaster.App.Tests.Solutions.SUM

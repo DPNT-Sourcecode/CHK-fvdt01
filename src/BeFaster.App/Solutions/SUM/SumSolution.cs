@@ -2,7 +2,6 @@
 using BeFaster.Domain.Services;
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace BeFaster.App.Solutions.SUM
 {

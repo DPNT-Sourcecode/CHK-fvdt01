@@ -96,6 +96,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Solutions\CHK\AppTests.cs" />
+    <Compile Include="Solutions\CHK\CheckoutCommandHandlerTests.cs" />
+    <Compile Include="Solutions\CHK\CheckoutCommandValidatorTests.cs" />
+    <Compile Include="Solutions\CHK\ShoppingBasketServiceTests.cs" />
     <Compile Include="Solutions\HLO\AppTests.cs" />
     <Compile Include="Solutions\HLO\HelloCommandValidatorTests.cs" />
     <Compile Include="Solutions\HLO\MessageServiceTests.cs" />
@@ -122,6 +126,10 @@
     <ProjectReference Include="..\BeFaster.Core\BeFaster.Core.csproj">
       <Project>{9F59B57D-7560-40ED-9429-995E5A4EDB1B}</Project>
       <Name>BeFaster.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BeFaster.Data\BeFaster.Data.csproj">
+      <Project>{5FD9893A-F355-4804-BDB1-AE3D36FD835E}</Project>
+      <Name>BeFaster.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\BeFaster.Domain\BeFaster.Domain.csproj">
       <Project>{7EFC3F95-B48D-4152-B6AD-A432A7AD1A5A}</Project>

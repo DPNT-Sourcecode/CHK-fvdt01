@@ -109,6 +109,10 @@
       <Project>{9f59b57d-7560-40ed-9429-995e5a4edb1b}</Project>
       <Name>BeFaster.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BeFaster.Data\BeFaster.Data.csproj">
+      <Project>{5fd9893a-f355-4804-bdb1-ae3d36fd835e}</Project>
+      <Name>BeFaster.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BeFaster.Domain\BeFaster.Domain.csproj">
       <Project>{7efc3f95-b48d-4152-b6ad-a432a7ad1a5a}</Project>
       <Name>BeFaster.Domain</Name>

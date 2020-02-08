@@ -15,4 +15,3 @@ namespace BeFaster.Domain.Cqrs.Validators
         }
     }
 }
-
