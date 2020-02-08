@@ -58,15 +58,16 @@ namespace BeFaster.App.Tests.Solutions.HLO
             //arrange
             var logger = Substitute.For<ILogger<HelloCommandHandler>>();            
             var messageService = Substitute.For<IMessageService>();
-            var command = new HelloCommand { Message="Hi there"};
+            var command = new HelloCommand { Message="Hello world there"};
             var commandHandler = new HelloCommandHandler(logger, messageService);
 
             //act
             Action action = async () => await commandHandler.Handle(command, default);
 
             //assert
-            action.Should().Equals("Hi there");
+            action.Should().Equals("Hello world there");
         }
     }
 }
+
 

@@ -16,8 +16,9 @@ namespace BeFaster.Domain.Services
 
         public Task<string> Hello(string message)
         {
-            return Task.FromResult($"Hi {message}");            
+            return Task.FromResult($"Hello world {message}");            
         }
     }
 }
+
 
