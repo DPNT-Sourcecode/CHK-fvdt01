@@ -8,12 +8,11 @@ using BeFaster.App.Solutions.SUM;
 using BeFaster.App.Solutions.ARRS;
 using BeFaster.App.Solutions.IRNG;
 using BeFaster.Runner;
+using BeFaster.Runner.Extensions;
 using BeFaster.Runner.Utils;
 using Newtonsoft.Json.Linq;
 using TDL.Client;
 using TDL.Client.Runner;
-using Microsoft.Extensions.DependencyInjection;
-
 
 namespace BeFaster.App
 {
@@ -65,7 +64,7 @@ namespace BeFaster.App
         /// </summary>
         /// <param name="args">Action.</param>
         private static void Main(string[] args)
-        {            
+        {
             var runner = new QueueBasedImplementationRunner.Builder().
                 SetConfig(Utils.GetRunnerConfig()).
                 WithSolutionFor("sum", (List<JToken> p) => SumSolution.Sum(p[0].ToObject<int>(), p[1].ToObject<int>())).
@@ -73,10 +72,10 @@ namespace BeFaster.App
                 WithSolutionFor("array_sum", (List<JToken> p) => ArraySumSolution.Compute((p[0].ToObject<List<int>>()))).
                 WithSolutionFor("int_range", (List<JToken> p) => IntRangeSolution.Generate(p[0].ToObject<int>(), p[1].ToObject<int>())).
                 WithSolutionFor("fizz_buzz", (List<JToken> p) => FizzBuzzSolution.FizzBuzz(p[0].ToObject<int>())).
-                WithSolutionFor("checkout", (List<JToken> p) => CheckoutSolution.Checkout(p[0].ToObject<string>())).
+                WithSolutionFor("checkout", (List<JToken> p) => CheckoutSolution.ComputePrice(p[0].ToObject<string>())).
                 WithSolutionFor("checklite", (List<JToken> p) => CheckliteSolution.ComputePrice(p[0].ToObject<string>())).
                 Create();
-            
+
             ChallengeSession.ForRunner(runner)
                 .WithConfig(Utils.GetConfig())
                 .WithActionProvider(new UserInputAction(args))
