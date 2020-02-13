@@ -44,7 +44,8 @@ namespace BeFaster.App.Tests.Solutions.CHK
 
         [Theory]
         [InlineData("AAAAA", 250)]
-        [InlineData("AAA", 150)]
+        [InlineData("AAA", 130)]
+        [InlineData("AAAA", 180)]
         [InlineData("AAAAAAAAAA", 450)]
         public void App_AOfferCombinations_ReturnsResult(string skus, int expected)
         {
@@ -66,3 +67,4 @@ namespace BeFaster.App.Tests.Solutions.CHK
         }
     }
 }
+
