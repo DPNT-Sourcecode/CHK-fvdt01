@@ -37,16 +37,30 @@ namespace BeFaster.Domain
                 {
                     var item = this.Cart.Items.ToList().Where(x => x.Value.Product.Sku.Equals(this.Product.Sku)).SingleOrDefault();
                     var itemTotal = this.Product.Price * item.Value.Quantity;
-                    var remainingQuantity = cartItem.Value.AvailableQuantity.Value - AtOfferQuantity.Value;
-                    var remainingTotal = this.Product.Price.Value * remainingQuantity;
                     var offerSummaryItem = new OfferSummaryItem
                     {
                         Offer = this,
                         AtPrice = this.AtOfferPrice.Value,
                         AtQuantity = this.AtOfferQuantity.Value,
-                        Total = itemTotal-this.AtOfferPrice.Value- remainingTotal,
+                        Total = itemTotal - this.AtOfferPrice.Value,
                         Product = this.Product
                     };
+                    this.Cart.Offers.Add(offerSummaryItem);
+                    var remainingQuantity = cartItem.Value.AvailableQuantity.Value - AtOfferQuantity.Value;
+                    cartItem.Value.AvailableQuantity = remainingQuantity;
+                    
+                    //var item = this.Cart.Items.ToList().Where(x => x.Value.Product.Sku.Equals(this.Product.Sku)).SingleOrDefault();
+                    //var itemTotal = this.Product.Price * item.Value.Quantity;
+                    //var remainingQuantity = cartItem.Value.AvailableQuantity.Value - AtOfferQuantity.Value;
+                    //var remainingTotal = this.Product.Price.Value * remainingQuantity;
+                    //var offerSummaryItem = new OfferSummaryItem
+                    //{
+                    //    Offer = this,
+                    //    AtPrice = this.AtOfferPrice.Value,
+                    //    AtQuantity = this.AtOfferQuantity.Value,
+                    //    Total = itemTotal-this.AtOfferPrice.Value- remainingTotal,
+                    //    Product = this.Product
+                    //};
                     this.Cart.Offers.Add(offerSummaryItem);
                     cartItem.Value.AvailableQuantity = remainingQuantity;
                     
