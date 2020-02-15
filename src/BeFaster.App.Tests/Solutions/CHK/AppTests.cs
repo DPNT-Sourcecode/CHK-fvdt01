@@ -43,9 +43,12 @@ namespace BeFaster.App.Tests.Solutions.CHK
         }
 
         [Theory]
-        [InlineData("AAA", 130)]
-        [InlineData("AAAA", 180)]
-        [InlineData("AAAAA", 200)]
+        //[InlineData("AAA", 130)]
+        //[InlineData("AAAA", 180)]
+        //[InlineData("AAAAA", 200)]
+        [InlineData("AAAAAAAA", 330)]
+        //[InlineData("AAAAAAAAA", 380)]
+        //[InlineData("AAAAAAAAAA", 400)]        
         public void App_ACombinations_ReturnsResult(string skus, int expected)
         {
             var result = CheckoutSolution.Checkout(skus);
@@ -101,3 +104,4 @@ namespace BeFaster.App.Tests.Solutions.CHK
         }
     }
 }
+
