@@ -6,6 +6,7 @@ namespace BeFaster.Core.Models
     {
         IDictionary<string,ICartItem> Items { get; set; }
         ICartSummary Summary { get; set; }
+        IOfferSummary Offers { get; set; }
         int CalculateTotal();
     }
 }

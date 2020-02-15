@@ -52,7 +52,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enums.cs" />
     <Compile Include="Cqrs\CommandHandlers\CheckoutCommandHandler.cs" />
     <Compile Include="Cqrs\CommandHandlers\HelloCommandHandler.cs" />
     <Compile Include="Cqrs\CommandHandlers\CalculateSumCommandHandler.cs" />
@@ -61,10 +60,12 @@
     <Compile Include="Cqrs\Results\CheckoutResult.cs" />
     <Compile Include="Cqrs\Results\HelloResult.cs" />
     <Compile Include="Cqrs\Results\CalculateSumResult.cs" />
-    <Compile Include="Builders\CartBuilder.cs" />
-    <Compile Include="Builders\OfferBuilder.cs" />
+    <Compile Include="Factories\CartFactory.cs" />
+    <Compile Include="Factories\OfferFactory.cs" />
     <Compile Include="Error.cs" />
     <Compile Include="Models\Cart.cs" />
+    <Compile Include="Models\OfferSummaryItem.cs" />
+    <Compile Include="Models\OfferSummary.cs" />
     <Compile Include="Models\CartSummaryItem.cs" />
     <Compile Include="Models\CartSummary.cs" />
     <Compile Include="Models\FreeOffer.cs" />

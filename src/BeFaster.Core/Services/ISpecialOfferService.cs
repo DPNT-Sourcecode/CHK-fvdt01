@@ -7,7 +7,8 @@ namespace BeFaster.Domain.Services
 {
     public interface IOfferService
     {
-        Task<IEnumerable<ICompositeOffer>> GetOffers();
-        IEnumerable<ICompositeOffer> Lookup(string sku);
+        void ApplyOffers(ICart cart, KeyValuePair<string, ICartItem> cartItem);
+        Task<IEnumerable<IProductOffer>> GetOffers();
+        IEnumerable<IProductOffer> Lookup(string sku);
     }
 }

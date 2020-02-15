@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using BeFaster.Core.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BeFaster.Core.Data

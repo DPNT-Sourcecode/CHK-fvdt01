@@ -1,5 +1,4 @@
-﻿using BeFaster.Core.Data;
-
+﻿
 namespace BeFaster.Core.Models
 {
     public interface ICartSummaryItem

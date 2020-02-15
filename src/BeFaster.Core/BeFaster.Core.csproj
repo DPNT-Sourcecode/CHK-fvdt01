@@ -46,7 +46,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builders\ICartBuilder.cs" />
-    <Compile Include="Data\ICompositeOffer.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="Models\IOfferSummary.cs" />
+    <Compile Include="Models\IOfferSummaryItem.cs" />
+    <Compile Include="Models\IProductOffer.cs" />
     <Compile Include="Models\ICart.cs" />
     <Compile Include="Models\ICartItem.cs" />
     <Compile Include="Cqrs\Commands\ICheckoutCommand.cs" />
@@ -55,9 +58,9 @@
     <Compile Include="Cqrs\ICommand.cs" />
     <Compile Include="Cqrs\ICommandHandler.cs" />
     <Compile Include="Cqrs\Commands\ICalculateSumCommand.cs" />
-    <Compile Include="Data\IProduct.cs" />
+    <Compile Include="Models\IProduct.cs" />
     <Compile Include="Data\IProductRepository.cs" />
-    <Compile Include="Data\IOffer.cs" />
+    <Compile Include="Models\IOffer.cs" />
     <Compile Include="Data\IOfferRepository.cs" />
     <Compile Include="Models\ICartSummary.cs" />
     <Compile Include="Models\ICartSummaryItem.cs" />

@@ -1,77 +1,78 @@
-﻿
-using BeFaster.Core.Data;
+﻿using BeFaster.Core.Enums;
 using BeFaster.Core.Models;
-using BeFaster.Domain.Enums;
 using BeFaster.Domain.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BeFaster.Domain
 {
-    public class FreeOffer : Offer, ICompositeOffer
+    public class FreeOffer : Offer, IProductOffer
     {
-        public int? AtQuantity { get; set; }
-        public int? AtPrice { get; set; }
-        public int? FreeSkuQuantity { get; set; }
-        public IProduct FreeSku { get; set; }
+        public int? AtOfferQuantity { get; set; }
+        public int? AtOfferPrice { get; set; }
+        public int? FreeOfferQuantity { get; set; }
+        public IProduct FreeOfferProduct { get; set; }
         public ICart Cart { get; set; }
-        
-        public FreeOffer(Guid speciaOfferId,
+        public FreeOffer(Guid? offerId,
                          IProduct product,
                          ICart cart,
                          OfferType offerType,
-                         string dsl,                                
-                         int atQuantity,
-                         int freeQuantity,
-                         IProduct freeSku) : base(speciaOfferId,product, offerType, dsl)
+                         string dsl,      
+                         int atOfferQuantity,
+                         int freeOfferQuantity,
+                         IProduct freeOfferProduct) : base(offerId, product, offerType, dsl)
         {
-            AtQuantity = atQuantity;
-            FreeSkuQuantity = freeQuantity;
-            FreeSku = freeSku;
+            Product = product;
+            AtOfferQuantity = atOfferQuantity;
+            FreeOfferQuantity = freeOfferQuantity;
+            FreeOfferProduct = freeOfferProduct;
             Cart = cart;
         }
 
+        public override void Apply(KeyValuePair<string, ICartItem> cartItem,
+                                   IEnumerable<IProductOffer> offers)
+        {
+            KeyValuePair<string, ICartItem>? freeItem;
+            freeItem = Cart.Items.Where(x => x.Value.Product.Sku.Equals(FreeOfferProduct.Sku)).FirstOrDefault();
 
-        public override void Apply(KeyValuePair<string, ICartItem> cartItem)
-        {            
-            if (cartItem.Value.Count >= AtQuantity.Value)
-            {
+            if (cartItem.Value.AvailableQuantity.Value >= AtOfferQuantity.Value && freeItem.HasValue)
+            {                
                 //get the target free item sku from the cart
-                var freeSkuCartItem= this.Cart.Items[this.FreeSku.Sku];
+                var freeSkuCartItem = this.Cart.Items[freeItem.Value.Value.Product.Sku];
                 if (freeSkuCartItem != null)
                 {
-                    var quantityForFree = freeSkuCartItem.Count > 0 ? this.FreeSkuQuantity:0;
-
-                    var freeSummaryItem = new CartSummaryItem
+                    var sku = freeItem.Value.Value.Product.Sku;
+                    var removeItems = this.Cart.Offers.Items.Where(x => x.Product.Sku.Equals(sku)).ToList();
+                    if (removeItems.Any())
+                    {
+                        removeItems.ForEach(x => {
+                            this.Cart.Offers.Items.Remove(x);
+                        });
+                    }
+                    
+                    var offerSummaryItem = new OfferSummaryItem
                     {
                         Product = freeSkuCartItem.Product,
-                        Quantity = quantityForFree.Value,
-                        Price = -freeSkuCartItem.Product.Price,
-                        Total = quantityForFree.Value * -freeSkuCartItem.Product.Price
-                    };
-                    this.Cart.Summary.Add(freeSummaryItem);
-                }
-
-
-                var summaryItem = new CartSummaryItem
-                {
-                    Quantity = cartItem.Value.Count,
-                    Price = this.Product.Price.Value,
-                    Total = cartItem.Value.Count * this.Product.Price.Value
+                        Offer = this,
+                        AtPrice = this.FreeOfferProduct.Price,
+                        AtQuantity = this.FreeOfferQuantity,
+                        Total = this.FreeOfferQuantity * this.FreeOfferProduct.Price
+                    };                    
+                    this.Cart.Offers.Add(offerSummaryItem);
                 };
-                this.Cart.Summary.Add(summaryItem);
-                cartItem.Value.Allocated = true;
-            }
-            else
-            {
-                var summaryItem = new CartSummaryItem
-                {
-                    Quantity = cartItem.Value.Count,
-                    Price = this.Product.Price.Value,
-                    Total = cartItem.Value.Count * this.Product.Price.Value
-                };
-                this.Cart.Summary.Add(summaryItem);
-                cartItem.Value.Allocated = true;
+
+                //var standardItem = new CartSummaryItem
+                //{
+                //    Product = this.Product,
+                //    OfferId = null,
+                //    Quantity = AtOfferQuantity.Value,
+                //    Price = this.Product.Price.Value,
+                //    Total = this.Product.Price.Value * AtOfferQuantity.Value
+                //};
+                //this.Cart.Summary.Add(standardItem);
+
+                //cartItem.Value.AvailableQuantity = cartItem.Value.AvailableQuantity.Value - AtOfferQuantity.Value;
             }
         }
     }

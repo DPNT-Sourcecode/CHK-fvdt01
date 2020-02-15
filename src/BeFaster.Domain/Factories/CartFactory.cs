@@ -1,4 +1,4 @@
-﻿using BeFaster.Core.Builders;
+﻿using BeFaster.Core.Factories;
 using BeFaster.Core.Data;
 using BeFaster.Core.Models;
 using BeFaster.Domain.Models;
@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace BeFaster.Domain.DSL
 {
-    public class CartBuilder : ICartBuilder
+    public class CartFactory : ICartFactory
     {
         private readonly IProductRepository _productRepository;
-        public CartBuilder(IProductRepository repository)
+        public CartFactory(IProductRepository repository)
         {
             _productRepository = repository ?? throw new ArgumentNullException(nameof(repository));            
         }
-        public async Task<ICart> Build(string skus)
+        public async Task<ICart> Create(string skus)
         {
             var skusItems = await _productRepository.GetAll();
             var skulookUp = skusItems.ToDictionary(x => x.Sku, x => x);
@@ -28,15 +28,19 @@ namespace BeFaster.Domain.DSL
                 var sku= skulookUp[item.Sku.ToString()];
                 var cartItem = new CartItem 
                 { 
-                    Product = sku, 
-                    Count = item.Count, 
+                    Product = sku,
+                    Offer = null,
+                    Quantity = item.Count,
+                    AvailableQuantity = item.Count,
                     Total = 0, 
-                    Allocated = false
+                    Processed = false
                 };
                 cartItems.Add(sku.Sku,cartItem);
             });
 
-            return new Cart(cartItems, new CartSummary(new List<ICartSummaryItem>()));
+            return new Cart(cartItems,
+                   new CartSummary(new List<ICartSummaryItem>()),
+                   new OfferSummary(new List<IOfferSummaryItem>()));
         }
     }
 }

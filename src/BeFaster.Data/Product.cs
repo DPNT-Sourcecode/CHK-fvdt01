@@ -1,4 +1,5 @@
 ﻿using BeFaster.Core.Data;
+using BeFaster.Core.Models;
 
 namespace BeFaster.Data
 {

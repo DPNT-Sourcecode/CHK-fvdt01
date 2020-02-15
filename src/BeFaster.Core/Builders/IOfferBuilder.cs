@@ -1,12 +1,12 @@
-﻿using BeFaster.Core.Data;
+﻿using BeFaster.Core.Models;
 using System.Threading.Tasks;
 
-namespace BeFaster.Core.Builders
+namespace BeFaster.Core.Factories
 {
-    public interface IOfferBuilder
+    public interface IOfferFactory
     {
-        Task<ICompositeOffer> Build(string speciaOfferDsl);
-        Task<ICompositeOffer> BuildBuyOffer(string speciaOfferDsl);
-        Task<ICompositeOffer> BuildFreeOffer(string speciaOfferDsl);
+        Task<IProductOffer> Create(string speciaOfferDsl);
+        Task<IProductOffer> CreateBuyOffer(string speciaOfferDsl);
+        Task<IProductOffer> CreateFreeOffer(string speciaOfferDsl);
     }
 }

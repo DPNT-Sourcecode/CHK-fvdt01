@@ -1,5 +1,6 @@
 ﻿
 using BeFaster.Core.Data;
+using BeFaster.Core.Models;
 using FluentValidation;
 using System;
 using System.Collections.Generic;

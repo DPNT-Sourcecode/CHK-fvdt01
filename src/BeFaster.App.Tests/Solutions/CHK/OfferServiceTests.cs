@@ -21,7 +21,7 @@ namespace BeFaster.App.Tests.Solutions.CHK
             var productLogger = Substitute.For<ILogger<ProductService>>();
             var productRepository = Substitute.For<ProductRepositoryInMemory>();
             var productService = new ProductService(productLogger, productRepository);                                
-            var offerBuilder = new OfferBuilder(offerRepository, productService);
+            var offerBuilder = new OfferFactory(offerRepository, productService);
 
             //act
             Action action = () => new OfferService(null, productRepository, offerRepository, offerBuilder);
@@ -39,7 +39,7 @@ namespace BeFaster.App.Tests.Solutions.CHK
             var productServiceLogger = Substitute.For<ILogger<ProductService>>();
             var offerServiceLogger = Substitute.For<ILogger<OfferService>>();
             var productService = new ProductService(productServiceLogger, productRepository);
-            var offerBuilder = new OfferBuilder(offerRepository, productService);
+            var offerBuilder = new OfferFactory(offerRepository, productService);
 
             //act
             Action action = () => new OfferService(offerServiceLogger, productRepository, null, offerBuilder);
@@ -57,7 +57,7 @@ namespace BeFaster.App.Tests.Solutions.CHK
             var productServiceLogger = Substitute.For<ILogger<ProductService>>();
             var offerServiceLogger = Substitute.For<ILogger<OfferService>>();
             var productService = new ProductService(productServiceLogger, productRepository);
-            var offerBuilder = new OfferBuilder(offerRepository, productService);
+            var offerBuilder = new OfferFactory(offerRepository, productService);
 
             //act
             Action action = () => new OfferService(offerServiceLogger, null, offerRepository, offerBuilder);
@@ -68,7 +68,7 @@ namespace BeFaster.App.Tests.Solutions.CHK
         }
 
         [Fact]
-        public void OfferServiceContructor_ThrowsArgumentException_WhenOfferBuilderNull()
+        public void OfferServiceContructor_ThrowsArgumentException_WhenOfferFactoryNull()
         {
             //arrange     
             var offerRepository = Substitute.For<OfferRepositoryInMemory>();
@@ -76,7 +76,7 @@ namespace BeFaster.App.Tests.Solutions.CHK
             var productServiceLogger = Substitute.For<ILogger<ProductService>>();
             var offerServiceLogger = Substitute.For<ILogger<OfferService>>();
             var productService = new ProductService(productServiceLogger, productRepository);
-            var offerBuilder = new OfferBuilder(offerRepository, productService);
+            var offerBuilder = new OfferFactory(offerRepository, productService);
 
 
             //act
@@ -111,7 +111,7 @@ namespace BeFaster.App.Tests.Solutions.CHK
             var productServiceLogger = Substitute.For<ILogger<ProductService>>();
             var offerServiceLogger = Substitute.For<ILogger<OfferService>>();
             var productService = new ProductService(productServiceLogger, productRepository);
-            var offerBuilder = new OfferBuilder(offerRepository, productService);
+            var offerBuilder = new OfferFactory(offerRepository, productService);
             var service = new OfferService(offerServiceLogger, productRepository,offerRepository, offerBuilder);
 
             var result = service.Lookup(sku);
@@ -130,7 +130,7 @@ namespace BeFaster.App.Tests.Solutions.CHK
             var productServiceLogger = Substitute.For<ILogger<ProductService>>();
             var offerServiceLogger = Substitute.For<ILogger<OfferService>>();
             var productService = new ProductService(productServiceLogger, productRepository);
-            var offerBuilder = new OfferBuilder(offerRepository, productService);
+            var offerBuilder = new OfferFactory(offerRepository, productService);
             var service = new OfferService(offerServiceLogger, productRepository, offerRepository, offerBuilder);
             
             //fact

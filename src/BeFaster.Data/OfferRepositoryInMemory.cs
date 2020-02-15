@@ -1,6 +1,6 @@
 ﻿
-
 using BeFaster.Core.Data;
+using BeFaster.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,10 +13,10 @@ namespace BeFaster.Data
         public OfferRepositoryInMemory()
         {
             _items = new List<IOffer>();
-            _items.Add(new Offer { OfferId = Guid.NewGuid(), OfferDSL = "3A for 130" });
-            _items.Add(new Offer { OfferId = Guid.NewGuid(), OfferDSL = "5A for 200" });
-            _items.Add(new Offer { OfferId = Guid.NewGuid(), OfferDSL = "2B for 45" });
-            _items.Add(new Offer { OfferId = Guid.NewGuid(), OfferDSL = "2E get one B free" });
+            _items.Add(new Offer { OfferId = Guid.NewGuid(), OfferDSL = "3A for 130"});
+            _items.Add(new Offer { OfferId = Guid.NewGuid(), OfferDSL = "5A for 200"});
+            _items.Add(new Offer { OfferId = Guid.NewGuid(), OfferDSL = "2B for 45"});
+            _items.Add(new Offer { OfferId = Guid.NewGuid(), OfferDSL = "2E get one B free"});
         }
 
         public Task<List<IOffer>> GetAll()

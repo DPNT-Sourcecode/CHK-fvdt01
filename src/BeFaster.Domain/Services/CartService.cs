@@ -1,5 +1,4 @@
-﻿using BeFaster.Core.Builders;
-using BeFaster.Core.Data;
+﻿using BeFaster.Core.Factories;
 using BeFaster.Core.Models;
 using BeFaster.Core.Services;
 using BeFaster.Domain.Models;
@@ -15,12 +14,12 @@ namespace BeFaster.Domain.Services
         private readonly ILogger<CartService> _logger;
         private readonly IProductService _productService;
         private readonly IOfferService _offerService;
-        private readonly ICartBuilder _cartBuilder;
+        private readonly ICartFactory _cartBuilder;
 
         public CartService(ILogger<CartService> logger,
                            IProductService productService,
                            IOfferService offerService,
-                           ICartBuilder cartBuilder)
+                           ICartFactory cartBuilder)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _offerService = offerService ?? throw new ArgumentNullException(nameof(offerService));
@@ -31,7 +30,7 @@ namespace BeFaster.Domain.Services
 
         public async Task<int> Checkout(string skus)
         { 
-            var cart = await _cartBuilder.Build(skus);
+            var cart = await _cartBuilder.Create(skus);
             var total = Calculate(cart);
             return total;
         }
@@ -43,7 +42,7 @@ namespace BeFaster.Domain.Services
                 .ToList()
                 .ForEach(cartItem =>
                 {
-                    total = total + cartItem.Value.Product.Price.Value * cartItem.Value.Count;
+                    total = total + cartItem.Value.Product.Price.Value * cartItem.Value.Quantity.Value;
                 });
             
             return total;
@@ -54,35 +53,30 @@ namespace BeFaster.Domain.Services
             cart.Items.OrderBy(x => x.Value.Product.Sku)
                 .ToList()
                 .ForEach(cartItem =>
-                {                    
-                    var skuOffers = _offerService.Lookup(cartItem.Value.Product.Sku);
-                    if (skuOffers != null)
+                {
+                    var cartSummaryItem = new CartSummaryItem
                     {
-                        skuOffers.ToList().ForEach(offer =>
-                        {
-                            if (!cartItem.Value.Allocated.Value)
-                            {
-                                if (cartItem.Value.Count > 0)
-                                {
-                                    offer.Cart = cart;
-                                    offer.Apply(cartItem);
-                                }
-                            }                            
-                        });
-                    }
-                    else
-                    {
-                        var cartSummaryItem = new CartSummaryItem
-                        {
-                            Quantity = cartItem.Value.Count,
-                            Price = cartItem.Value.Product.Price,
-                            Total = cartItem.Value.Count * cartItem.Value.Product.Price
-                        };
-                        cart.Summary.Add(cartSummaryItem);                        
-                    }
+                        Quantity = cartItem.Value.Quantity.Value,
+                        OfferId = null,
+                        Product = cartItem.Value.Product,
+                        Price = cartItem.Value.Product.Price,
+                        Total = cartItem.Value.Quantity.Value * cartItem.Value.Product.Price
+                    };
+                    cart.Summary.Add(cartSummaryItem);                    
                 });
 
-            return cart.CalculateTotal();
+            cart.Items.OrderBy(x => x.Value.Product.Sku)
+                .ToList()
+                .ForEach(cartItem =>
+                {
+                    _offerService.ApplyOffers(cart, cartItem);
+                });
+
+            var totalOffers = cart.Offers.CalculateTotal();
+            var totalCart = cart.CalculateTotal();
+            var total = totalCart - totalOffers;
+
+            return total;
         } 
     }
 }

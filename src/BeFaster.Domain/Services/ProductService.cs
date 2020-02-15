@@ -1,4 +1,5 @@
 ﻿using BeFaster.Core.Data;
+using BeFaster.Core.Models;
 using BeFaster.Core.Services;
 using Microsoft.Extensions.Logging;
 using System;

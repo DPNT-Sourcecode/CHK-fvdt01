@@ -8,11 +8,14 @@ namespace BeFaster.Domain.Models
     {
         public IDictionary<string,ICartItem> Items { get; set; }
         public ICartSummary Summary { get; set; }
+        public IOfferSummary Offers { get; set; }
         public Cart(IDictionary<string,ICartItem> items,
-                    ICartSummary summary)
+                    ICartSummary summary,
+                    IOfferSummary offers)
         {
             Items = items;
             Summary = summary;
+            Offers = offers;
         }
 
         public int CalculateTotal()

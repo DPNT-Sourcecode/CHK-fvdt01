@@ -1,64 +1,76 @@
-﻿using BeFaster.Core.Data;
+﻿using BeFaster.Core.Enums;
 using BeFaster.Core.Models;
-using BeFaster.Domain.Enums;
 using BeFaster.Domain.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BeFaster.Domain
 {
-    public class ForOffer : Offer, ICompositeOffer
+    public class ForOffer : Offer, IProductOffer
     {        
-        public int? AtQuantity { get; set; }
-        public int? AtPrice { get; set; }
-        public int? FreeSkuQuantity { get; set; }
-        public IProduct FreeSku { get; set; }
+        public int? AtOfferQuantity { get; set; }
+        public int? AtOfferPrice { get; set; }
+        public int? FreeOfferQuantity { get; set; }
+        public IProduct FreeOfferProduct { get; set; }
         public ICart Cart { get; set; }       
-        public ForOffer(Guid speciaOfferId,
+        public ForOffer(Guid offerId,
                         IProduct product,
+                        ICart cart,
                         OfferType offerType,
                         string dsl,                                           
                         int atQuantity, 
-                        int atPrice) : base(speciaOfferId, product, offerType, dsl)
+                        int atPrice) : base(offerId, product, offerType, dsl)
         {
-            AtQuantity = atQuantity;
-            AtPrice = atPrice;            
+            AtOfferQuantity = atQuantity;
+            AtOfferPrice = atPrice;
+            Cart = cart;
+            Product = product;
         }
 
-        public override void Apply(KeyValuePair<string,ICartItem> cartItem)
+        public override void Apply(KeyValuePair<string, ICartItem> cartItem,
+                                   IEnumerable<IProductOffer> offers)
         {
-            if (cartItem.Value.Count > AtQuantity.Value)
+            if (cartItem.Value.AvailableQuantity > 0)
             {
-                var offerSummaryItem = new CartSummaryItem
+                if (cartItem.Value.AvailableQuantity >= AtOfferQuantity.Value)
                 {
-                    Product = cartItem.Value.Product,
-                    Quantity = AtQuantity.Value,
-                    Price = this.AtPrice.Value,
-                    Total = this.AtPrice.Value
-                };
-                this.Cart.Summary.Add(offerSummaryItem);
+                    var item = this.Cart.Items.ToList().Where(x => x.Value.Product.Sku.Equals(this.Product.Sku)).SingleOrDefault();
+                    var itemTotal = this.Product.Price * item.Value.Quantity;
+                    var remainingQuantity = cartItem.Value.AvailableQuantity.Value - AtOfferQuantity.Value;
+                    var remainingTotal = this.Product.Price.Value * remainingQuantity;
+                    var offerSummaryItem = new OfferSummaryItem
+                    {
+                        Offer = this,
+                        AtPrice = this.AtOfferPrice.Value,
+                        AtQuantity = this.AtOfferQuantity.Value,
+                        Total = itemTotal-this.AtOfferPrice.Value- remainingTotal,
+                        Product = this.Product
+                    };
+                    this.Cart.Offers.Add(offerSummaryItem);
+                    cartItem.Value.AvailableQuantity = remainingQuantity;
+                    
+                    //var remainingQuantity = cartItem.Value.AvailableQuantity.Value - AtOfferQuantity.Value;
+                    //cartItem.Value.AvailableQuantity = remainingQuantity;
 
-                var standardItem = new CartSummaryItem
-                {
-                    Quantity = cartItem.Value.Count - AtQuantity.Value,
-                    Price = this.Product.Price.Value,
-                    Total = this.Product.Price.Value * (cartItem.Value.Count - AtQuantity.Value)
-                };
-                this.Cart.Summary.Add(standardItem);
+                    //if (remainingQuantity > 0)
+                    //{
+                    //    var standardItem = new OfferSummaryItem
+                    //    {
+                    //        Offer = this,
+                    //        AtPrice = this.AtOfferPrice.Value,
+                    //        AtQuantity = this.AtOfferQuantity.Value,
+                    //        Total = itemTotal - (this.Product.Price.Value * remainingQuantity),
+                    //        Product = this.Product
+                    //    };
+                    //    this.Cart.Offers.Add(offerSummaryItem);
+                    //    cartItem.Value.AvailableQuantity = cartItem.Value.AvailableQuantity.Value - remainingQuantity;
+                    //    cartItem.Value.Processed = true;
+                    //}
+                }
+            }
+            
 
-                cartItem.Value.Allocated = true;
-            }
-            else
-            {
-                var standardItem = new CartSummaryItem
-                {
-                    Quantity = cartItem.Value.Count,
-                    Price = this.Product.Price.Value,
-                    Total = cartItem.Value.Count * this.Product.Price.Value
-                };
-                this.Cart.Summary.Add(standardItem);
-                cartItem.Value.Allocated = true;
-            }
         }
     }
 }

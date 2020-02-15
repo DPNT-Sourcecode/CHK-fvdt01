@@ -8,9 +8,10 @@ namespace BeFaster.Domain.Models
     public class CartItem : ICartItem
     {
         public IProduct Product { get; set; }
-        public int Count { get; set; }
+        public IProductOffer Offer { get; set; }
+        public int? Quantity { get; set; }
+        public int? AvailableQuantity { get; set; }
         public int? Total { get; set; }
-        public int? Price { get; set; }
-        public bool? Allocated { get; set; }
+        public bool? Processed { get; set; }
     }
 }

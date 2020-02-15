@@ -9,10 +9,10 @@ using Xunit;
 
 namespace BeFaster.App.Tests.Solutions.CHK
 {
-    public class OfferBuilderTests
+    public class OfferFactoryTests
     {
         [Fact]
-        public void OfferBuilderContructor_ThrowsArgumentException_WhenProductServiceNull()
+        public void OfferFactoryContructor_ThrowsArgumentException_WhenProductServiceNull()
         {
             //arrange     
             var offerRepository = Substitute.For<OfferRepositoryInMemory>();
@@ -20,14 +20,14 @@ namespace BeFaster.App.Tests.Solutions.CHK
             var productRepository = Substitute.For<ProductRepositoryInMemory>();            
 
             //act
-            Action action = () => new OfferBuilder(offerRepository, null);
+            Action action = () => new OfferFactory(offerRepository, null);
             
             //assert
             action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
-        public void OfferBuilderContructor_ThrowsArgumentException_WhenOfferRepositoryNull()
+        public void OfferFactoryContructor_ThrowsArgumentException_WhenOfferRepositoryNull()
         {
             //arrange     
             var offerRepository = Substitute.For<OfferRepositoryInMemory>();
@@ -36,7 +36,7 @@ namespace BeFaster.App.Tests.Solutions.CHK
             var productService = new ProductService(logger, productRepository);
 
             //act
-            Action action = () => new OfferBuilder(null, productService);
+            Action action = () => new OfferFactory(null, productService);
 
             //assert
             action.Should().Throw<ArgumentNullException>();
@@ -44,7 +44,7 @@ namespace BeFaster.App.Tests.Solutions.CHK
 
         [Theory]
         [InlineData("2B for 45")]
-        public async void OfferBuilder_Build_ReturnsResult(string dsl)
+        public async void OfferFactory_Build_ReturnsResult(string dsl)
         {
             //arrange     
             var offerRepository = Substitute.For<OfferRepositoryInMemory>();
@@ -53,13 +53,13 @@ namespace BeFaster.App.Tests.Solutions.CHK
             var productService = new ProductService(logger,productRepository);
            
             //act            
-            var builder = new OfferBuilder(offerRepository, productService);
-            var result = await builder.Build(dsl);
+            var factory = new OfferFactory(offerRepository, productService);
+            var result = await factory.Create(dsl);
 
             //assert
             result.Should().NotBeNull();            
-            result.AtQuantity.Should().Be(2);
-            result.AtPrice.Should().Be(45);
+            result.AtOfferQuantity.Should().Be(2);
+            result.AtOfferPrice.Should().Be(45);
             result.Product.Sku.Should().Be("B");
             
         }

@@ -1,5 +1,4 @@
-﻿using BeFaster.Core.Builders;
-using BeFaster.Core.Data;
+﻿using BeFaster.Core.Factories;
 using BeFaster.Core.Services;
 using BeFaster.Domain.Services;
 using FluentAssertions;
@@ -18,7 +17,7 @@ namespace BeFaster.App.Tests.Solutions.CHK
             //arrange            
             var speciaOfferService = Substitute.For<IOfferService>();
             var skuService = Substitute.For<IProductService>();
-            var cartItemBuilder = Substitute.For<ICartBuilder>();
+            var cartItemBuilder = Substitute.For<ICartFactory>();
 
             //act
             Action action = () => new CartService(null, skuService, speciaOfferService, cartItemBuilder);
@@ -34,7 +33,7 @@ namespace BeFaster.App.Tests.Solutions.CHK
             var logger = Substitute.For<ILogger<CartService>>();
             var speciaOfferService = Substitute.For<IOfferService>();
             var skuService = Substitute.For<IProductService>();
-            var cartItemBuilder = Substitute.For<ICartBuilder>();
+            var cartItemBuilder = Substitute.For<ICartFactory>();
 
             //act
             Action action = () => new CartService(logger, null, speciaOfferService, cartItemBuilder);
@@ -50,7 +49,7 @@ namespace BeFaster.App.Tests.Solutions.CHK
             var logger = Substitute.For<ILogger<CartService>>();
             var speciaOfferService = Substitute.For<IOfferService>();
             var skuService = Substitute.For<IProductService>();
-            var cartItemBuilder = Substitute.For<ICartBuilder>();
+            var cartItemBuilder = Substitute.For<ICartFactory>();
 
             //act
             Action action = () => new CartService(logger, skuService, null, cartItemBuilder);
@@ -67,7 +66,7 @@ namespace BeFaster.App.Tests.Solutions.CHK
             var logger = Substitute.For<ILogger<CartService>>();
             var speciaOfferService = Substitute.For<IOfferService>();
             var skuService = Substitute.For<IProductService>();
-            var cartItemBuilder = Substitute.For<ICartBuilder>();
+            var cartItemBuilder = Substitute.For<ICartFactory>();
 
             //act
             Action action = () => new CartService(logger, skuService, speciaOfferService, null);
@@ -85,7 +84,7 @@ namespace BeFaster.App.Tests.Solutions.CHK
             var logger = Substitute.For<ILogger<CartService>>();
             var speciaOfferService = Substitute.For<IOfferService>();
             var skuService = Substitute.For<IProductService>();
-            var cartItemBuilder = Substitute.For<ICartBuilder>();
+            var cartItemBuilder = Substitute.For<ICartFactory>();
 
             //act
             var service = new CartService(logger, skuService, speciaOfferService, cartItemBuilder);
@@ -103,7 +102,7 @@ namespace BeFaster.App.Tests.Solutions.CHK
             var logger = Substitute.For<ILogger<CartService>>();
             var speciaOfferService = Substitute.For<IOfferService>();
             var skuService = Substitute.For<IProductService>();
-            var cartItemBuilder = Substitute.For<ICartBuilder>();
+            var cartItemBuilder = Substitute.For<ICartFactory>();
 
             //act
             var service = new CartService(logger, skuService, speciaOfferService, cartItemBuilder);
@@ -121,7 +120,7 @@ namespace BeFaster.App.Tests.Solutions.CHK
             var logger = Substitute.For<ILogger<CartService>>();
             var speciaOfferService = Substitute.For<IOfferService>();
             var skuService = Substitute.For<IProductService>();
-            var cartItemBuilder = Substitute.For<ICartBuilder>();
+            var cartItemBuilder = Substitute.For<ICartFactory>();
 
             //act
             var service = new CartService(logger, skuService, speciaOfferService, cartItemBuilder);
@@ -139,7 +138,7 @@ namespace BeFaster.App.Tests.Solutions.CHK
             var logger = Substitute.For<ILogger<CartService>>();
             var speciaOfferService = Substitute.For<IOfferService>();
             var skuService = Substitute.For<IProductService>();
-            var cartItemBuilder = Substitute.For<ICartBuilder>();
+            var cartItemBuilder = Substitute.For<ICartFactory>();
 
             //act
             var service = new CartService(logger, skuService, speciaOfferService, cartItemBuilder);

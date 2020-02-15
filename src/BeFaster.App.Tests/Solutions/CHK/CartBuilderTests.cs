@@ -10,16 +10,16 @@ using Xunit;
 
 namespace BeFaster.App.Tests.Solutions.CHK
 {
-    public class CartBuilderTests
+    public class CartFactoryTests
     {
         [Fact]
-        public void CartBuilderContructor_ThrowsArgumentException_WhenProductRepositoryNull()
+        public void CartFactoryContructor_ThrowsArgumentException_WhenProductRepositoryNull()
         {
             //arrange            
             var skuRepository = Substitute.For<IProductRepository>();
 
             //act
-            Action action = () => new CartBuilder(null);
+            Action action = () => new CartFactory(null);
 
             //assert
             action.Should().Throw<ArgumentNullException>();
@@ -27,15 +27,15 @@ namespace BeFaster.App.Tests.Solutions.CHK
 
         [Theory]        
         [InlineData("ABCD")]
-        public async void CartBuilder_Build_ReturnsResult(string skus)
+        public async void CartFactory_Build_ReturnsResult(string skus)
         {
             //arrange
             var logger = Substitute.For<ILogger<ProductService>>();
             var productRepository = Substitute.For<ProductRepositoryInMemory>();
             
             //act
-            var builder = new CartBuilder(productRepository);
-            var result = await builder.Build(skus);
+            var factory = new CartFactory(productRepository);
+            var result = await factory.Create(skus);
 
             //assert
             result.Items.Should().HaveCount(4);

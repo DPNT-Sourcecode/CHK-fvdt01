@@ -34,7 +34,7 @@ namespace BeFaster.App.Tests.Solutions.CHK
         }
 
         [Theory]
-        [InlineData("BB", 60)]
+        [InlineData("BB", 45)]
         public void App_CheckoutReturnsResult_WhenBOfferApplied(string skus, int expected)
         {
             var result = CheckoutSolution.Checkout(skus);
@@ -43,11 +43,10 @@ namespace BeFaster.App.Tests.Solutions.CHK
         }
 
         [Theory]
-        [InlineData("AAAAA", 250)]
         [InlineData("AAA", 130)]
         [InlineData("AAAA", 180)]
-        [InlineData("AAAAAAAAAA", 450)]
-        public void App_AOfferCombinations_ReturnsResult(string skus, int expected)
+        [InlineData("AAAAA", 200)]
+        public void App_ACombinations_ReturnsResult(string skus, int expected)
         {
             var result = CheckoutSolution.Checkout(skus);
 
@@ -67,4 +66,3 @@ namespace BeFaster.App.Tests.Solutions.CHK
         }
     }
 }
-

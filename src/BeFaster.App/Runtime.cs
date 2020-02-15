@@ -1,5 +1,5 @@
-﻿using BeFaster.Core.Builders;
-using BeFaster.Core.Data;
+﻿using BeFaster.Core.Data;
+using BeFaster.Core.Factories;
 using BeFaster.Core.Services;
 using BeFaster.Data;
 using BeFaster.Domain.Cqrs;
@@ -31,8 +31,8 @@ namespace BeFaster.App
                     .AddSingleton<IMessageService, MessageService>()
                     .AddSingleton<IProductRepository, ProductRepositoryInMemory>()
                     .AddSingleton<IOfferRepository, OfferRepositoryInMemory>()
-                    .AddSingleton<IOfferBuilder, OfferBuilder>()
-                    .AddSingleton<ICartBuilder, CartBuilder>()
+                    .AddSingleton<IOfferFactory, OfferFactory>()
+                    .AddSingleton<ICartFactory, CartFactory>()
                     .AddSingleton<IOfferService, OfferService>()
                     .AddSingleton<IProductService, ProductService>()
                     .AddSingleton<ICartService, CartService>()

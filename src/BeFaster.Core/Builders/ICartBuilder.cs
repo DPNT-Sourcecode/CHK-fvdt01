@@ -1,12 +1,11 @@
 ﻿using BeFaster.Core.Data;
 using BeFaster.Core.Models;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BeFaster.Core.Builders
+namespace BeFaster.Core.Factories
 {
-    public interface ICartBuilder
+    public interface ICartFactory
     {
-        Task<ICart> Build(string skus);
+        Task<ICart> Create(string skus);
     }
 }
