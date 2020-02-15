@@ -1,6 +1,7 @@
 ﻿using BeFaster.Core.Data;
 using BeFaster.Core.Factories;
 using BeFaster.Core.Models;
+using BeFaster.Domain.Models;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -71,8 +72,7 @@ namespace BeFaster.Domain.Services
         {
             var offers = Lookup(cartItem.Value.Product.Sku);
             if (offers != null)
-            {                
-                
+            {                                
                 offers.ToList().ForEach(offer =>
                 {
                     if (!cartItem.Value.Processed.Value)
@@ -85,16 +85,18 @@ namespace BeFaster.Domain.Services
                 //apply remaining items at product price
                 if (cartItem.Value.AvailableQuantity > 0)
                 {
-                    var standardItem = new OfferSummaryItem
+                    var item = cart.Items.ToList().Where(x => x.Value.Product.Sku.Equals(cartItem.Value.Product.Sku)).SingleOrDefault();
+                    var itemTotal = cartItem.Value.Product.Price * cartItem.Value.Quantity.Value;
+                    var offerSummaryItem = new OfferSummaryItem
                     {
-                        Offer = this,
-                        AtPrice = this.AtOfferPrice.Value,
-                        AtQuantity = this.AtOfferQuantity.Value,
-                        Total = itemTotal - (this.Product.Price.Value * remainingQuantity),
-                        Product = this.Product
+                        Offer = null,
+                        AtPrice = cartItem.Value.Product.Price,
+                        AtQuantity = cartItem.Value.AvailableQuantity.Value,
+                        Total = itemTotal - (cartItem.Value.Product.Price * cartItem.Value.AvailableQuantity.Value),
+                        Product = cartItem.Value.Product
                     };
-                    this.Cart.Offers.Add(offerSummaryItem);
-                    cartItem.Value.AvailableQuantity = cartItem.Value.AvailableQuantity.Value - remainingQuantity;
+                    cart.Offers.Add(offerSummaryItem);
+                    cartItem.Value.AvailableQuantity = 0;
                     cartItem.Value.Processed = true;                    
                 }
             }
@@ -125,4 +127,5 @@ namespace BeFaster.Domain.Services
         } 
     }
 }
+
 
