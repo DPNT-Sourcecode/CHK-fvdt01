@@ -41,8 +41,8 @@ namespace BeFaster.App.Solutions.CHK
                     Quantity = SplitSkus(splitFor[0].Trim()),
                     Price = sku.Price,
                     FreeItem = splitFor[1].Trim().Split(new string[] { "free" }, StringSplitOptions.None).ToList()[0].Trim()
-            }
-        };
+                    }
+                };
             }
         }
 
@@ -149,7 +149,7 @@ namespace BeFaster.App.Solutions.CHK
 
             }
         }
-        public List<Offer> Offers { get;  set; }
+        public List<Offer> Offers { get; set; }
 
         public int TotalPrice
         {
@@ -188,10 +188,11 @@ namespace BeFaster.App.Solutions.CHK
 
             //SplitSpecialOffer(skuList);
 
-            //var ItemA = skuList[0].TotalPrice;
-            //var ItemB = skuList[1].TotalPrice;
+            var ItemA = skuList[0].TotalPrice;
+            var ItemB = skuList[1].TotalPrice;
             var ItemC = skuList[2].TotalPrice;
-            //var ItemD = skuList[3].TotalPrice;
+            var ItemD = skuList[3].TotalPrice;
+            var ItemE = skuList[4].TotalPrice;
 
             return 0;
         }
@@ -207,6 +208,7 @@ namespace BeFaster.App.Solutions.CHK
 
     }
 }
+
 
 
 
