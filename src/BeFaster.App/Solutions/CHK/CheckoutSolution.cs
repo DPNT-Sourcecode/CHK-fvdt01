@@ -27,8 +27,10 @@ namespace BeFaster.App.Solutions.CHK
                     str = str + skus[i];
                 }
                 else {
-                    result.Add(str + skus[i]);
-
+                    var sku = str + skus[i];
+                    result.Add(sku);
+                    // Remove the added sku form skus
+                    skus = skus.Substring(sku.Length, skus.Length);
 
                 }
             }
@@ -37,4 +39,5 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
