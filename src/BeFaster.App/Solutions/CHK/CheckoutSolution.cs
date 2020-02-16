@@ -145,19 +145,19 @@ namespace BeFaster.App.Solutions.CHK
             //var skuSplit = SplitSkus(skus);
 
 
-            //skus = Newtonsoft.Json.JsonConvert.SerializeObject(new[] {
-            //    new { product = "A", price = 50, quantity = 12, specialoffer = "3A for 130, 5A for 200" },
-            //    new { product = "B", price = 30, quantity = 2, specialoffer = "2B for 45" },
-            //    new { product = "C", price = 20, quantity = 1, specialoffer = "" },
-            //    new { product = "D", price = 20, quantity = 1, specialoffer = "" },
-            //    new { product = "E", price = 20, quantity = 2, specialoffer = "2E get one B free" }
-            //});
+            skus = Newtonsoft.Json.JsonConvert.SerializeObject(new[] {
+                new { product = "A", price = 50, quantity = 3, specialoffer = "3A for 130, 5A for 200" },
+                new { product = "B", price = 30, quantity = 2, specialoffer = "2B for 45" },
+                new { product = "C", price = 20, quantity = 1, specialoffer = "" },
+                new { product = "D", price = 20, quantity = 1, specialoffer = "" },
+                new { product = "E", price = 20, quantity = 2, specialoffer = "2E get one B free" }
+            });
 
             var skuList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Sku>>(skus);
 
             SplitSpecialOffer(skuList);
 
-            return skuList[0].TotalPrice;
+            return skuList[1].TotalPrice;
 
             return 0;
         }
@@ -221,6 +221,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 

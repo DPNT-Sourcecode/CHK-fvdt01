@@ -78,13 +78,14 @@ namespace BeFaster.App.Tests.Solutions.CHK
         }
 
         [TestCase("[{\"product\":\"A\",\"price\":50,\"quantity\":36,\"specialoffer\":\"3A for 130, 5A for 200\"},{\"product\":\"B\",\"price\":30,\"quantity\":2,\"specialoffer\":\"2B for 45\"},{\"product\":\"C\",\"price\":20,\"quantity\":1,\"specialoffer\":\"\"},{\"product\":\"D\",\"price\":20,\"quantity\":1,\"specialoffer\":\"\"},{\"product\":\"E\",\"price\":20,\"quantity\":2,\"specialoffer\":\"2E get one B free\"}]"
-            , ExpectedResult = 380)]
+            , ExpectedResult = 1450)]
         public static int ComputePrice_A36(string skus)
         {
             return CheckoutSolution.ComputePrice(skus);
         }
     }
 }
+
 
 
 
