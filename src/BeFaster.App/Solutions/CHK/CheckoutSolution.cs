@@ -13,10 +13,9 @@ namespace BeFaster.App.Solutions.CHK
         {
             switch (sku.Product)
             {
-                case "A":
+                case "A": "B":
                     {
                         return Item(sku);
-                        break;
                     }
 
 
@@ -222,4 +221,5 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
