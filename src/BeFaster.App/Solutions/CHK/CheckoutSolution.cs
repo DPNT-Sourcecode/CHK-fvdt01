@@ -13,7 +13,10 @@ namespace BeFaster.App.Solutions.CHK
         {
             switch (sku.Product)
             {
-                case "A": case "B": case "C": case "D":
+                case "A":
+                case "B":
+                case "C":
+                case "D":
                     {
                         return Item(sku);
                     }
@@ -33,63 +36,73 @@ namespace BeFaster.App.Solutions.CHK
             var result = 0;
             var initialQuantity = sku.Quantity;
 
-            sku.Offers.OrderByDescending(x => x.Quantity).ToList().ForEach(offer => {
-
-                if (initialQuantity >= offer.Quantity)
+            if (sku.Offers.Any())
+            {
+                sku.Offers.OrderByDescending(x => x.Quantity).ToList().ForEach(offer =>
                 {
-                    var rem = initialQuantity % offer.Quantity;
-                    if (rem == 0)
+
+                    if (initialQuantity >= offer.Quantity)
                     {
-                        result = result + (initialQuantity / offer.Quantity) * offer.Price;
-                        initialQuantity = 0;
-                    }
-                    else
-                    {
-                        if (sku.Offers.Select(x => x.Quantity <= rem).FirstOrDefault())
+                        var rem = initialQuantity % offer.Quantity;
+                        if (rem == 0)
                         {
                             result = result + (initialQuantity / offer.Quantity) * offer.Price;
+                            initialQuantity = 0;
                         }
                         else
                         {
-                            result = result + ((initialQuantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
+                            if (sku.Offers.Select(x => x.Quantity <= rem).FirstOrDefault())
+                            {
+                                result = result + (initialQuantity / offer.Quantity) * offer.Price;
+                            }
+                            else
+                            {
+                                result = result + ((initialQuantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
+                            }
+                            initialQuantity = rem;
                         }
-                        initialQuantity = rem;
                     }
-                }
-                else {
-                    result = sku.Quantity * sku.Price;
-                }
+                    else
+                    {
+                        result = sku.Quantity * sku.Price;
+                    }
+                });
+            }
+            else
+            {
+                result = sku.Quantity * sku.Price;
+            }
 
 
-                    //var rem = sku.Quantity % offer.Quantity;
-                //if (rem == 0 && sku.Quantity >= offer.Quantity)
-                //{
-                //    var t = (sku.Quantity / offer.Quantity) * offer.Price;
-                //    if (result == 0)
-                //    {
-                //        result = t;
-                //    }
-                //    else
-                //    {
-                //        result = result > t ? t : result;
-                //    }
-                //}
-                //else
-                //{
-                //    var t = ((sku.Quantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
-                //    if (result == 0)
-                //    {
-                //        result = t;
-                //    }
-                //    else
-                //    {
-                //        result = result > t ? t : result;
-                //    }
+            //var rem = sku.Quantity % offer.Quantity;
+            //if (rem == 0 && sku.Quantity >= offer.Quantity)
+            //{
+            //    var t = (sku.Quantity / offer.Quantity) * offer.Price;
+            //    if (result == 0)
+            //    {
+            //        result = t;
+            //    }
+            //    else
+            //    {
+            //        result = result > t ? t : result;
+            //    }
+            //}
+            //else
+            //{
+            //    var t = ((sku.Quantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
+            //    if (result == 0)
+            //    {
+            //        result = t;
+            //    }
+            //    else
+            //    {
+            //        result = result > t ? t : result;
+            //    }
 
-                //    sku.Quantity = rem;
-                //}
+            //    sku.Quantity = rem;
+            //}
 
-            });
+
 
 
             //var offer = sku.Offers.OrderByDescending(x => x.Quantity).ToList().FirstOrDefault(x => sku.Quantity % x.Quantity == 0 );
@@ -230,4 +243,5 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
