@@ -36,11 +36,13 @@ namespace BeFaster.App.Solutions.CHK
             else if (sku.SpecialOffer.Contains("get one"))
             {
                 var splitFor = sku.SpecialOffer.Trim().Split(new string[] { "get one" }, StringSplitOptions.None).ToList();
-                //sku.Offer = new List<Offer> {
-                //new Offer{
-                //    Quantity = SplitSkus(splitFor[0].Trim()),
-                //    Price = int.Parse(splitFor[1].Trim())
-                //}};
+                sku.Offers = new List<Offer> {
+                new Offer{
+                    Quantity = SplitSkus(splitFor[0].Trim()),
+                    Price = sku.Price,
+                    FreeItem = splitFor[1].Trim().Split(new string[] { "free" }, StringSplitOptions.None).ToList()[0].Trim()
+            }
+        };
             }
         }
 
@@ -161,6 +163,7 @@ namespace BeFaster.App.Solutions.CHK
     {
         public int Quantity { get; set; }
         public int Price { get; set; }
+        public string FreeItem { get; internal set; }
     }
 
     public static class CheckoutSolution
@@ -204,5 +207,6 @@ namespace BeFaster.App.Solutions.CHK
 
     }
 }
+
 
 
