@@ -8,6 +8,55 @@ namespace BeFaster.App.Solutions.CHK
 
     public static class OfferPrice
     {
+        public static void SpecialOfferFormatter(Sku sku)
+        {
+            if (sku.SpecialOffer.IndexOf(",") > 0 && sku.SpecialOffer.Contains("for"))
+            {
+                sku.Offers = new List<Offer>();
+                var splitComma = sku.SpecialOffer.Split(',').ToList();
+                splitComma.ForEach(c =>
+                {
+                    var splitFor = c.Trim().Split(new string[] { "for" }, StringSplitOptions.None).ToList();
+                    sku.Offers.Add(new Offer
+                    {
+                        Quantity = SplitSkus(splitFor[0].Trim()),
+                        Price = int.Parse(splitFor[1].Trim())
+                    });
+                });
+            }
+            else if (sku.SpecialOffer.Contains("for"))
+            {
+                var splitFor = sku.SpecialOffer.Trim().Split(new string[] { "for" }, StringSplitOptions.None).ToList();
+                sku.Offers = new List<Offer> {
+                new Offer{
+                    Quantity = SplitSkus(splitFor[0].Trim()),
+                    Price = int.Parse(splitFor[1].Trim())
+                }};
+            }
+            else if (sku.SpecialOffer.Contains("get one"))
+            {
+                //var splitFor = sku.SpecialOffer.Trim().Split(new string[] { "get one" }, StringSplitOptions.None).ToList();
+                //sku.Offer = new List<Offer> {
+                //new Offer{
+                //    Quantity = SplitSkus(splitFor[0].Trim()),
+                //    Price = int.Parse(splitFor[1].Trim())
+                //}};
+            }
+        }
+
+        private static int SplitSkus(string skus)
+        {
+            string str = string.Empty;
+            for (int i = 0; i < skus.Length; i++)
+            {
+                if (char.IsDigit(skus[i]))
+                {
+                    str = str + skus[i];
+                }
+            }
+
+            return int.Parse(str);
+        }
 
         public static int Calclate(Sku sku)
         {
@@ -79,10 +128,23 @@ namespace BeFaster.App.Solutions.CHK
 
     public class Sku
     {
+        private string specialOffer;
         public string Product { get; set; }
         public int Price { get; set; }
         public int Quantity { get; set; }
-        public string SpecialOffer { get; set; }
+        public string SpecialOffer
+        {
+            get { return specialOffer; }
+            set
+            {
+                specialOffer = value;
+                if (specialOffer.Length > 0) {
+
+                    Offers = CheckoutSolution.SpecialOfferFormatter(this);
+                }
+                
+            }
+        }
         public List<Offer> Offers { get; set; }
 
         public int TotalPrice
@@ -143,57 +205,10 @@ namespace BeFaster.App.Solutions.CHK
             });
         }
 
-        private static void SpecialOfferFormatter(Sku sku)
-        {
-            if (sku.SpecialOffer.IndexOf(",") > 0 && sku.SpecialOffer.Contains("for"))
-            {
-                sku.Offers = new List<Offer>();
-                var splitComma = sku.SpecialOffer.Split(',').ToList();
-                splitComma.ForEach(c =>
-                {
-                    var splitFor = c.Trim().Split(new string[] { "for" }, StringSplitOptions.None).ToList();
-                    sku.Offers.Add(new Offer
-                    {
-                        Quantity = SplitSkus(splitFor[0].Trim()),
-                        Price = int.Parse(splitFor[1].Trim())
-                    });
-                });
-            }
-            else if (sku.SpecialOffer.Contains("for"))
-            {
-                var splitFor = sku.SpecialOffer.Trim().Split(new string[] { "for" }, StringSplitOptions.None).ToList();
-                sku.Offers = new List<Offer> {
-                new Offer{
-                    Quantity = SplitSkus(splitFor[0].Trim()),
-                    Price = int.Parse(splitFor[1].Trim())
-                }};
-            }
-            else if (sku.SpecialOffer.Contains("get one"))
-            {
-                //var splitFor = sku.SpecialOffer.Trim().Split(new string[] { "get one" }, StringSplitOptions.None).ToList();
-                //sku.Offer = new List<Offer> {
-                //new Offer{
-                //    Quantity = SplitSkus(splitFor[0].Trim()),
-                //    Price = int.Parse(splitFor[1].Trim())
-                //}};
-            }
-        }
 
-        private static int SplitSkus(string skus)
-        {
-            string str = string.Empty;
-            for (int i = 0; i < skus.Length; i++)
-            {
-                if (char.IsDigit(skus[i]))
-                {
-                    str = str + skus[i];
-                }
-            }
-
-            return int.Parse(str);
-        }
     }
 }
+
 
 
 
