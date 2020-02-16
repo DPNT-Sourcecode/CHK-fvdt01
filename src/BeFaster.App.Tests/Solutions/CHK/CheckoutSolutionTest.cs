@@ -11,11 +11,12 @@ namespace BeFaster.App.Tests.Solutions.CHK
     [TestFixture]
     class CheckoutSolutionTest
     {
-        //3A2BCD2E
-        [TestCase("33AB44C", ExpectedResult = 210)]
-        public int ComputePrice(string skus)
-        {
+        private const string skus = "[{\"item\":\"A\",\"price\":40,\"specialoffer\":\"3A for 130, 5A for 200\"},{\"item\":\"B\",\"price\":40,\"specialoffer\":\"3A for 130, 5A for 200\"},{\"item\":\"C\",\"price\":40,\"specialoffer\":\"3A for 130, 5A for 200\"}]";
 
+        //3A2BCD2E
+        [TestCase(skus, ExpectedResult = 210)]
+        public static int ComputePrice(string skus)
+        {
             return CheckoutSolution.ComputePrice(skus);
         }
 
