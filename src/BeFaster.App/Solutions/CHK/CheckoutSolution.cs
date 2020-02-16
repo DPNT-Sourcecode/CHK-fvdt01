@@ -140,7 +140,7 @@ namespace BeFaster.App.Solutions.CHK
                 specialOffer = value;
                 if (specialOffer.Length > 0) {
 
-                    Offers = CheckoutSolution.SpecialOfferFormatter(this);
+                    OfferPrice.SpecialOfferFormatter(this);
                 }
                 
             }
@@ -187,7 +187,7 @@ namespace BeFaster.App.Solutions.CHK
 
             var skuList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Sku>>(skus);
 
-            SplitSpecialOffer(skuList);
+            //SplitSpecialOffer(skuList);
 
             //var ItemA = skuList[0].TotalPrice;
             //var ItemB = skuList[1].TotalPrice;
@@ -197,19 +197,14 @@ namespace BeFaster.App.Solutions.CHK
             return 0;
         }
 
-        private static void SplitSpecialOffer(List<Sku> skuList)
-        {
-            skuList.ForEach(item =>
-            {
-                if (item.SpecialOffer.Length > 0) SpecialOfferFormatter(item);
-            });
-        }
+        //private static void SplitSpecialOffer(List<Sku> skuList)
+        //{
+        //    skuList.ForEach(item =>
+        //    {
+        //        if (item.SpecialOffer.Length > 0) SpecialOfferFormatter(item);
+        //    });
+        //}
 
 
     }
 }
-
-
-
-
-
