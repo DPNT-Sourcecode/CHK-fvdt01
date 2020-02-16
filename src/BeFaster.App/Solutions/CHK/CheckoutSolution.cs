@@ -31,12 +31,32 @@ namespace BeFaster.App.Solutions.CHK
             //    new { item = "E", price = 20, specialoffer = "2E get one B free" }
             //});
 
-            var skuList = Newtonsoft.Json.JsonConvert.DeserializeObject<Sku[]>(skus);
+            var skuList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Sku>>(skus);
+
+            SplitSpecialOffer(skuList);
+
 
             return 0;
         }
 
+        private static void SplitSpecialOffer(List<Sku> skuList)
+        {
+            skuList.ForEach(item => {
+                SpecialOfferFormatter(item.SpecialOffer);
 
+
+            });
+        }
+
+        private static void SpecialOfferFormatter(string specialOffer)
+        {
+            if (specialOffer.IndexOf(",") > 0) {
+                var splitComma = specialOffer.Split(',').ToList();
+                splitComma.ForEach(c => { 
+                    
+                });
+            }
+        }
 
         private static List<string> SplitSkus(string skus)
         {
@@ -63,4 +83,5 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
