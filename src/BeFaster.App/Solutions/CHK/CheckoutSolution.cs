@@ -26,7 +26,8 @@ namespace BeFaster.App.Solutions.CHK
 
         public static int ItemA(Sku sku)
         {
-            var  t  = sku.Offers.Select(offer =>
+            var result = 0;
+           sku.Offers.ForEach(offer =>
             {
                 // 3 or 5 
                 // 4 or 6
@@ -34,9 +35,9 @@ namespace BeFaster.App.Solutions.CHK
                 var rem = sku.Quantity % offer.Quantity;
                 if (rem == 0)
                 {
-                    return (sku.Quantity / offer.Quantity) * offer.Price;
+                    result = (sku.Quantity / offer.Quantity) * offer.Price;
                 }
-                return ((sku.Quantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
+                result = ((sku.Quantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
             });
 
 
@@ -164,7 +165,3 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
-
-
-
-
