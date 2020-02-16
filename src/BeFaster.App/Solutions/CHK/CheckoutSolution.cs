@@ -6,12 +6,33 @@ using System.Linq;
 namespace BeFaster.App.Solutions.CHK
 {
 
+    public static class OfferPrice {
+
+        public static int Calclate(Sku item) {
+
+            return 0;
+        }
+    
+    }
+
     public class Sku
     {
         public string Item { get; set; }
         public int Price { get; set; }
+        public int Quantity { get; set; }
         public string SpecialOffer { get; set; }
-        public Offer Offer { get; set; }
+        public List<Offer> Offer { get; set; }
+
+        public int TotalPrice
+        {
+            get
+            {
+                var t = OfferPrice.Calclate(this);
+                return 0;
+            }
+        }
+
+
     }
 
     public class Offer
@@ -30,13 +51,13 @@ namespace BeFaster.App.Solutions.CHK
             //var skuSplit = SplitSkus(skus);
 
 
-            //skus = Newtonsoft.Json.JsonConvert.SerializeObject(new[] {
-            //    new { item = "A", price = 50, specialoffer = "3A for 130, 5A for 200" },
-            //    new { item = "B", price = 30, specialoffer = "2B for 45" },
-            //    new { item = "C", price = 20, specialoffer = "" },
-            //    new { item = "D", price = 20, specialoffer = "" },
-            //    new { item = "E", price = 20, specialoffer = "2E get one B free" }
-            //});
+            skus = Newtonsoft.Json.JsonConvert.SerializeObject(new[] {
+                new { item = "A", price = 50, quantity = 3, specialoffer = "3A for 130, 5A for 200" },
+                new { item = "B", price = 30, quantity = 2, specialoffer = "2B for 45" },
+                new { item = "C", price = 20, quantity = 1, specialoffer = "" },
+                new { item = "D", price = 20, quantity = 1, specialoffer = "" },
+                new { item = "E", price = 20, quantity = 2, specialoffer = "2E get one B free" }
+            });
 
             var skuList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Sku>>(skus);
 
@@ -50,27 +71,48 @@ namespace BeFaster.App.Solutions.CHK
         {
             skuList.ForEach(item =>
             {
-                SpecialOfferFormatter(item.SpecialOffer);
-
-
+                if (item.SpecialOffer.Length > 0) SpecialOfferFormatter(item);
             });
         }
 
-        private static void SpecialOfferFormatter(string specialOffer)
+        private static void SpecialOfferFormatter(Sku sku)
         {
-            if (specialOffer.IndexOf(",") > 0)
+            if (sku.SpecialOffer.IndexOf(",") > 0 && sku.SpecialOffer.Contains("for"))
             {
-                var splitComma = specialOffer.Split(',').ToList();
+                sku.Offer = new List<Offer>();
+                var splitComma = sku.SpecialOffer.Split(',').ToList();
                 splitComma.ForEach(c =>
                 {
-                    var splitFor = c.Trim().Split(new string[] {"for"}, StringSplitOptions.None);
+                    var splitFor = c.Trim().Split(new string[] { "for" }, StringSplitOptions.None).ToList();
+                    sku.Offer.Add(new Offer
+                    {
+                        Quantity = SplitSkus(splitFor[0].Trim()),
+                        Price = int.Parse(splitFor[1].Trim())
+                    });
                 });
+            }
+            else if (sku.SpecialOffer.Contains("for"))
+            {
+                var splitFor = sku.SpecialOffer.Trim().Split(new string[] { "for" }, StringSplitOptions.None).ToList();
+                sku.Offer = new List<Offer> {
+                new Offer{
+                    Quantity = SplitSkus(splitFor[0].Trim()),
+                    Price = int.Parse(splitFor[1].Trim())
+                }};
+            }
+            else if (sku.SpecialOffer.Contains("get one"))
+            {
+                //var splitFor = sku.SpecialOffer.Trim().Split(new string[] { "get one" }, StringSplitOptions.None).ToList();
+                //sku.Offer = new List<Offer> {
+                //new Offer{
+                //    Quantity = SplitSkus(splitFor[0].Trim()),
+                //    Price = int.Parse(splitFor[1].Trim())
+                //}};
             }
         }
 
-        private static List<string> SplitSkus(string skus)
+        private static int SplitSkus(string skus)
         {
-            var result = new List<string>();
             string str = string.Empty;
             for (int i = 0; i < skus.Length; i++)
             {
@@ -78,22 +120,9 @@ namespace BeFaster.App.Solutions.CHK
                 {
                     str = str + skus[i];
                 }
-                else
-                {
-                    var sku = str + skus[i];
-                    str = string.Empty;
-                    result.Add(sku);
-                    // Remove the added sku form skus
-                    skus = skus.Substring(sku.Length, skus.Length - sku.Length);
-                    i = -1;
-                }
             }
 
-            return result;
+            return int.Parse(str);
         }
     }
 }
-
-
-
-
