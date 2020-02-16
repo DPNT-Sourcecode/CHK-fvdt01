@@ -31,7 +31,11 @@ namespace BeFaster.App.Solutions.CHK
                 return sku.Quantity * sku.Price;
             }
 
-            var offer = sku.Offers.FirstOrDefault(x => sku.Quantity % x.Quantity == 0 );
+
+
+
+
+            var offer = sku.Offers.OrderByDescending(x => x.Quantity).ToList().FirstOrDefault(x => sku.Quantity % x.Quantity == 0 );
 
             if (offer != null)
             {
@@ -166,3 +170,4 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
