@@ -1,4 +1,5 @@
 ﻿using BeFaster.Runner.Exceptions;
+using System.Linq;
 
 namespace BeFaster.App.Solutions.CHK
 {
@@ -6,11 +7,10 @@ namespace BeFaster.App.Solutions.CHK
     {
         public static int ComputePrice(string skus)
         {
-            var arr = skus.Split(',');
-
-            return  0;
+            return skus.Split(',').Select(x => int.Parse(x)).Sum();
         }
     }
 }
+
 
 
