@@ -15,7 +15,7 @@ namespace BeFaster.App.Solutions.CHK
             {
                 case "A":
                     {
-                        return ItemA(sku);
+                        return Item(sku);
                         break;
                     }
 
@@ -24,7 +24,7 @@ namespace BeFaster.App.Solutions.CHK
             return 0;
         }
 
-        public static int ItemA(Sku sku)
+        public static int Item(Sku sku)
         {
             if(sku.Quantity == 1  || sku.Quantity == 2)
             {
@@ -147,7 +147,7 @@ namespace BeFaster.App.Solutions.CHK
 
 
             skus = Newtonsoft.Json.JsonConvert.SerializeObject(new[] {
-                new { product = "A", price = 50, quantity = 7, specialoffer = "3A for 130, 5A for 200" },
+                new { product = "A", price = 50, quantity = 12, specialoffer = "3A for 130, 5A for 200" },
                 new { product = "B", price = 30, quantity = 2, specialoffer = "2B for 45" },
                 new { product = "C", price = 20, quantity = 1, specialoffer = "" },
                 new { product = "D", price = 20, quantity = 1, specialoffer = "" },
@@ -222,3 +222,4 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
