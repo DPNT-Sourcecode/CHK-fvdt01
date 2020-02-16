@@ -31,7 +31,7 @@ namespace BeFaster.App.Solutions.CHK
                 return sku.Quantity * sku.Price;
             }
 
-            var offer = sku.Offers.FirstOrDefault(x => sku.Quantity % x.Quantity >= 0 && sku.Quantity == x.Quantity);
+            var offer = sku.Offers.FirstOrDefault(x => sku.Quantity % x.Quantity == 0 );
 
             if (offer != null)
             {
@@ -91,7 +91,7 @@ namespace BeFaster.App.Solutions.CHK
 
 
             skus = Newtonsoft.Json.JsonConvert.SerializeObject(new[] {
-                new { product = "A", price = 50, quantity = 10, specialoffer = "3A for 130, 5A for 200" },
+                new { product = "A", price = 50, quantity = 6, specialoffer = "3A for 130, 5A for 200" },
                 new { product = "B", price = 30, quantity = 2, specialoffer = "2B for 45" },
                 new { product = "C", price = 20, quantity = 1, specialoffer = "" },
                 new { product = "D", price = 20, quantity = 1, specialoffer = "" },
@@ -166,9 +166,3 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
-
-
-
-
-
-
