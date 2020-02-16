@@ -30,7 +30,7 @@ namespace BeFaster.App.Solutions.CHK
                     var sku = str + skus[i];
                     result.Add(sku);
                     // Remove the added sku form skus
-                    skus = skus.Substring(sku.Length, skus.Length);
+                    skus = skus.Substring(sku.Length, skus.Length-sku.Length);
 
                 }
             }
@@ -39,5 +39,6 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
