@@ -6,8 +6,11 @@ namespace BeFaster.App.Solutions.CHK
     {
         public static int ComputePrice(string skus)
         {
+            var arr = skus.Split(',');
+
             return  0;
         }
     }
 }
+
 
