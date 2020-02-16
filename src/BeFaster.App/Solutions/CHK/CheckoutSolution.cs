@@ -35,7 +35,7 @@ namespace BeFaster.App.Solutions.CHK
             }
             else if (sku.SpecialOffer.Contains("get one"))
             {
-                //var splitFor = sku.SpecialOffer.Trim().Split(new string[] { "get one" }, StringSplitOptions.None).ToList();
+                var splitFor = sku.SpecialOffer.Trim().Split(new string[] { "get one" }, StringSplitOptions.None).ToList();
                 //sku.Offer = new List<Offer> {
                 //new Offer{
                 //    Quantity = SplitSkus(splitFor[0].Trim()),
@@ -204,4 +204,5 @@ namespace BeFaster.App.Solutions.CHK
 
     }
 }
+
 
