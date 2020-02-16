@@ -35,31 +35,45 @@ namespace BeFaster.App.Solutions.CHK
 
             sku.Offers.OrderByDescending(x => x.Quantity).ToList().ForEach(offer => {
 
-                var rem = sku.Quantity % offer.Quantity;
-                if (rem == 0)
-                {
-                    var t = (sku.Quantity / offer.Quantity) * offer.Price;
-                    if (result == 0) {
-                        result = t;
+                if (sku.Quantity >= offer.Quantity) {
+                    var rem = sku.Quantity % offer.Quantity;
+                    if (rem == 0)
+                    {
+                        result = (sku.Quantity / offer.Quantity) * offer.Price;
                     }
-                    else {
-                       result = result > t ? t : result;
+                    else { 
+                        result = ((sku.Quantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
                     }
                 }
-                else
-                {
-                    var t = ((sku.Quantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
-                    if (result == 0)
-                    {
-                        result = t;
-                    }
-                    else
-                    {
-                        result = result > t ? t : result;
-                    }
 
-                    sku.Quantity = rem;
-                }
+
+                    //var rem = sku.Quantity % offer.Quantity;
+                //if (rem == 0 && sku.Quantity >= offer.Quantity)
+                //{
+                //    var t = (sku.Quantity / offer.Quantity) * offer.Price;
+                //    if (result == 0)
+                //    {
+                //        result = t;
+                //    }
+                //    else
+                //    {
+                //        result = result > t ? t : result;
+                //    }
+                //}
+                //else
+                //{
+                //    var t = ((sku.Quantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
+                //    if (result == 0)
+                //    {
+                //        result = t;
+                //    }
+                //    else
+                //    {
+                //        result = result > t ? t : result;
+                //    }
+
+                //    sku.Quantity = rem;
+                //}
 
             });
 
@@ -199,3 +213,4 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
