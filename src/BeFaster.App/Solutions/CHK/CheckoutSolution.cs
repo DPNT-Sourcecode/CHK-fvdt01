@@ -32,12 +32,22 @@ namespace BeFaster.App.Solutions.CHK
                 // 3 or 5 
                 // 4 or 6
                 // 6/5 rem=1 5/5 rem=0
-                var rem = sku.Quantity % offer.Quantity;
-                if (rem == 0)
+                if (sku.Quantity == offer.Quantity)
                 {
-                    result = (sku.Quantity / offer.Quantity) * offer.Price;
+                    var rem = sku.Quantity % offer.Quantity;
+                    if (rem == 0)
+                    {
+                        result = (sku.Quantity / offer.Quantity) * offer.Price;
+                    }
+                    else
+                    {
+                        result = ((sku.Quantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
+                    }
                 }
-                result = ((sku.Quantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
+                else
+                {
+                    result =  sku.Quantity * sku.Price;
+                }
             });
 
 
@@ -46,7 +56,7 @@ namespace BeFaster.App.Solutions.CHK
             //    if(sku)
             //}
 
-            return 0;
+            return result;
         }
 
     }
@@ -165,3 +175,4 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
