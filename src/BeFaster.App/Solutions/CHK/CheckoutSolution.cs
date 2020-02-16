@@ -11,7 +11,7 @@ namespace BeFaster.App.Solutions.CHK
 
         public static int Calclate(Sku sku)
         {
-            switch (sku.Item)
+            switch (sku.Product)
             {
                 case "A":
                     {
@@ -24,14 +24,26 @@ namespace BeFaster.App.Solutions.CHK
             return 0;
         }
 
-        public static int ItemA(Sku sku) {
-            sku.Offer
+        public static int ItemA(Sku sku)
+        {
+            sku.Offers.Select(offer =>
+            {
+                // 3 or 5 
+                // 4 or 6
+                // 6/5 rem=1 5/5 rem=0
+                var rem = sku.Quantity % offer.Quantity;
+                if (rem == 0)
+                {
+                    return (sku.Quantity / offer.Quantity) * offer.Price;
+                }
+                return ((sku.Quantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
+            });
 
 
-            if (sku.Quantity == 3) { 
-                // Check offers
-                if(sku)
-            }
+            //if (sku.Quantity == 3) { 
+            //    // Check offers
+            //    if(sku)
+            //}
 
             return 0;
         }
@@ -149,4 +161,5 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
