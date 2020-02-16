@@ -11,6 +11,13 @@ namespace BeFaster.App.Solutions.CHK
         public string Item { get; set; }
         public int Price { get; set; }
         public string SpecialOffer { get; set; }
+        public Offer Offer { get; set; }
+    }
+
+    public class Offer
+    {
+        public int Quantity { get; set; }
+        public int Price { get; set; }
     }
 
     public static class CheckoutSolution
@@ -86,6 +93,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
