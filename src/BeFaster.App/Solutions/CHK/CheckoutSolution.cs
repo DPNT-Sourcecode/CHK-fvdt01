@@ -28,19 +28,13 @@ namespace BeFaster.App.Solutions.CHK
 
         public static int Item(Sku sku)
         {
-            //if(sku.Quantity == 1  || sku.Quantity == 2)
-            //{
-            //    return sku.Quantity * sku.Price;
-            //}
-
             var result = 0;
             var initialQuantity = sku.Quantity;
 
-            if (sku.Offers.Any())
+            if (sku.Offers != null)
             {
                 sku.Offers.OrderByDescending(x => x.Quantity).ToList().ForEach(offer =>
                 {
-
                     if (initialQuantity >= offer.Quantity)
                     {
                         var rem = initialQuantity % offer.Quantity;
@@ -73,57 +67,8 @@ namespace BeFaster.App.Solutions.CHK
                 result = sku.Quantity * sku.Price;
             }
 
-
-            //var rem = sku.Quantity % offer.Quantity;
-            //if (rem == 0 && sku.Quantity >= offer.Quantity)
-            //{
-            //    var t = (sku.Quantity / offer.Quantity) * offer.Price;
-            //    if (result == 0)
-            //    {
-            //        result = t;
-            //    }
-            //    else
-            //    {
-            //        result = result > t ? t : result;
-            //    }
-            //}
-            //else
-            //{
-            //    var t = ((sku.Quantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
-            //    if (result == 0)
-            //    {
-            //        result = t;
-            //    }
-            //    else
-            //    {
-            //        result = result > t ? t : result;
-            //    }
-
-            //    sku.Quantity = rem;
-            //}
-
-
-
-
-            //var offer = sku.Offers.OrderByDescending(x => x.Quantity).ToList().FirstOrDefault(x => sku.Quantity % x.Quantity == 0 );
-
-            //if (offer != null)
-            //{
-            //    var rem = sku.Quantity % offer.Quantity;
-            //    if (rem == 0)
-            //    {
-            //        return (sku.Quantity / offer.Quantity) * offer.Price;
-            //    }
-            //    else
-            //    {
-            //        return ((sku.Quantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
-            //    }
-
-            //}
-
             return result;
         }
-
     }
 
     public class Sku
@@ -243,5 +188,6 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
