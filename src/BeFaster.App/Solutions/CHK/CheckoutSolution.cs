@@ -26,29 +26,28 @@ namespace BeFaster.App.Solutions.CHK
 
         public static int ItemA(Sku sku)
         {
-            var result = 0;
-            var offer = sku.Offers.FirstOrDefault(x => x.Quantity % sku.Quantity >= 0 );
+            if(sku.Quantity == 1  || sku.Quantity == 2)
+            {
+                return sku.Quantity * sku.Price;
+            }
+
+            var offer = sku.Offers.FirstOrDefault(x => sku.Quantity % x.Quantity >= 0 && sku.Quantity == x.Quantity);
 
             if (offer != null)
             {
                 var rem = sku.Quantity % offer.Quantity;
                 if (rem == 0)
                 {
-                    result = (sku.Quantity / offer.Quantity) * offer.Price;
+                    return (sku.Quantity / offer.Quantity) * offer.Price;
                 }
                 else
                 {
-                    result = ((sku.Quantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
+                    return ((sku.Quantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
                 }
 
-            }else
-            {
-                result = sku.Quantity * sku.Price;
             }
 
-
-
-            return result;
+            return 0;
         }
 
     }
@@ -92,7 +91,7 @@ namespace BeFaster.App.Solutions.CHK
 
 
             skus = Newtonsoft.Json.JsonConvert.SerializeObject(new[] {
-                new { product = "A", price = 50, quantity = 1, specialoffer = "3A for 130, 5A for 200" },
+                new { product = "A", price = 50, quantity = 10, specialoffer = "3A for 130, 5A for 200" },
                 new { product = "B", price = 30, quantity = 2, specialoffer = "2B for 45" },
                 new { product = "C", price = 20, quantity = 1, specialoffer = "" },
                 new { product = "D", price = 20, quantity = 1, specialoffer = "" },
@@ -167,6 +166,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
