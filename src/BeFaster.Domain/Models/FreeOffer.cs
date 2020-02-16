@@ -43,36 +43,56 @@ namespace BeFaster.Domain
                 if (freeSkuCartItem != null)
                 {
                     var sku = freeItem.Value.Value.Product.Sku;
-                    var removeItems = this.Cart.Offers.Items.Where(x => x.Product.Sku.Equals(sku)).ToList();
+                    int quantityNew = 0;
+                    var removeItems = this.Cart.Itemised.Items.Where(x => x.Product.Sku.Equals(sku)).ToList();
                     if (removeItems.Any())
                     {
                         removeItems.ForEach(x => {
-                            this.Cart.Offers.Items.Remove(x);
+                            this.Cart.Itemised.Items.Remove(x);
+                            if (quantityNew == 0)
+                            {
+                                quantityNew = x.AtQuantity.Value - this.FreeOfferQuantity.Value;
+                            }                            
                         });
+
+                        if (quantityNew > 0)
+                        {
+                            var test = new CartItemisedItem
+                            {
+                                AtPrice = freeSkuCartItem.Product.Price,
+                                AtQuantity = quantityNew,
+                                Total = freeSkuCartItem.Product.Price * quantityNew,
+                                Product = freeSkuCartItem.Product,
+                                Free = false
+                            };
+                            this.Cart.Itemised.Add(test);
+                        }
                     }
-                    
-                    var offerSummaryItem = new OfferSummaryItem
+
+                    var freeItemItemised = new CartItemisedItem
                     {
                         Product = freeSkuCartItem.Product,
                         Offer = this,
                         AtPrice = this.FreeOfferProduct.Price,
                         AtQuantity = this.FreeOfferQuantity,
-                        Total = this.FreeOfferQuantity * this.FreeOfferProduct.Price
+                        Total = this.FreeOfferQuantity * this.FreeOfferProduct.Price,
+                        Free = true
                     };                    
-                    this.Cart.Offers.Add(offerSummaryItem);
-                };
+                    this.Cart.Itemised.Add(freeItemItemised);
 
-                //var standardItem = new CartSummaryItem
-                //{
-                //    Product = this.Product,
-                //    OfferId = null,
-                //    Quantity = AtOfferQuantity.Value,
-                //    Price = this.Product.Price.Value,
-                //    Total = this.Product.Price.Value * AtOfferQuantity.Value
-                //};
-                //this.Cart.Summary.Add(standardItem);
+                    var cartItemisedItem = new CartItemisedItem
+                    {
+                        AtPrice = cartItem.Value.Product.Price,
+                        AtQuantity = AtOfferQuantity.Value,
+                        Total = cartItem.Value.Product.Price * AtOfferQuantity.Value,
+                        Product = cartItem.Value.Product,
+                        Free = false
+                    };
+                    this.Cart.Itemised.Add(cartItemisedItem);
 
-                //cartItem.Value.AvailableQuantity = cartItem.Value.AvailableQuantity.Value - AtOfferQuantity.Value;
+                    var remainingQuantity = cartItem.Value.AvailableQuantity.Value - AtOfferQuantity.Value;
+                    cartItem.Value.AvailableQuantity = remainingQuantity;
+                };             
             }
         }
     }

@@ -40,7 +40,7 @@ namespace BeFaster.Domain.DSL
 
             return new Cart(cartItems,
                    new CartSummary(new List<ICartSummaryItem>()),
-                   new OfferSummary(new List<IOfferSummaryItem>()));
+                   new CartItemised(new List<ICartItemisedItem>()));
         }
     }
 }

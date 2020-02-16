@@ -70,13 +70,31 @@ namespace BeFaster.Domain.Services
                 .ForEach(cartItem =>
                 {
                     _offerService.ApplyOffers(cart, cartItem);
-                });
 
-            var totalOffers = cart.Offers.CalculateTotal();
-            var totalCart = cart.CalculateTotal();
-            var total = totalCart - totalOffers;
+                    //apply remaining items at product price
+                    if (cartItem.Value.AvailableQuantity > 0)
+                    {
+                        //var item = cart.Items.ToList().Where(x => x.Value.Product.Sku.Equals(cartItem.Value.Product.Sku)).SingleOrDefault();
+                        //var itemTotal = cartItem.Value.Product.Price * cartItem.Value.Quantity.Value;
+                        var cartItemisedItem = new CartItemisedItem
+                        {
+                            AtPrice = cartItem.Value.Product.Price,
+                            AtQuantity = cartItem.Value.AvailableQuantity.Value,
+                            Total = cartItem.Value.Product.Price * cartItem.Value.AvailableQuantity.Value,
+                            Product = cartItem.Value.Product,
+                            Free = false
+                        };
+                        cart.Itemised.Add(cartItemisedItem);
+                        cartItem.Value.AvailableQuantity = 0;
+                        cartItem.Value.Processed = true;
+                    }
+                });            
 
-            return total;
+            var itemisedTotal = cart.Itemised.CalculateTotal();
+            //var totalCart = cart.CalculateTotal();
+            //var subTotal = totalCart - itemisedTotal;
+            //var total = totalCart - subTotal;
+            return itemisedTotal;
         } 
     }
 }

@@ -81,24 +81,6 @@ namespace BeFaster.Domain.Services
                         offer.Apply(cartItem, offers);
                     }
                 });
-
-                //apply remaining items at product price
-                if (cartItem.Value.AvailableQuantity > 0)
-                {
-                    var item = cart.Items.ToList().Where(x => x.Value.Product.Sku.Equals(cartItem.Value.Product.Sku)).SingleOrDefault();
-                    var itemTotal = cartItem.Value.Product.Price * cartItem.Value.Quantity.Value;
-                    var offerSummaryItem = new OfferSummaryItem
-                    {
-                        Offer = null,
-                        AtPrice = cartItem.Value.Product.Price,
-                        AtQuantity = cartItem.Value.AvailableQuantity.Value,
-                        Total = itemTotal - (cartItem.Value.Product.Price * cartItem.Value.AvailableQuantity.Value),
-                        Product = cartItem.Value.Product
-                    };
-                    cart.Offers.Add(offerSummaryItem);
-                    cartItem.Value.AvailableQuantity = 0;
-                    cartItem.Value.Processed = true;                    
-                }
             }
         }
 
@@ -127,5 +109,3 @@ namespace BeFaster.Domain.Services
         } 
     }
 }
-
-

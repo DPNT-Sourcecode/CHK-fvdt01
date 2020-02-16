@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace BeFaster.Core.Models
 {
-    public interface IOfferSummary
+    public interface ICartItemised
     {
-        IList<IOfferSummaryItem> Items { get; set; }
+        IList<ICartItemisedItem> Items { get; set; }
         int CalculateTotal();
-        void Add(IOfferSummaryItem item);
+        void Add(ICartItemisedItem item);
     }
 }

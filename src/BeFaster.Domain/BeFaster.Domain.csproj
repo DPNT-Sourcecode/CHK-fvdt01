@@ -64,8 +64,8 @@
     <Compile Include="Factories\OfferFactory.cs" />
     <Compile Include="Error.cs" />
     <Compile Include="Models\Cart.cs" />
-    <Compile Include="Models\OfferSummaryItem.cs" />
-    <Compile Include="Models\OfferSummary.cs" />
+    <Compile Include="Models\CartItemisedItem.cs" />
+    <Compile Include="Models\CartItemised.cs" />
     <Compile Include="Models\CartSummaryItem.cs" />
     <Compile Include="Models\CartSummary.cs" />
     <Compile Include="Models\FreeOffer.cs" />

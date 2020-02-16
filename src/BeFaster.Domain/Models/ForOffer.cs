@@ -33,54 +33,22 @@ namespace BeFaster.Domain
         {
             if (cartItem.Value.AvailableQuantity > 0)
             {
-                if (cartItem.Value.AvailableQuantity >= AtOfferQuantity.Value)
+                while (cartItem.Value.AvailableQuantity >= AtOfferQuantity.Value)
                 {
-                    var item = this.Cart.Items.ToList().Where(x => x.Value.Product.Sku.Equals(this.Product.Sku)).SingleOrDefault();
-                    var itemTotal = this.Product.Price * item.Value.Quantity;
-                    var offerSummaryItem = new OfferSummaryItem
+                    //var item = this.Cart.Items.ToList().Where(x => x.Value.Product.Sku.Equals(this.Product.Sku)).SingleOrDefault();
+                    //var itemTotal = this.Product.Price * item.Value.Quantity;
+                    var cartItemisedItem = new CartItemisedItem
                     {
                         Offer = this,
                         AtPrice = this.AtOfferPrice.Value,
                         AtQuantity = this.AtOfferQuantity.Value,
-                        Total = itemTotal - this.AtOfferPrice.Value,
-                        Product = this.Product
+                        Total = this.AtOfferPrice.Value,
+                        Product = this.Product,
+                        Free = false
                     };
-                    this.Cart.Offers.Add(offerSummaryItem);
+                    this.Cart.Itemised.Add(cartItemisedItem);
                     var remainingQuantity = cartItem.Value.AvailableQuantity.Value - AtOfferQuantity.Value;
-                    cartItem.Value.AvailableQuantity = remainingQuantity;
-                    
-                    //var item = this.Cart.Items.ToList().Where(x => x.Value.Product.Sku.Equals(this.Product.Sku)).SingleOrDefault();
-                    //var itemTotal = this.Product.Price * item.Value.Quantity;
-                    //var remainingQuantity = cartItem.Value.AvailableQuantity.Value - AtOfferQuantity.Value;
-                    //var remainingTotal = this.Product.Price.Value * remainingQuantity;
-                    //var offerSummaryItem = new OfferSummaryItem
-                    //{
-                    //    Offer = this,
-                    //    AtPrice = this.AtOfferPrice.Value,
-                    //    AtQuantity = this.AtOfferQuantity.Value,
-                    //    Total = itemTotal-this.AtOfferPrice.Value- remainingTotal,
-                    //    Product = this.Product
-                    //};
-                    this.Cart.Offers.Add(offerSummaryItem);
-                    cartItem.Value.AvailableQuantity = remainingQuantity;
-                    
-                    //var remainingQuantity = cartItem.Value.AvailableQuantity.Value - AtOfferQuantity.Value;
-                    //cartItem.Value.AvailableQuantity = remainingQuantity;
-
-                    //if (remainingQuantity > 0)
-                    //{
-                    //    var standardItem = new OfferSummaryItem
-                    //    {
-                    //        Offer = this,
-                    //        AtPrice = this.AtOfferPrice.Value,
-                    //        AtQuantity = this.AtOfferQuantity.Value,
-                    //        Total = itemTotal - (this.Product.Price.Value * remainingQuantity),
-                    //        Product = this.Product
-                    //    };
-                    //    this.Cart.Offers.Add(offerSummaryItem);
-                    //    cartItem.Value.AvailableQuantity = cartItem.Value.AvailableQuantity.Value - remainingQuantity;
-                    //    cartItem.Value.Processed = true;
-                    //}
+                    cartItem.Value.AvailableQuantity = remainingQuantity;             
                 }
             }
             

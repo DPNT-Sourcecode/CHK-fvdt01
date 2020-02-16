@@ -4,16 +4,16 @@ using System.Linq;
 
 namespace BeFaster.Domain.Models
 {
-    public class OfferSummary : IOfferSummary
+    public class CartItemised : ICartItemised
     {
-        public IList<IOfferSummaryItem> Items { get; set; }
+        public IList<ICartItemisedItem> Items { get; set; }
 
-        public OfferSummary(IList<IOfferSummaryItem> offers)
+        public CartItemised(IList<ICartItemisedItem> offers)
         {
             Items = offers;
         }
 
-        public void Add(IOfferSummaryItem item)
+        public void Add(ICartItemisedItem item)
         {
             Items.Add(item);
         }
@@ -22,7 +22,7 @@ namespace BeFaster.Domain.Models
         {
             int total = 0;
 
-            total = Items.Sum(i => i.Total).Value;
+            total = Items.Where(i=> i.Free==false).Sum(i => i.Total).Value;
             return total;
         }
     }
