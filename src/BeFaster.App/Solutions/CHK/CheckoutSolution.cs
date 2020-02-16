@@ -71,7 +71,7 @@ namespace BeFaster.App.Solutions.CHK
                     }
                 case "E":
                     {
-                        return ItemE(sku);
+                        return Item(sku);
                     }
                 default:
                     return 0;
@@ -138,24 +138,20 @@ namespace BeFaster.App.Solutions.CHK
             set
             {
                 specialOffer = value;
-                if (specialOffer.Length > 0) {
+                if (specialOffer.Length > 0)
+                {
 
                     OfferPrice.SpecialOfferFormatter(this);
+                    this.TotalPrice = OfferPrice.Calclate(this);
                 }
-                
+
             }
         }
-        public List<Offer> Offers { get; set; }
+        public List<Offer> Offers { get;  set; }
 
         public int TotalPrice
         {
-            set
-            {
-            }
-            get
-            {
-                return OfferPrice.Calclate(this);
-            }
+            get; private set;
         }
 
 
@@ -208,3 +204,4 @@ namespace BeFaster.App.Solutions.CHK
 
     }
 }
+
