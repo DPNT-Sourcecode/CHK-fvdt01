@@ -41,8 +41,15 @@ namespace BeFaster.App.Solutions.CHK
                     {
                         result = (sku.Quantity / offer.Quantity) * offer.Price;
                     }
-                    else { 
-                        result = ((sku.Quantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
+                    else {
+                        if (sku.Offers.Select(x => x.Quantity < rem).FirstOrDefault())
+                        {
+                            result = (sku.Quantity / offer.Quantity) * offer.Price;
+                        }
+                        else {
+                            result = ((sku.Quantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
+                        }
+
                     }
                 }
 
@@ -213,4 +220,5 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
