@@ -6,22 +6,45 @@ using System.Linq;
 namespace BeFaster.App.Solutions.CHK
 {
 
-    public static class OfferPrice {
+    public static class OfferPrice
+    {
 
-        public static int Calclate(Sku item) {
+        public static int Calclate(Sku sku)
+        {
+            switch (sku.Item)
+            {
+                case "A":
+                    {
+                        return ItemA(sku);
+                        break;
+                    }
+
+
+            }
+            return 0;
+        }
+
+        public static int ItemA(Sku sku) {
+            sku.Offer
+
+
+            if (sku.Quantity == 3) { 
+                // Check offers
+                if(sku)
+            }
 
             return 0;
         }
-    
+
     }
 
     public class Sku
     {
-        public string Item { get; set; }
+        public string Product { get; set; }
         public int Price { get; set; }
         public int Quantity { get; set; }
         public string SpecialOffer { get; set; }
-        public List<Offer> Offer { get; set; }
+        public List<Offer> Offers { get; set; }
 
         public int TotalPrice
         {
@@ -52,11 +75,11 @@ namespace BeFaster.App.Solutions.CHK
 
 
             skus = Newtonsoft.Json.JsonConvert.SerializeObject(new[] {
-                new { item = "A", price = 50, quantity = 3, specialoffer = "3A for 130, 5A for 200" },
-                new { item = "B", price = 30, quantity = 2, specialoffer = "2B for 45" },
-                new { item = "C", price = 20, quantity = 1, specialoffer = "" },
-                new { item = "D", price = 20, quantity = 1, specialoffer = "" },
-                new { item = "E", price = 20, quantity = 2, specialoffer = "2E get one B free" }
+                new { product = "A", price = 50, quantity = 3, specialoffer = "3A for 130, 5A for 200" },
+                new { product = "B", price = 30, quantity = 2, specialoffer = "2B for 45" },
+                new { product = "C", price = 20, quantity = 1, specialoffer = "" },
+                new { product = "D", price = 20, quantity = 1, specialoffer = "" },
+                new { product = "E", price = 20, quantity = 2, specialoffer = "2E get one B free" }
             });
 
             var skuList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Sku>>(skus);
@@ -79,12 +102,12 @@ namespace BeFaster.App.Solutions.CHK
         {
             if (sku.SpecialOffer.IndexOf(",") > 0 && sku.SpecialOffer.Contains("for"))
             {
-                sku.Offer = new List<Offer>();
+                sku.Offers = new List<Offer>();
                 var splitComma = sku.SpecialOffer.Split(',').ToList();
                 splitComma.ForEach(c =>
                 {
                     var splitFor = c.Trim().Split(new string[] { "for" }, StringSplitOptions.None).ToList();
-                    sku.Offer.Add(new Offer
+                    sku.Offers.Add(new Offer
                     {
                         Quantity = SplitSkus(splitFor[0].Trim()),
                         Price = int.Parse(splitFor[1].Trim())
@@ -94,7 +117,7 @@ namespace BeFaster.App.Solutions.CHK
             else if (sku.SpecialOffer.Contains("for"))
             {
                 var splitFor = sku.SpecialOffer.Trim().Split(new string[] { "for" }, StringSplitOptions.None).ToList();
-                sku.Offer = new List<Offer> {
+                sku.Offers = new List<Offer> {
                 new Offer{
                     Quantity = SplitSkus(splitFor[0].Trim()),
                     Price = int.Parse(splitFor[1].Trim())
@@ -126,3 +149,4 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
