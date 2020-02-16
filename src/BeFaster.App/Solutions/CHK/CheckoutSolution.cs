@@ -35,23 +35,29 @@ namespace BeFaster.App.Solutions.CHK
 
             sku.Offers.OrderByDescending(x => x.Quantity).ToList().ForEach(offer => {
 
-                if (initialQuantity >= offer.Quantity) {
+                if (initialQuantity >= offer.Quantity)
+                {
                     var rem = initialQuantity % offer.Quantity;
                     if (rem == 0)
                     {
                         result = result + (initialQuantity / offer.Quantity) * offer.Price;
                         initialQuantity = 0;
                     }
-                    else {
+                    else
+                    {
                         if (sku.Offers.Select(x => x.Quantity <= rem).FirstOrDefault())
                         {
                             result = result + (initialQuantity / offer.Quantity) * offer.Price;
                         }
-                        else {
+                        else
+                        {
                             result = result + ((initialQuantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
                         }
                         initialQuantity = rem;
                     }
+                }
+                else {
+                    return sku.Quantity * sku.Price;
                 }
 
 
@@ -222,6 +228,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
