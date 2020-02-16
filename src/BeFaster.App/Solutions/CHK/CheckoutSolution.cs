@@ -31,25 +31,38 @@ namespace BeFaster.App.Solutions.CHK
                 return sku.Quantity * sku.Price;
             }
 
+            var result = 0;
 
+            sku.Offers.OrderByDescending(x => x.Quantity).ToList().ForEach(offer => {
 
-
-
-            var offer = sku.Offers.OrderByDescending(x => x.Quantity).ToList().FirstOrDefault(x => sku.Quantity % x.Quantity == 0 );
-
-            if (offer != null)
-            {
                 var rem = sku.Quantity % offer.Quantity;
                 if (rem == 0)
                 {
-                    return (sku.Quantity / offer.Quantity) * offer.Price;
+                    result = (sku.Quantity / offer.Quantity) * offer.Price;
                 }
                 else
                 {
-                    return ((sku.Quantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
+                    result = ((sku.Quantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
                 }
 
-            }
+            });
+
+
+            //var offer = sku.Offers.OrderByDescending(x => x.Quantity).ToList().FirstOrDefault(x => sku.Quantity % x.Quantity == 0 );
+
+            //if (offer != null)
+            //{
+            //    var rem = sku.Quantity % offer.Quantity;
+            //    if (rem == 0)
+            //    {
+            //        return (sku.Quantity / offer.Quantity) * offer.Price;
+            //    }
+            //    else
+            //    {
+            //        return ((sku.Quantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
+            //    }
+
+            //}
 
             return 0;
         }
@@ -170,4 +183,5 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
