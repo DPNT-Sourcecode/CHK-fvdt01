@@ -5,6 +5,13 @@ using System.Linq;
 
 namespace BeFaster.App.Solutions.CHK
 {
+
+    public class Sku {
+        public string Item { get; set; }
+        public int Price { get; set; }
+        public string SpecialOffer { get; set; }
+    }
+
     public static class CheckoutSolution
     {
         public static int ComputePrice(string skus)
@@ -13,11 +20,13 @@ namespace BeFaster.App.Solutions.CHK
             //3A2BCD2E it should produce 3A,2B.C,D,2E
             //if contains 33AB44C should have 33A,B,44C and should work for other patterns
 
-            var t = new { item = "A", price = 40, specialoffer = "3A for 130, 5A for 200" }.ToString();
+            var t = (object)  new { item = "A", price = 40, specialoffer = "3A for 130, 5A for 200" }.ToString();
 
             var skuSplit = SplitSkus(skus);
             return 0;
         }
+
+
 
         private static List<string> SplitSkus(string skus)
         {
@@ -42,6 +51,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
