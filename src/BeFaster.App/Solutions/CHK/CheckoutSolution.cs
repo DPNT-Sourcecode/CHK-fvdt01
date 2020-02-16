@@ -26,7 +26,7 @@ namespace BeFaster.App.Solutions.CHK
 
         public static int ItemA(Sku sku)
         {
-            sku.Offers.Select(offer =>
+            var  t  = sku.Offers.Select(offer =>
             {
                 // 3 or 5 
                 // 4 or 6
@@ -100,6 +100,7 @@ namespace BeFaster.App.Solutions.CHK
 
             SplitSpecialOffer(skuList);
 
+            var x = skuList[0].TotalPrice;
 
             return 0;
         }
@@ -163,6 +164,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
