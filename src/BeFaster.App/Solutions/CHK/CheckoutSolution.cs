@@ -20,11 +20,17 @@ namespace BeFaster.App.Solutions.CHK
                     {
                         return Item(sku);
                     }
-
-
+                case "E":
+                    {
+                        return ItemE(sku);
+                    }
+                default:
+                    return 0;
             }
-            return 0;
         }
+
+        public static int ItemE(Sku sku)
+        { return 0; }
 
         public static int Item(Sku sku)
         {
@@ -188,6 +194,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
