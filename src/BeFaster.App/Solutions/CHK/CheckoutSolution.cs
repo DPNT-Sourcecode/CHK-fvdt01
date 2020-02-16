@@ -32,22 +32,24 @@ namespace BeFaster.App.Solutions.CHK
             }
 
             var result = 0;
+            var initialQuantity = sku.Quantity;
 
             sku.Offers.OrderByDescending(x => x.Quantity).ToList().ForEach(offer => {
 
-                if (sku.Quantity >= offer.Quantity) {
-                    var rem = sku.Quantity % offer.Quantity;
+                if (initialQuantity >= offer.Quantity) {
+                    var rem = initialQuantity % offer.Quantity;
                     if (rem == 0)
                     {
-                        result = (sku.Quantity / offer.Quantity) * offer.Price;
+                        result = result + (initialQuantity / offer.Quantity) * offer.Price;
                     }
                     else {
                         if (sku.Offers.Select(x => x.Quantity < rem).FirstOrDefault())
                         {
-                            result = (sku.Quantity / offer.Quantity) * offer.Price;
+                            result = result + (initialQuantity / offer.Quantity) * offer.Price;
+                            initialQuantity = rem;
                         }
                         else {
-                            result = ((sku.Quantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
+                            result = result + ((initialQuantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
                         }
 
                     }
@@ -220,5 +222,6 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
