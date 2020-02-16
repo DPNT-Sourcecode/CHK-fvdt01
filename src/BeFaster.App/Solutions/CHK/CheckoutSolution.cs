@@ -60,6 +60,8 @@ namespace BeFaster.App.Solutions.CHK
 
         public int TotalPrice
         {
+            set {
+            }
             get
             {
                 var t = OfferPrice.Calclate(this);
@@ -161,5 +163,6 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
