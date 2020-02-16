@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BeFaster.App.Solutions.CHK;
 using NUnit.Framework;
 
 namespace BeFaster.App.Tests.Solutions.CHK
@@ -10,11 +11,14 @@ namespace BeFaster.App.Tests.Solutions.CHK
     [TestFixture]
     class CheckoutSolutionTest
     {
-        [TestCase("", ExpectedResult = 0)]
+        //3A2BCD2E
+        [TestCase("3AB2E", ExpectedResult = 210)]
         public int ComputePrice(string skus)
         {
-
-            return 0;
+            return CheckoutSolution.ComputePrice(skus);
         }
+
+
+
     }
 }
