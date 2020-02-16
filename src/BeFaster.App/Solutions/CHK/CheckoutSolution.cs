@@ -57,6 +57,8 @@ namespace BeFaster.App.Solutions.CHK
                     {
                         result = result > t ? t : result;
                     }
+
+                    sku.Quantity = rem;
                 }
 
             });
@@ -197,8 +199,3 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
-
-
-
-
-
