@@ -7,7 +7,12 @@ namespace BeFaster.App.Solutions.CHK
     {
         public static int ComputePrice(string skus)
         {
-            return skus.Split(',').Select(x => int.Parse(x)).Sum();
+            //var t =  skus.Split(',').Select(x => { 
+
+            //});
+
+            return 0;
         }
     }
 }
+
