@@ -57,7 +57,7 @@ namespace BeFaster.App.Solutions.CHK
                     }
                 }
                 else {
-                    return sku.Quantity * sku.Price;
+                    result = sku.Quantity * sku.Price;
                 }
 
 
@@ -153,7 +153,7 @@ namespace BeFaster.App.Solutions.CHK
 
             skus = Newtonsoft.Json.JsonConvert.SerializeObject(new[] {
                 new { product = "A", price = 50, quantity = 1, specialoffer = "3A for 130, 5A for 200" },
-                new { product = "B", price = 30, quantity = 2, specialoffer = "2B for 45" },
+                new { product = "B", price = 30, quantity = 4, specialoffer = "2B for 45" },
                 new { product = "C", price = 20, quantity = 1, specialoffer = "" },
                 new { product = "D", price = 20, quantity = 1, specialoffer = "" },
                 new { product = "E", price = 20, quantity = 2, specialoffer = "2E get one B free" }
@@ -165,6 +165,8 @@ namespace BeFaster.App.Solutions.CHK
 
             var ItemA = skuList[0].TotalPrice;
             var ItemB = skuList[1].TotalPrice;
+            var ItemC = skuList[2].TotalPrice;
+            var ItemD = skuList[3].TotalPrice;
 
             return ItemA;
         }
@@ -228,10 +230,3 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
-
-
-
-
-
-
-
