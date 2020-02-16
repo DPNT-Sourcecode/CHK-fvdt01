@@ -38,11 +38,17 @@ namespace BeFaster.App.Solutions.CHK
                 var rem = sku.Quantity % offer.Quantity;
                 if (rem == 0)
                 {
-                    result = (sku.Quantity / offer.Quantity) * offer.Price;
+                    var t = (sku.Quantity / offer.Quantity) * offer.Price;
+                    if (result == 0) {
+                        result = t;
+                    }
+                    else {
+                       result = result > t ? t : result;
+                    }
                 }
                 else
                 {
-                    result = ((sku.Quantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
+                    var t = ((sku.Quantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
                 }
 
             });
@@ -183,5 +189,6 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
