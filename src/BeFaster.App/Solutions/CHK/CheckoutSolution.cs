@@ -25,10 +25,10 @@ namespace BeFaster.App.Solutions.CHK
 
         public static int Item(Sku sku)
         {
-            if(sku.Quantity == 1  || sku.Quantity == 2)
-            {
-                return sku.Quantity * sku.Price;
-            }
+            //if(sku.Quantity == 1  || sku.Quantity == 2)
+            //{
+            //    return sku.Quantity * sku.Price;
+            //}
 
             var result = 0;
             var initialQuantity = sku.Quantity;
@@ -146,7 +146,7 @@ namespace BeFaster.App.Solutions.CHK
 
 
             skus = Newtonsoft.Json.JsonConvert.SerializeObject(new[] {
-                new { product = "A", price = 50, quantity = 3, specialoffer = "3A for 130, 5A for 200" },
+                new { product = "A", price = 50, quantity = 1, specialoffer = "3A for 130, 5A for 200" },
                 new { product = "B", price = 30, quantity = 2, specialoffer = "2B for 45" },
                 new { product = "C", price = 20, quantity = 1, specialoffer = "" },
                 new { product = "D", price = 20, quantity = 1, specialoffer = "" },
@@ -157,9 +157,10 @@ namespace BeFaster.App.Solutions.CHK
 
             SplitSpecialOffer(skuList);
 
-            return skuList[1].TotalPrice;
+            var ItemA = skuList[0].TotalPrice;
+            var ItemB = skuList[1].TotalPrice;
 
-            return 0;
+            return ItemA;
         }
 
         private static void SplitSpecialOffer(List<Sku> skuList)
@@ -221,6 +222,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
