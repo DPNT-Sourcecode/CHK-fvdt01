@@ -194,6 +194,8 @@ namespace BeFaster.App.Solutions.CHK
             var ItemD = skuList[3].TotalPrice;
             var ItemE = skuList[4].TotalPrice;
 
+            var freeOfferItem = skuList.ToList().Where(x => x.Offers.Any(t => t.FreeItem != null)).ToList();
+
             return 0;
         }
 
@@ -208,6 +210,7 @@ namespace BeFaster.App.Solutions.CHK
 
     }
 }
+
 
 
 
