@@ -12,7 +12,7 @@ namespace BeFaster.App.Tests.Solutions.CHK
     class CheckoutSolutionTest
     {
         //3A2BCD2E
-        [TestCase("3AB2E", ExpectedResult = 210)]
+        [TestCase("33AB44C", ExpectedResult = 210)]
         public int ComputePrice(string skus)
         {
 
@@ -22,6 +22,7 @@ namespace BeFaster.App.Tests.Solutions.CHK
 
     }
 }
+
 
 
 
