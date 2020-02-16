@@ -10,8 +10,10 @@ namespace BeFaster.App.Solutions.CHK
         public static int ComputePrice(string skus)
         {
 
+            return 0;
         }
 
 
     }
 }
+
