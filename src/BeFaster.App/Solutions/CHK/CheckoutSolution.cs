@@ -27,7 +27,7 @@ namespace BeFaster.App.Solutions.CHK
         public static int ItemA(Sku sku)
         {
             var result = 0;
-            var offer = sku.Offers.FirstOrDefault(x => sku.Quantity % x.Quantity >= 0 );
+            var offer = sku.Offers.FirstOrDefault(x => x.Quantity % sku.Quantity >= 0 );
 
             if (offer != null)
             {
@@ -167,6 +167,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
