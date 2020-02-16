@@ -41,7 +41,8 @@ namespace BeFaster.App.Solutions.CHK
 
         private static void SplitSpecialOffer(List<Sku> skuList)
         {
-            skuList.ForEach(item => {
+            skuList.ForEach(item =>
+            {
                 SpecialOfferFormatter(item.SpecialOffer);
 
 
@@ -50,10 +51,12 @@ namespace BeFaster.App.Solutions.CHK
 
         private static void SpecialOfferFormatter(string specialOffer)
         {
-            if (specialOffer.IndexOf(",") > 0) {
+            if (specialOffer.IndexOf(",") > 0)
+            {
                 var splitComma = specialOffer.Split(',').ToList();
-                splitComma.ForEach(c => { 
-                    
+                splitComma.ForEach(c =>
+                {
+                    var splitFor = c.Trim().Split(new string[] {"for"}, StringSplitOptions.None);
                 });
             }
         }
@@ -83,5 +86,6 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
