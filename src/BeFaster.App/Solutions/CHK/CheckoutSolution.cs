@@ -13,7 +13,7 @@ namespace BeFaster.App.Solutions.CHK
         {
             switch (sku.Product)
             {
-                case "A": case "B":
+                case "A": case "B": case "C": case "D":
                     {
                         return Item(sku);
                     }
@@ -163,12 +163,12 @@ namespace BeFaster.App.Solutions.CHK
 
             SplitSpecialOffer(skuList);
 
-            var ItemA = skuList[0].TotalPrice;
-            var ItemB = skuList[1].TotalPrice;
+            //var ItemA = skuList[0].TotalPrice;
+            //var ItemB = skuList[1].TotalPrice;
             var ItemC = skuList[2].TotalPrice;
-            var ItemD = skuList[3].TotalPrice;
+            //var ItemD = skuList[3].TotalPrice;
 
-            return ItemA;
+            return 0;
         }
 
         private static void SplitSpecialOffer(List<Sku> skuList)
@@ -230,3 +230,4 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
