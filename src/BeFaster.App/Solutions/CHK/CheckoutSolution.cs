@@ -13,6 +13,8 @@ namespace BeFaster.App.Solutions.CHK
             //3A2BCD2E it should produce 3A,2B.C,D,2E
             //if contains 33AB44C should have 33A,B,44C and should work for other patterns
 
+            var t = new { item = "A", price = 40, specialoffer = "3A for 130, 5A for 200" }.ToString();
+
             var skuSplit = SplitSkus(skus);
             return 0;
         }
@@ -40,6 +42,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
