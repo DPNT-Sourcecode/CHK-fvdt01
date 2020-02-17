@@ -169,7 +169,7 @@ namespace BeFaster.App.Solutions.TST
             {
                 var foundOffer = skuList.ToList().Find(p => offer.Offers.Any(o => o.Product == p.Product));
                 var currentOffer = offer.Offers.Where(x => x.Product.Equals(foundOffer.Product)).First();
-                if (currentOffer.Quantity > 0)
+                if (currentOffer.Quantity > 0 && foundOffer.Offers != null)
                 {
                     if (foundOffer.Quantity == 0)
                     {
@@ -177,7 +177,7 @@ namespace BeFaster.App.Solutions.TST
                     }
                     else if (foundOffer.Offers.Any(x => foundOffer.Quantity >= x.Quantity))
                     {
-                        var offerQty = offer.Offers.Select(x => x.Quantity).First();
+                        var offerQty = currentOffer.Quantity;
                         var freeItem = foundOffer.Quantity - offerQty;
                         foundOffer.Quantity = freeItem;
                         foundOffer.TotalPrice = Item1(foundOffer);
@@ -185,11 +185,16 @@ namespace BeFaster.App.Solutions.TST
                     }
                     else if (foundOffer.Offers.Any(x => foundOffer.Quantity < x.Quantity))
                     {
-                        var offerQty = offer.Offers.Select(x => x.Quantity).First();
+                        var offerQty = currentOffer.Quantity;
                         foundOffer.Quantity -= 1;
                         foundOffer.TotalPrice = Item1(foundOffer);
                         foundOffer.Quantity += 1;
                     }
+                }
+                else { 
+                    
+                
+                
                 }
 
             });
@@ -270,3 +275,4 @@ namespace BeFaster.App.Solutions.TST
         public bool IsOffer { get; internal set; }
     }
 }
+
