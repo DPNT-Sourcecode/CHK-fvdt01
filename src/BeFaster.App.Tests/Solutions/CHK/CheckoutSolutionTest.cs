@@ -263,8 +263,11 @@ namespace BeFaster.App.Tests.Solutions.CHK
         {
             return CheckoutSolution.ComputePrice(skus);
         }
+
+
     }
 }
+
 
 
 
