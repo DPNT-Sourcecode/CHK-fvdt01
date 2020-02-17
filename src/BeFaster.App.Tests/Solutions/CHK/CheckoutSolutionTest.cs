@@ -242,8 +242,23 @@ namespace BeFaster.App.Tests.Solutions.CHK
         {
             return CheckoutSolution.ComputePrice(skus);
         }
+
+        [TestCase(""
+        , ExpectedResult = -1)]
+        public static int ComputePrice_Empty(string skus)
+        {
+            return CheckoutSolution.ComputePrice(skus);
+        }
+
+        [TestCase("-"
+        , ExpectedResult = -1)]
+        public static int ComputePrice_Empty_cjar(string skus)
+        {
+            return CheckoutSolution.ComputePrice(skus);
+        }
     }
 }
+
 
 
 
