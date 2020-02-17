@@ -73,25 +73,27 @@ namespace BeFaster.App.Solutions.TST
 
         public static int Calclate(Sku sku)
         {
-            switch (sku.Product)
-            {
-                case "A":
-                case "B":
-                case "C":
-                case "D":
-                    {
-                        if (sku.Quantity > 0) return Item(sku);
-                        return 0;
-                    }
-                case "E":
-                case "F":
-                    {
-                        if (sku.Quantity > 0) return Item(sku);
-                        return 0;
-                    }
-                default:
-                    return 0;
-            }
+            if(sku.Quantity > 0) return Item(sku);
+            return 0;
+            //switch (sku.Product)
+            //{
+            //    case "A":
+            //    case "B":
+            //    case "C":
+            //    case "D":
+            //        {
+            //            if (sku.Quantity > 0) return Item(sku);
+            //            return 0;
+            //        }
+            //    case "E":
+            //    case "F":
+            //        {
+            //            if (sku.Quantity > 0) return Item(sku);
+            //            return 0;
+            //        }
+            //    default:
+            //        return 0;
+            //}
         }
 
         public static int Item(Sku sku)
@@ -246,6 +248,7 @@ namespace BeFaster.App.Solutions.TST
         public string FreeItem { get; internal set; }
     }
 }
+
 
 
 
