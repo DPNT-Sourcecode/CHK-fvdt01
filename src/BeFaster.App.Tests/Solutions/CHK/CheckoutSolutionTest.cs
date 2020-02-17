@@ -36,7 +36,7 @@ namespace BeFaster.App.Tests.Solutions.CHK
         }
 
         [TestCase("NNNNNNMM"
-            , ExpectedResult = 15)]
+            , ExpectedResult = 240)]
         public static int ComputePrice_NNNNNNMM(string skus)
         {
             return CheckoutSolution.ComputePrice(skus);
@@ -401,10 +401,5 @@ namespace BeFaster.App.Tests.Solutions.CHK
         }
     }
 }
-
-
-
-
-
 
 
