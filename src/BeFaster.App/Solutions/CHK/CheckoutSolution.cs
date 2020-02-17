@@ -145,10 +145,12 @@ namespace BeFaster.App.Solutions.CHK
                         if (offer != null)
                         {
                             if (x.Quantity != 0) {
-                                var discountOn2 = (x.Quantity / offer.Quantity) % p.Quantity;
-                                if (discountOn2 == 0)
+                                p.Quantity = x.Quantity / offer.Quantity;
 
-                                p.TotalPrice = OfferPrice.SplitSkus(offer.FreeItem) == 0 ? p.TotalPrice : (x.Quantity % OfferPrice.SplitSkus(offer.FreeItem)) * p.Price;
+                                //var discountOn2 = (x.Quantity / offer.Quantity) % p.Quantity;
+                                //if (discountOn2 == 0)
+
+                                //p.TotalPrice = OfferPrice.SplitSkus(offer.FreeItem) == 0 ? p.TotalPrice : (x.Quantity % OfferPrice.SplitSkus(offer.FreeItem)) * p.Price;
                             }
                         }
                     });
@@ -267,6 +269,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
