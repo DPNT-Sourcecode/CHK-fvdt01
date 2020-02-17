@@ -12,7 +12,7 @@ namespace BeFaster.App.Tests.Solutions.CHK
         //[TestCase("[{\"product\":\"A\",\"price\":50,\"quantity\":1,\"specialoffer\":\"3A for 130, 5A for 200\"},{\"product\":\"B\",\"price\":30,\"quantity\":2,\"specialoffer\":\"2B for 45\"},{\"product\":\"C\",\"price\":20,\"quantity\":1,\"specialoffer\":\"\"},{\"product\":\"D\",\"price\":15,\"quantity\":1,\"specialoffer\":\"\"},{\"product\":\"E\",\"price\":40,\"quantity\":2,\"specialoffer\":\"2E get one B free\"}]"
         //    , ExpectedResult = 165)]
         [TestCase("A2BCD4E"
-            , ExpectedResult = 215)]
+            , ExpectedResult = 170)]
 
         public static int ComputePrice_A1(string skus)
         {
@@ -20,14 +20,14 @@ namespace BeFaster.App.Tests.Solutions.CHK
         }
 
         [TestCase("2A2BCD4E"
-            , ExpectedResult = 215)]
+            , ExpectedResult = 220)]
         public static int ComputePrice_A2(string skus)
         {
             return CheckoutSolution.ComputePrice(skus);
         }
 
         [TestCase("3A2BCD4E"
-            , ExpectedResult = 395)]
+            , ExpectedResult = 400)]
         public static int ComputePrice_A3(string skus)
         {
             return CheckoutSolution.ComputePrice(skus);
@@ -83,6 +83,7 @@ namespace BeFaster.App.Tests.Solutions.CHK
         }
     }
 }
+
 
 
 
