@@ -237,7 +237,7 @@ namespace BeFaster.App.Solutions.TST
                         }
                         else if (initialQuantity >= offer.Quantity && !sku.Product.Equals(offer.Product))
                         {
-                            result = sku.Quantity * offer.Price;
+                            result = sku.Quantity * sku.Price;
                             initialQuantity = 0;
                         }
                     }
@@ -282,4 +282,5 @@ namespace BeFaster.App.Solutions.TST
         public bool IsOffer { get; internal set; }
     }
 }
+
 
