@@ -40,7 +40,7 @@ namespace BeFaster.App.Solutions.TST
                 new Offer{
                     Quantity = SplitSkus(splitFor[0].Trim()),
                     Price = sku.Price,
-                    FreeItem = (SplitSkus(splitFor[0].Trim())) + splitFor[1].Trim().Split(new string[] { "free" }, StringSplitOptions.None).ToList()[0].Trim()
+                    FreeItem = splitFor[1].Trim().Split(new string[] { "free" }, StringSplitOptions.None).ToList()[0].Trim()
                     }
                 };
             }
@@ -224,3 +224,4 @@ namespace BeFaster.App.Solutions.TST
         public string FreeItem { get; internal set; }
     }
 }
+
