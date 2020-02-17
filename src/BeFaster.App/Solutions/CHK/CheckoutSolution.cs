@@ -116,6 +116,10 @@ namespace BeFaster.App.Solutions.CHK
                     {
                         result = sku.Quantity * sku.Price;
                     }
+                    else if (!sku.Offers.Any(x => x.Quantity == sku.Quantity))
+                    {
+                        result = sku.Quantity * sku.Price;
+                    }
                 });
             }
             else
@@ -260,4 +264,5 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
