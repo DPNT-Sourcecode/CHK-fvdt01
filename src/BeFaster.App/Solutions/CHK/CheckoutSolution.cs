@@ -204,106 +204,108 @@ namespace BeFaster.App.Solutions.CHK
                     //{
                     //    result = sku.Quantity * sku.Price;
                     //}
-            });
-            //else if (offer == null)
-            //{
-            //    result = sku.Quantity * sku.Price;
-            //}
-        }
+                });
+                //else if (offer == null)
+                //{
+                //    result = sku.Quantity * sku.Price;
+                //}
+            }
             else
             {
-                result = sku.Quantity* sku.Price;
-    }
+                result = sku.Quantity * sku.Price;
+            }
 
             return result;
         }
 
-public static void ProcessFreeItemOffer(List<Sku> skuList)
-{
-    var freeOfferItem = skuList.ToList()
-        .Where(x => x.Offers != null)
-        .Where(x => x.Offers.Any(t => t.FreeItem != null)).ToList();
-
-    freeOfferItem.ToList()
-        .ForEach(x =>
+        public static void ProcessFreeItemOffer(List<Sku> skuList)
         {
-            skuList.ToList().ForEach(p =>
-            {
-                var offer = x.Offers.Where(t => t.FreeItem.Contains(p.Product)).FirstOrDefault();
-                if (offer != null)
+            var freeOfferItem = skuList.ToList()
+                .Where(x => x.Offers != null)
+                .Where(x => x.Offers.Any(t => t.FreeItem != null)).ToList();
+
+            freeOfferItem.ToList()
+                .ForEach(x =>
                 {
-                    if (x.Quantity != 0)
+                    skuList.ToList().ForEach(p =>
                     {
-                        var discountOn = x.Quantity / OfferPrice.SplitSkus(offer.FreeItem);
-                        if(p.Quantity != 0)
-                            p.Quantity = discountOn > p.Quantity ? discountOn - p.Quantity : p.Quantity - discountOn;
+                        var offer = x.Offers.Where(t => t.FreeItem.Contains(p.Product)).FirstOrDefault();
+                        if (offer != null)
+                        {
+                            if (x.Quantity != 0)
+                            {
+                                var discountOn = x.Quantity / OfferPrice.SplitSkus(offer.FreeItem);
+                                if (p.Quantity != 0)
+                                    p.Quantity = discountOn > p.Quantity ? discountOn - p.Quantity : p.Quantity - discountOn;
 
                         //var discountOn2 = (x.Quantity / offer.Quantity) % p.Quantity;
                         //if (discountOn2 == 0)
 
                         //p.TotalPrice = OfferPrice.SplitSkus(offer.FreeItem) == 0 ? p.TotalPrice : (x.Quantity % OfferPrice.SplitSkus(offer.FreeItem)) * p.Price;
                     }
-                }
-            });
+                        }
+                    });
 
 
-        });
+                });
 
-}
+        }
     }
 
     public class Sku
-{
-    private string specialOffer;
-    private int quantity;
-    public string Product { get; set; }
-    public int Price { get; set; }
-    public int Quantity
     {
-        get { return quantity; }
-        set
+        private string specialOffer;
+        private int quantity;
+        public string Product { get; set; }
+        public int Price { get; set; }
+        public int Quantity
         {
-            quantity = value;
-            this.TotalPrice = OfferPrice.Calclate(this);
-        }
-    }
-    public string SpecialOffer
-    {
-        get { return specialOffer; }
-        set
-        {
-            specialOffer = value;
-            if (specialOffer.Length > 0)
+            get { return quantity; }
+            set
             {
-                OfferPrice.SpecialOfferFormatter(this);
+                quantity = value;
+                this.TotalPrice = OfferPrice.Calclate(this);
             }
         }
+        public string SpecialOffer
+        {
+            get { return specialOffer; }
+            set
+            {
+                specialOffer = value;
+                if (specialOffer.Length > 0)
+                {
+                    OfferPrice.SpecialOfferFormatter(this);
+                }
+            }
+        }
+        public List<Offer> Offers { get; set; }
+        public int TotalPrice
+        {
+            get; set;
+        }
     }
-    public List<Offer> Offers { get; set; }
-    public int TotalPrice
+
+    public class Offer
     {
-        get; set;
+        public int Quantity { get; set; }
+        public int Price { get; set; }
+        public string FreeItem { get; internal set; }
     }
-}
 
-public class Offer
-{
-    public int Quantity { get; set; }
-    public int Price { get; set; }
-    public string FreeItem { get; internal set; }
-}
-
-public static class CheckoutSolution
-{
-    public static int ComputePrice(string skus)
+    public static class CheckoutSolution
     {
-        //SplitSkus from string
-        //3A2BCD2E it should produce 3A,2B.C,D,2E
-        //if contains 33AB44C should ehave 33A,B,44C and should work for other patterns
-        if (!skus.Any() || skus.Contains('-')) return -1;
-        var skuSplit = SplitSkus(skus);
+        public static int ComputePrice(string skus)
+        {
+            //SplitSkus from string
+            //3A2BCD2E it should produce 3A,2B.C,D,2E
+            //if contains 33AB44C should ehave 33A,B,44C and should work for other patterns
+            if (!skus.Any() || skus.Contains('-') || skus.Any(x => Char.IsLower(x))) return -1;
 
-        var skuList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Sku>>(Newtonsoft.Json.JsonConvert.SerializeObject(new[] {
+            var skuSplit = SplitSkus(skus);
+
+
+            var skuList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Sku>>(Newtonsoft.Json.JsonConvert.SerializeObject(new[] {
                 new { product = "A", price = 50, quantity = 0, specialoffer = "3A for 130, 5A for 200" },
                 new { product = "B", price = 30, quantity = 0, specialoffer = "2B for 45" },
                 new { product = "C", price = 20, quantity = 0, specialoffer = "" },
@@ -311,54 +313,55 @@ public static class CheckoutSolution
                 new { product = "E", price = 40, quantity = 0, specialoffer = "2E get one B free" }
             }));
 
-        skuList.ForEach(o =>
-        {
-            if (skuSplit.ContainsKey(o.Product))
-                o.Quantity = skuSplit[o.Product];
-        });
-
-        OfferPrice.ProcessFreeItemOffer(skuList);
-
-        var ItemA = skuList[0].TotalPrice;
-        var ItemB = skuList[1].TotalPrice;
-        var ItemC = skuList[2].TotalPrice;
-        var ItemD = skuList[3].TotalPrice;
-        var ItemE = skuList[4].TotalPrice;
-
-        return skuList.Sum(x => x.TotalPrice);
-    }
-
-    private static Dictionary<string, int> SplitSkus(string skus)
-    {
-
-        string quantity = string.Empty;
-        var item = new Dictionary<string, int>();
-        for (int i = 0; i < skus.Length; i++)
-        {
-            if (char.IsDigit(skus[i]))
+            skuList.ForEach(o =>
             {
-                quantity = quantity + skus[i];
-            }
-            else
+                if (skuSplit.ContainsKey(o.Product))
+                    o.Quantity = skuSplit[o.Product];
+            });
+
+            OfferPrice.ProcessFreeItemOffer(skuList);
+
+            var ItemA = skuList[0].TotalPrice;
+            var ItemB = skuList[1].TotalPrice;
+            var ItemC = skuList[2].TotalPrice;
+            var ItemD = skuList[3].TotalPrice;
+            var ItemE = skuList[4].TotalPrice;
+
+            return skuList.Sum(x => x.TotalPrice);
+        }
+
+        private static Dictionary<string, int> SplitSkus(string skus)
+        {
+
+            string quantity = string.Empty;
+            var item = new Dictionary<string, int>();
+            for (int i = 0; i < skus.Length; i++)
             {
-                var prod = skus[i].ToString();
-                if (item.ContainsKey(prod))
+                if (char.IsDigit(skus[i]))
                 {
-                    item[prod] = item[prod] + 1;
+                    quantity = quantity + skus[i];
                 }
                 else
                 {
-                    item.Add(prod, quantity == string.Empty ? 1 : int.Parse(quantity));
+                    var prod = skus[i].ToString();
+                    if (item.ContainsKey(prod))
+                    {
+                        item[prod] = item[prod] + 1;
+                    }
+                    else
+                    {
+                        item.Add(prod, quantity == string.Empty ? 1 : int.Parse(quantity));
+                    }
+                    quantity = string.Empty;
+
+                    skus = skus.Substring(i + 1, skus.Length - (i + 1));
+                    i = -1;
                 }
-                quantity = string.Empty;
-
-                skus = skus.Substring(i + 1, skus.Length - (i + 1));
-                i = -1;
             }
-        }
 
-        return item;
+            return item;
+        }
     }
 }
-}
+
 
