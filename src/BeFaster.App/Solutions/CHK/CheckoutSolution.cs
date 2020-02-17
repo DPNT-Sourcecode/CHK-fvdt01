@@ -39,14 +39,14 @@ namespace BeFaster.App.Solutions.CHK
                 sku.Offers = new List<Offer> {
                 new Offer{
                     Quantity = SplitSkus(splitFor[0].Trim()),
-                    Price = sku.Price,
-                    FreeItem = splitFor[1].Trim().Split(new string[] { "free" }, StringSplitOptions.None).ToList()[0].Trim()
+                    Price = sku.Quantity * sku.Price,
+                    FreeItem = (sku.Quantity/SplitSkus(splitFor[0].Trim())) + splitFor[1].Trim().Split(new string[] { "free" }, StringSplitOptions.None).ToList()[0].Trim()
                     }
                 };
             }
         }
 
-        private static int SplitSkus(string skus)
+        public static int SplitSkus(string skus)
         {
             string str = string.Empty;
             for (int i = 0; i < skus.Length; i++)
@@ -80,9 +80,6 @@ namespace BeFaster.App.Solutions.CHK
             }
         }
 
-        public static int ItemE(Sku sku)
-        { return 0; }
-
         public static int Item(Sku sku)
         {
             var result = 0;
@@ -92,7 +89,7 @@ namespace BeFaster.App.Solutions.CHK
             {
                 sku.Offers.OrderByDescending(x => x.Quantity).ToList().ForEach(offer =>
                 {
-                    if (initialQuantity >= offer.Quantity)
+                    if (initialQuantity >= offer.Quantity && offer.FreeItem == null)
                     {
                         var rem = initialQuantity % offer.Quantity;
                         if (rem == 0)
@@ -126,6 +123,30 @@ namespace BeFaster.App.Solutions.CHK
 
             return result;
         }
+
+        public static void ProcessFreeItemOffer(List<Sku> skuList)
+        {
+            var freeOfferItem = skuList.ToList()
+                .Where(x => x.Offers != null)
+                .Where(x => x.Offers.Any(t => t.FreeItem != null)).ToList();
+
+            freeOfferItem.ToList()
+                .ForEach(x =>
+                {
+                    skuList.ToList().ForEach(p =>
+                    {
+                        var offer = x.Offers.Where(t => t.FreeItem.Contains(p.Product)).FirstOrDefault();
+                        if (offer != null)
+                        {
+
+                            p.TotalPrice = (x.Quantity % OfferPrice.SplitSkus(offer.FreeItem)) * p.Price;
+                        }
+                    });
+
+
+                });
+
+        }
     }
 
     public class Sku
@@ -142,21 +163,17 @@ namespace BeFaster.App.Solutions.CHK
                 specialOffer = value;
                 if (specialOffer.Length > 0)
                 {
-
                     OfferPrice.SpecialOfferFormatter(this);
-                    this.TotalPrice = OfferPrice.Calclate(this);
                 }
+                this.TotalPrice = OfferPrice.Calclate(this);
 
             }
         }
         public List<Offer> Offers { get; set; }
-
         public int TotalPrice
         {
-            get; private set;
+            get; set;
         }
-
-
     }
 
     public class Offer
@@ -176,42 +193,24 @@ namespace BeFaster.App.Solutions.CHK
             //var skuSplit = SplitSkus(skus);
 
 
-            skus = Newtonsoft.Json.JsonConvert.SerializeObject(new[] {
-                new { product = "A", price = 50, quantity = 1, specialoffer = "3A for 130, 5A for 200" },
-                new { product = "B", price = 30, quantity = 4, specialoffer = "2B for 45" },
-                new { product = "C", price = 20, quantity = 1, specialoffer = "" },
-                new { product = "D", price = 20, quantity = 1, specialoffer = "" },
-                new { product = "E", price = 20, quantity = 2, specialoffer = "2E get one B free" }
-            });
+            //skus = Newtonsoft.Json.JsonConvert.SerializeObject(new[] {
+            //    new { product = "A", price = 50, quantity = 1, specialoffer = "3A for 130, 5A for 200" },
+            //    new { product = "B", price = 30, quantity = 2, specialoffer = "2B for 45" },
+            //    new { product = "C", price = 20, quantity = 1, specialoffer = "" },
+            //    new { product = "D", price = 20, quantity = 1, specialoffer = "" },
+            //    new { product = "E", price = 20, quantity = 4, specialoffer = "2E get one B free" }
+            //});
 
             var skuList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Sku>>(skus);
+            OfferPrice.ProcessFreeItemOffer(skuList);
 
-            //SplitSpecialOffer(skuList);
+            //var ItemA = skuList[0].TotalPrice;
+            //var ItemB = skuList[1].TotalPrice;
+            //var ItemC = skuList[2].TotalPrice;
+            //var ItemD = skuList[3].TotalPrice;
+            //var ItemE = skuList[4].TotalPrice;
 
-            var ItemA = skuList[0].TotalPrice;
-            var ItemB = skuList[1].TotalPrice;
-            var ItemC = skuList[2].TotalPrice;
-            var ItemD = skuList[3].TotalPrice;
-            var ItemE = skuList[4].TotalPrice;
-
-            var freeOfferItem = skuList.ToList().Where(x => x.Offers.Any(t => t.FreeItem != null)).ToList();
-
-            return 0;
+            return skuList.Sum(x => x.TotalPrice);
         }
-
-        //private static void SplitSpecialOffer(List<Sku> skuList)
-        //{
-        //    skuList.ForEach(item =>
-        //    {
-        //        if (item.SpecialOffer.Length > 0) SpecialOfferFormatter(item);
-        //    });
-        //}
-
-
     }
 }
-
-
-
-
-
