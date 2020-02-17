@@ -179,13 +179,22 @@ namespace BeFaster.App.Solutions.TST
                         var offer = x.Offers.Where(t => t.FreeItem.Contains(p.Product)).FirstOrDefault();
                         if (offer != null)
                         {
-                            if (x.Quantity != 0)
+                            if (x.Quantity != 0 && x.Product == "E")
                             {
                                 var discountOn = x.Quantity / OfferPrice.SplitSkus(offer.FreeItem);
                                 if (discountOn == x.Quantity) return;
                                 if (p.Quantity != 0)
                                     p.Quantity = discountOn > p.Quantity ? discountOn - p.Quantity : p.Quantity - discountOn;
                             }
+                            if (x.Quantity != 0 && x.Product == "F")
+                            {
+                                var discountOn = x.Quantity / OfferPrice.SplitSkus(offer.FreeItem);
+                                if (discountOn == x.Quantity) return;
+                                if (p.Quantity != 0)
+                                    p.Quantity = discountOn > p.Quantity ? discountOn - p.Quantity : p.Quantity - discountOn;
+                            }
+
+
                         }
                     });
 
@@ -236,3 +245,4 @@ namespace BeFaster.App.Solutions.TST
         public string FreeItem { get; internal set; }
     }
 }
+
