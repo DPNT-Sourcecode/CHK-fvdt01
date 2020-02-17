@@ -189,7 +189,7 @@ namespace BeFaster.App.Solutions.TST
                             if (x.Quantity != 0 && x.Product == "F")
                             {
 
-                                var discountOn = x.Quantity - (x.Quantity / 2);
+                                var discountOn = (x.Quantity / 2)+1;
                                 if (discountOn == x.Quantity) return;
                                 if (p.Quantity != 0)
                                     p.Quantity = discountOn;
@@ -246,5 +246,6 @@ namespace BeFaster.App.Solutions.TST
         public string FreeItem { get; internal set; }
     }
 }
+
 
 
