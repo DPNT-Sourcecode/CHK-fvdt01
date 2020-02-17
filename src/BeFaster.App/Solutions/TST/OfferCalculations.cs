@@ -105,50 +105,50 @@ namespace BeFaster.App.Solutions.TST
             {
                 sku.Offers.OrderByDescending(x => x.Quantity).ToList().ForEach(offer =>
                 {
-                    if (offer.Quantity == initialQuantity)
+                if (offer.Quantity == initialQuantity)
+                {
+                    var rem = initialQuantity % offer.Quantity;
+                    if (rem == 0)
                     {
-                        var rem = initialQuantity % offer.Quantity;
-                        if (rem == 0)
+                        result = result + (initialQuantity / offer.Quantity) * offer.Price;
+                        initialQuantity = 0;
+                    }
+                    else
+                    {
+                        if (sku.Offers.Select(x => x.Quantity <= rem).FirstOrDefault())
                         {
                             result = result + (initialQuantity / offer.Quantity) * offer.Price;
-                            initialQuantity = 0;
                         }
                         else
                         {
-                            if (sku.Offers.Select(x => x.Quantity <= rem).FirstOrDefault())
-                            {
-                                result = result + (initialQuantity / offer.Quantity) * offer.Price;
-                            }
-                            else
-                            {
-                                result = result + ((initialQuantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
-                            }
+                            result = result + ((initialQuantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
+                        }
+                        initialQuantity = rem;
+                    }
+
+                }
+                else if (initialQuantity > offer.Quantity && offer.Quantity != 0)
+                {
+                    var rem = initialQuantity % offer.Quantity;
+                    if (rem == 0)
+                    {
+                        result = result + (initialQuantity / offer.Quantity) * offer.Price;
+                        initialQuantity = 0;
+                    }
+                    else
+                    {
+                        if (sku.Offers.Select(x => x.Quantity <= rem).FirstOrDefault())
+                        {
+                            result = result + (initialQuantity / offer.Quantity) * offer.Price;
                             initialQuantity = rem;
                         }
-
-                    }
-                    else if (initialQuantity > offer.Quantity && offer.Quantity != 0)
-                    {
-                        var rem = initialQuantity % offer.Quantity;
-                        if (rem == 0)
-                        {
-                            result = result + (initialQuantity / offer.Quantity) * offer.Price;
-                            initialQuantity = 0;
-                        }
                         else
                         {
-                            if (sku.Offers.Select(x => x.Quantity <= rem).FirstOrDefault())
-                            {
-                                result = result + (initialQuantity / offer.Quantity) * offer.Price;
-                                initialQuantity = rem;
-                            }
-                            else
-                            {
-                                result = result + ((initialQuantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
-                                initialQuantity = 0;
-                            }
+                            result = result + ((initialQuantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
+                            initialQuantity = 0;
                         }
-                    } else if (!sku.Offers.Any(x => x.Quantity < initialQuantity)) {
+                    }
+                } else if (initialQuantity != 0 && !sku.Offers.Any(x => x.Quantity < initialQuantity)) {
                         result = sku.Quantity * sku.Price;
                     }
                     //else if (initialQuantity == 1 || initialQuantity == 2)
@@ -250,4 +250,5 @@ namespace BeFaster.App.Solutions.TST
         public string FreeItem { get; internal set; }
     }
 }
+
 
