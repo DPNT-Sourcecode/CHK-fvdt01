@@ -194,10 +194,14 @@ namespace BeFaster.App.Solutions.TST
                 }
                 else
                 {
-                    var offerQty = currentOffer.Quantity;
-                    foundOffer.Quantity -= 1;
-                    foundOffer.TotalPrice = Item1(foundOffer);
-                    foundOffer.Quantity += 1;
+                    if (currentOffer.Quantity > 0)
+                    {
+                        var offerQty = currentOffer.Quantity;
+                        foundOffer.Quantity -= 1;
+                        foundOffer.TotalPrice = Item1(foundOffer);
+                        foundOffer.Quantity += 1;
+                    }
+
                 }
 
             });
@@ -279,5 +283,6 @@ namespace BeFaster.App.Solutions.TST
         public bool IsOffer { get; internal set; }
     }
 }
+
 
 
