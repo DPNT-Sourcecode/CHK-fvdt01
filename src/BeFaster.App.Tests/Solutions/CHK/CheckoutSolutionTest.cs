@@ -83,7 +83,7 @@ namespace BeFaster.App.Tests.Solutions.CHK
         }
 
         [TestCase("a"
-            , ExpectedResult = 50)]
+            , ExpectedResult = -1)]
         public static int ComputePrice_a(string skus)
         {
             return CheckoutSolution.ComputePrice(skus);
@@ -96,7 +96,7 @@ namespace BeFaster.App.Tests.Solutions.CHK
             return CheckoutSolution.ComputePrice(skus);
         }
         [TestCase("ABaCaC"
-            , ExpectedResult = 200)]
+            , ExpectedResult = -1)]
         public static int ComputePrice_ABaCaC(string skus)
         {
             return CheckoutSolution.ComputePrice(skus);
@@ -173,27 +173,27 @@ namespace BeFaster.App.Tests.Solutions.CHK
         }
 
         [TestCase("EeE"
-            , ExpectedResult = 120)]
+            , ExpectedResult = -1)]
         public static int ComputePrice_EeE(string skus)
         {
             return CheckoutSolution.ComputePrice(skus);
         }
 
-        [TestCase("EeEB"
+        [TestCase("EEEB"
             , ExpectedResult = 120)]
         public static int ComputePrice_EeEB(string skus)
         {
             return CheckoutSolution.ComputePrice(skus);
         }
 
-        [TestCase("EeEBB"
+        [TestCase("EEEBB"
             , ExpectedResult = 150)]
         public static int ComputePrice_EeEBB(string skus)
         {
             return CheckoutSolution.ComputePrice(skus);
         }
 
-        [TestCase("EeEBBE"
+        [TestCase("EEEBBE"
             , ExpectedResult = 160)]
         public static int ComputePrice_EeEBBE(string skus)
         {
@@ -267,12 +267,5 @@ namespace BeFaster.App.Tests.Solutions.CHK
 
     }
 }
-
-
-
-
-
-
-
 
 
