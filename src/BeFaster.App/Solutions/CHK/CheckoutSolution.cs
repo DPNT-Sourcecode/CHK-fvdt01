@@ -89,33 +89,6 @@ namespace BeFaster.App.Solutions.CHK
 
             if (sku.Offers != null)
             {
-
-                //var offer = sku.Offers.OrderByDescending(x => x.Quantity).ToList().Where(x => initialQuantity >= x.Quantity).ToList().FirstOrDefault();
-                //if (offer != null)
-                //{
-                //    //if (initialQuantity >= offer.Quantity && offer.FreeItem == null)
-                //    //{
-                //        var rem = initialQuantity % offer.Quantity;
-                //        if (rem == 0)
-                //        {
-                //            result = result + (initialQuantity / offer.Quantity) * offer.Price;
-                //            initialQuantity = 0;
-                //        }
-                //        else
-                //        {
-                //            if (sku.Offers.Select(x => x.Quantity <= rem).FirstOrDefault())
-                //            {
-                //                result = result + (initialQuantity / offer.Quantity) * offer.Price;
-                //            }
-                //            else
-                //            {
-                //                result = result + ((initialQuantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
-                //            }
-                //            initialQuantity = rem;
-                //        }
-                //    //}
-                //}
-
                 sku.Offers.OrderByDescending(x => x.Quantity).ToList().ForEach(offer =>
                 {
                     if (offer.Quantity == initialQuantity)
@@ -170,45 +143,7 @@ namespace BeFaster.App.Solutions.CHK
                     {
                         result = sku.Quantity * sku.Price;
                     }
-
-
-                    //if (initialQuantity >= offer.Quantity && offer.FreeItem == null)
-                    //{
-                    //    var rem = initialQuantity % offer.Quantity;
-                    //    if (rem == 0)
-                    //    {
-                    //        result = result + (initialQuantity / offer.Quantity) * offer.Price;
-                    //        initialQuantity = 0;
-                    //    }
-                    //    else
-                    //    {
-                    //        if (sku.Offers.Select(x => x.Quantity <= rem).FirstOrDefault())
-                    //        {
-                    //            result = result + (initialQuantity / offer.Quantity) * offer.Price;
-                    //        }
-                    //        else
-                    //        {
-                    //            result = result + ((initialQuantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
-                    //        }
-                    //        initialQuantity = rem;
-                    //    }
-                    //}
-                    //else if (initialQuantity < offer.Quantity || offer.Quantity == 0) {
-                    //    result = sku.Quantity * sku.Price;
-                    //}
-                    //else if (offer.FreeItem != null && !sku.Offers.Any(x => x.Quantity == sku.Quantity))
-                    //{
-                    //    result = sku.Quantity * sku.Price;
-                    //}
-                    //else if (!sku.Offers.Any(x => x.Quantity < sku.Quantity))
-                    //{
-                    //    result = sku.Quantity * sku.Price;
-                    //}
                 });
-                //else if (offer == null)
-                //{
-                //    result = sku.Quantity * sku.Price;
-                //}
             }
             else
             {
@@ -365,4 +300,5 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
