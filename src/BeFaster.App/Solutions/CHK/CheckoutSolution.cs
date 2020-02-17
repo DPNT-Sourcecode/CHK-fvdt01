@@ -139,7 +139,7 @@ namespace BeFaster.App.Solutions.CHK
                         if (offer != null)
                         {
 
-                            p.TotalPrice = (x.Quantity % OfferPrice.SplitSkus(offer.FreeItem)) * p.Price;
+                            p.TotalPrice = OfferPrice.SplitSkus(offer.FreeItem) == 0 ? 0 :(x.Quantity % OfferPrice.SplitSkus(offer.FreeItem)) * p.Price;
                         }
                     });
 
@@ -211,10 +211,10 @@ namespace BeFaster.App.Solutions.CHK
             OfferPrice.ProcessFreeItemOffer(skuList);
 
             //var ItemA = skuList[0].TotalPrice;
-            //var ItemB = skuList[1].TotalPrice;
-            //var ItemC = skuList[2].TotalPrice;
-            //var ItemD = skuList[3].TotalPrice;
-            //var ItemE = skuList[4].TotalPrice;
+            var ItemB = skuList[1].TotalPrice;
+            var ItemC = skuList[2].TotalPrice;
+            var ItemD = skuList[3].TotalPrice;
+            var ItemE = skuList[4].TotalPrice;
 
             return skuList.Sum(x => x.TotalPrice);
         }
@@ -245,6 +245,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
