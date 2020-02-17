@@ -190,7 +190,10 @@ namespace BeFaster.App.Solutions.CHK
             //SplitSkus from string
             //3A2BCD2E it should produce 3A,2B.C,D,2E
             //if contains 33AB44C should ehave 33A,B,44C and should work for other patterns
-            //var skuSplit = SplitSkus(skus);
+            var skuSplit = OfferPrice.SplitSkus(skus);
+
+
+
 
 
             //skus = Newtonsoft.Json.JsonConvert.SerializeObject(new[] {
@@ -212,7 +215,30 @@ namespace BeFaster.App.Solutions.CHK
 
             return skuList.Sum(x => x.TotalPrice);
         }
+
+        private static void SplitSkus(string skus) {
+
+            string quantity = string.Empty;
+            var item = new Dictionary<string, int>();
+            for (int i = 0; i < skus.Length; i++)
+            {
+                if (char.IsDigit(skus[i]))
+                {
+                    quantity = quantity + skus[i];
+                }
+                else {
+                    var prod = skus[i].ToString();
+                    item.Add(prod, int.Parse(quantity));
+                    quantity = string.Empty;
+
+                    skus = skus.Substring(i, skus.Length - i);
+                    i = -1;
+                }
+            }
+
+        }
     }
 }
+
 
 
