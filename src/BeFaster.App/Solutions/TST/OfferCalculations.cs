@@ -73,6 +73,7 @@ namespace BeFaster.App.Solutions.TST
                         return 0;
                     }
                 case "E":
+                case "F":
                     {
                         if (sku.Quantity > 0) return Item(sku);
                         return 0;
@@ -223,4 +224,5 @@ namespace BeFaster.App.Solutions.TST
         public string FreeItem { get; internal set; }
     }
 }
+
 
