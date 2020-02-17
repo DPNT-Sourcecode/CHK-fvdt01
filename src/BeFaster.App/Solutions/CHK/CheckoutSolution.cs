@@ -189,7 +189,7 @@ namespace BeFaster.App.Solutions.CHK
         {
             //SplitSkus from string
             //3A2BCD2E it should produce 3A,2B.C,D,2E
-            //if contains 33AB44C should have 33A,B,44C and should work for other patterns
+            //if contains 33AB44C should ehave 33A,B,44C and should work for other patterns
             //var skuSplit = SplitSkus(skus);
 
 
@@ -214,3 +214,4 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
