@@ -93,10 +93,20 @@ namespace BeFaster.App.Tests.Solutions.CHK
 
         [Theory]
         [InlineData("EEEEBB", 160)]
-        //[InlineData("BEBEEE", 160)]
-        //[InlineData("EEEB", 120)]
-        //[InlineData("EEB", 80)]
+        [InlineData("BEBEEE", 160)]
+        [InlineData("EEEB", 120)]
+        [InlineData("EEB", 80)]
         public void App_EBCombinations_ReturnsResult(string skus, int expected)
+        {
+            var result = CheckoutSolution.Checkout(skus);
+
+            Assert.Equal(expected, result);
+        }
+
+        [Theory]        
+        [InlineData("AAAAAEEBAAABB", 455)]
+        [InlineData("ABCDECBAABCABBAAAEEAA", 665)]
+        public void App_AEBCombinations_ReturnsResult(string skus, int expected)
         {
             var result = CheckoutSolution.Checkout(skus);
 

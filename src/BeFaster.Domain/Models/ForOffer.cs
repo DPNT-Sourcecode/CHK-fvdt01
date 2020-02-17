@@ -31,28 +31,21 @@ namespace BeFaster.Domain
         public override void Apply(KeyValuePair<string, ICartItem> cartItem,
                                    IEnumerable<IProductOffer> offers)
         {
-            if (cartItem.Value.AvailableQuantity > 0)
+            while (cartItem.Value.AvailableQuantity >= AtOfferQuantity.Value)
             {
-                while (cartItem.Value.AvailableQuantity >= AtOfferQuantity.Value)
+                var cartItemisedItem = new CartItemisedItem
                 {
-                    //var item = this.Cart.Items.ToList().Where(x => x.Value.Product.Sku.Equals(this.Product.Sku)).SingleOrDefault();
-                    //var itemTotal = this.Product.Price * item.Value.Quantity;
-                    var cartItemisedItem = new CartItemisedItem
-                    {
-                        Offer = this,
-                        AtPrice = this.AtOfferPrice.Value,
-                        AtQuantity = this.AtOfferQuantity.Value,
-                        Total = this.AtOfferPrice.Value,
-                        Product = this.Product,
-                        Free = false
-                    };
-                    this.Cart.Itemised.Add(cartItemisedItem);
-                    var remainingQuantity = cartItem.Value.AvailableQuantity.Value - AtOfferQuantity.Value;
-                    cartItem.Value.AvailableQuantity = remainingQuantity;             
-                }
+                    Offer = this,
+                    AtPrice = this.AtOfferPrice.Value,
+                    AtQuantity = this.AtOfferQuantity.Value,
+                    Total = this.AtOfferPrice.Value,
+                    Product = this.Product,
+                    Free = false
+                };
+                this.Cart.Itemised.Add(cartItemisedItem);
+                var remainingQuantity = cartItem.Value.AvailableQuantity.Value - AtOfferQuantity.Value;
+                cartItem.Value.AvailableQuantity = remainingQuantity;
             }
-            
-
         }
     }
 }

@@ -43,30 +43,47 @@ namespace BeFaster.Domain
                 if (freeSkuCartItem != null)
                 {
                     var sku = freeItem.Value.Value.Product.Sku;
-                    int quantityNew = 0;
+                    int recalculatedQuantity = 0;
                     var removeItems = this.Cart.Itemised.Items.Where(x => x.Product.Sku.Equals(sku)).ToList();
                     if (removeItems.Any())
                     {
-                        removeItems.ForEach(x => {
-                            this.Cart.Itemised.Items.Remove(x);
-                            if (quantityNew == 0)
-                            {
-                                quantityNew = x.AtQuantity.Value - this.FreeOfferQuantity.Value;
-                            }                            
+                        var summaryItem = this.Cart.Summary.Items.Where(x => x.Product.Sku.Equals(sku)).FirstOrDefault();
+                        recalculatedQuantity = summaryItem.Quantity - this.FreeOfferQuantity.Value;
+
+                        ICartItemisedItem forOffer = null;
+                        if (removeItems.Where(x=>x.Offer!=null).Any())
+                            forOffer = removeItems.Where(x => x.Offer.OfferType.Equals(OfferType.BuyXForY)).FirstOrDefault();
+
+                        removeItems.ForEach(x => {                            
+                            this.Cart.Itemised.Items.Remove(x);                          
                         });
 
-                        if (quantityNew > 0)
+                        if (recalculatedQuantity >= forOffer.AtQuantity && forOffer != null)
                         {
                             var test = new CartItemisedItem
                             {
-                                AtPrice = freeSkuCartItem.Product.Price,
-                                AtQuantity = quantityNew,
-                                Total = freeSkuCartItem.Product.Price * quantityNew,
-                                Product = freeSkuCartItem.Product,
+                                AtPrice = forOffer.AtPrice,
+                                AtQuantity = forOffer.AtQuantity,
+                                Total = forOffer.AtPrice,
+                                Product = forOffer.Product,
                                 Free = false
                             };
                             this.Cart.Itemised.Add(test);
+                            //int q = recalculatedQuantity - forOffer.AtQuantity.Value;                          
                         }
+
+                        //if (recalculatedQuantity > 0)
+                        //{
+                        //    var test = new CartItemisedItem
+                        //    {
+                        //        AtPrice = summaryItem.Product.Price,
+                        //        AtQuantity = recalculatedQuantity,
+                        //        Total = summaryItem.Product.Price * recalculatedQuantity,
+                        //        Product = forOffer.Product,
+                        //        Free = false
+                        //    };
+                        //    this.Cart.Itemised.Add(test);
+                        //}
                     }
 
                     var freeItemItemised = new CartItemisedItem
