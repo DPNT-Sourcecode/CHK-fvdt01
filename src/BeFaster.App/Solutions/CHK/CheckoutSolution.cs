@@ -144,7 +144,10 @@ namespace BeFaster.App.Solutions.CHK
                         var offer = x.Offers.Where(t => t.FreeItem.Contains(p.Product)).FirstOrDefault();
                         if (offer != null)
                         {
-                            if (offer.Quantity != 0) {
+                            if (x.Quantity != 0) {
+                                var discountOn2 = (x.Quantity / offer.Quantity) % p.Quantity;
+                                if (discountOn2 == 0)
+
                                 p.TotalPrice = OfferPrice.SplitSkus(offer.FreeItem) == 0 ? p.TotalPrice : (x.Quantity % OfferPrice.SplitSkus(offer.FreeItem)) * p.Price;
                             }
                         }
@@ -264,5 +267,6 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
