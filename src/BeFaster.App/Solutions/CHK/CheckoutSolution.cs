@@ -238,11 +238,11 @@ namespace BeFaster.App.Solutions.CHK
                                 if (p.Quantity != 0)
                                     p.Quantity = discountOn > p.Quantity ? discountOn - p.Quantity : p.Quantity - discountOn;
 
-                        //var discountOn2 = (x.Quantity / offer.Quantity) % p.Quantity;
-                        //if (discountOn2 == 0)
+                                //var discountOn2 = (x.Quantity / offer.Quantity) % p.Quantity;
+                                //if (discountOn2 == 0)
 
-                        //p.TotalPrice = OfferPrice.SplitSkus(offer.FreeItem) == 0 ? p.TotalPrice : (x.Quantity % OfferPrice.SplitSkus(offer.FreeItem)) * p.Price;
-                    }
+                                //p.TotalPrice = OfferPrice.SplitSkus(offer.FreeItem) == 0 ? p.TotalPrice : (x.Quantity % OfferPrice.SplitSkus(offer.FreeItem)) * p.Price;
+                            }
                         }
                     });
 
@@ -300,7 +300,9 @@ namespace BeFaster.App.Solutions.CHK
             //SplitSkus from string
             //3A2BCD2E it should produce 3A,2B.C,D,2E
             //if contains 33AB44C should ehave 33A,B,44C and should work for other patterns
-            if (!skus.Any() || skus.Contains('-') || skus.Any(x => Char.IsLower(x))) return -1;
+            if (skus.Contains('-') || skus.Any(x => Char.IsLower(x))) return -1;
+
+            if (!skus.Any()) return 0;
 
             var skuSplit = SplitSkus(skus);
 
@@ -363,3 +365,4 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
