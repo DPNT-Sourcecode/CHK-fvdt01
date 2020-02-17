@@ -341,7 +341,7 @@ public static class CheckoutSolution
             }
             else
             {
-                var prod = skus[i].ToString().ToUpper();
+                var prod = skus[i].ToString();
                 if (item.ContainsKey(prod))
                 {
                     item[prod] = item[prod] + 1;
@@ -361,3 +361,4 @@ public static class CheckoutSolution
     }
 }
 }
+
