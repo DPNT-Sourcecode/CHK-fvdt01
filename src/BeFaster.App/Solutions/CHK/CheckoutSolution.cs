@@ -145,7 +145,9 @@ namespace BeFaster.App.Solutions.CHK
                         if (offer != null)
                         {
                             if (x.Quantity != 0) {
-                                p.Quantity = x.Quantity / offer.Quantity;
+                                var discountOn = x.Quantity / offer.Quantity;
+
+                                p.Quantity = discountOn > p.Quantity ? discountOn - p.Quantity : p.Quantity - discountOn;
 
                                 //var discountOn2 = (x.Quantity / offer.Quantity) % p.Quantity;
                                 //if (discountOn2 == 0)
@@ -269,7 +271,3 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
-
-
-
-
