@@ -26,7 +26,8 @@ namespace BeFaster.App.Solutions.CHK
                 new { product = "B", price = 30, quantity = 0, specialoffer = "2B for 45" },
                 new { product = "C", price = 20, quantity = 0, specialoffer = "" },
                 new { product = "D", price = 15, quantity = 0, specialoffer = "" },
-                new { product = "E", price = 40, quantity = 0, specialoffer = "2E get one B free" }
+                new { product = "E", price = 40, quantity = 0, specialoffer = "2E get one B free" },
+                new { product = "F", price = 10, quantity = 0, specialoffer = "2F get one F free" }
             }));
 
             skuList.ForEach(o =>
@@ -79,6 +80,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
