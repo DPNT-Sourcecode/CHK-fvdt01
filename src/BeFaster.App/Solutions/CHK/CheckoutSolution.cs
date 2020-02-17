@@ -112,7 +112,7 @@ namespace BeFaster.App.Solutions.CHK
                             initialQuantity = rem;
                         }
                     }
-                    else if (offer.FreeItem != null)
+                    else if (offer.FreeItem == null)
                     {
                         result = sku.Quantity * sku.Price;
                     }
@@ -259,5 +259,6 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
