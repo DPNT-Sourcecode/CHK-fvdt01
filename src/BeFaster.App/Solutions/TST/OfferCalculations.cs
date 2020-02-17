@@ -38,9 +38,9 @@ namespace BeFaster.App.Solutions.TST
                 var splitFor = sku.SpecialOffer.Trim().Split(new string[] { "get one" }, StringSplitOptions.None).ToList();
                 sku.Offers = new List<Offer> {
                 new Offer{
-                    Quantity = 1, // SplitSkus(splitFor[0].Trim()),
+                    Quantity = SplitSkus(splitFor[0].Trim()),
                     Price = sku.Price,
-                    FreeItem = 1 + splitFor[1].Trim().Split(new string[] { "free" }, StringSplitOptions.None).ToList()[0].Trim()
+                    FreeItem = SplitSkus(splitFor[0].Trim()) + splitFor[1].Trim().Split(new string[] { "free" }, StringSplitOptions.None).ToList()[0].Trim()
                     }
                 };
             }
@@ -171,11 +171,12 @@ namespace BeFaster.App.Solutions.TST
                             if (x.Quantity != 0)
                             {
                                 var discountOn = x.Quantity / OfferPrice.SplitSkus(offer.FreeItem);
-                                if (discountOn == x.Quantity)
-                                {
-                                    p.Quantity = discountOn;
-                                }
-                                else if (p.Quantity != 0) {
+                                //if (discountOn == x.Quantity)
+                                //{
+                                //    p.Quantity = discountOn;
+                                //}
+                                //else 
+                                if (p.Quantity != 0) {
                                     p.Quantity = discountOn > p.Quantity ? discountOn - p.Quantity : p.Quantity - discountOn;
                                 }
                                     
@@ -230,6 +231,7 @@ namespace BeFaster.App.Solutions.TST
         public string FreeItem { get; internal set; }
     }
 }
+
 
 
 
