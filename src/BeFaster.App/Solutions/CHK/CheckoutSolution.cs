@@ -33,10 +33,10 @@ namespace BeFaster.App.Solutions.CHK
                 new { product = "I", price = 35, quantity = 0, specialoffer = "" },
                 new { product = "J", price = 60, quantity = 0, specialoffer = "" },
                 new { product = "K", price = 80, quantity = 0, specialoffer = "2K for 50" },
-                new { product = "l", price = 90, quantity = 0, specialoffer = "" },
+                new { product = "L", price = 90, quantity = 0, specialoffer = "" },
                 new { product = "M", price = 15, quantity = 0, specialoffer = "" },
                 new { product = "N", price = 40, quantity = 0, specialoffer = "3N get one M free" },
-                new { product = "0", price = 10, quantity = 0, specialoffer = "" },
+                new { product = "O", price = 10, quantity = 0, specialoffer = "" },
             }));
 
 
@@ -90,3 +90,4 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
