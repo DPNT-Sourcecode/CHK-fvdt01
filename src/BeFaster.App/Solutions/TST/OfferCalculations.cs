@@ -159,7 +159,8 @@ namespace BeFaster.App.Solutions.TST
 
         public static void ProcessFreeItemOffer(List<Sku> skuList)
         {
-            skuList.ForEach(prod => {
+            skuList.ForEach(prod =>
+            {
                 prod.TotalPrice = Item1(prod);
             });
 
@@ -191,10 +192,12 @@ namespace BeFaster.App.Solutions.TST
                         foundOffer.Quantity += 1;
                     }
                 }
-                else { 
-                    
-                
-                
+                else
+                {
+                    var offerQty = currentOffer.Quantity;
+                    foundOffer.Quantity -= 1;
+                    foundOffer.TotalPrice = Item1(foundOffer);
+                    foundOffer.Quantity += 1;
                 }
 
             });
@@ -212,7 +215,7 @@ namespace BeFaster.App.Solutions.TST
                 {
                     if (sku.Quantity > 0)
                     {
-                        
+
 
                         if (initialQuantity >= offer.Quantity && sku.Product.Equals(offer.Product))
                         {
@@ -223,8 +226,9 @@ namespace BeFaster.App.Solutions.TST
                                 result = result + offer.Price * (sku.Quantity / offer.Quantity);
                                 initialQuantity = initialQuantity % offer.Quantity;
                             }
-                            else {
-                                result = result + offer.Price; 
+                            else
+                            {
+                                result = result + offer.Price;
                             }
 
                         }
@@ -275,4 +279,5 @@ namespace BeFaster.App.Solutions.TST
         public bool IsOffer { get; internal set; }
     }
 }
+
 
