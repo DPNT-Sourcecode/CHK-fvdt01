@@ -148,11 +148,13 @@ namespace BeFaster.App.Solutions.TST
                                 initialQuantity = 0;
                             }
                         }
-                    }
-                    else if (initialQuantity == 1 || initialQuantity == 2)
-                    {
+                    } else if (!sku.Offers.Any(x => x.Quantity < initialQuantity)) {
                         result = sku.Quantity * sku.Price;
                     }
+                    //else if (initialQuantity == 1 || initialQuantity == 2)
+                    //{
+                    //    result = sku.Quantity * sku.Price;
+                    //}
                     else if (offer.Quantity == 0)
                     {
                         result = sku.Quantity * sku.Price;
@@ -248,3 +250,4 @@ namespace BeFaster.App.Solutions.TST
         public string FreeItem { get; internal set; }
     }
 }
+
