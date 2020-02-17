@@ -48,12 +48,13 @@ namespace BeFaster.App.Solutions.CHK
                 new { product = "X", price = 90, quantity = 0, specialoffer = "" },
                 new { product = "Y", price = 10, quantity = 0, specialoffer = "" },
                 new { product = "Z", price = 50, quantity = 0, specialoffer = "" },
-            }));
+            })).ToList();
 
             skuList.ForEach(o =>
                         {
                             if (skuSplit.ContainsKey(o.Product))
                                 o.Quantity = skuSplit[o.Product];
+                            o.CalculatePriceAndOffers();
                         });
 
             OfferPrice.ProcessFreeItemOffer(skuList);
@@ -100,5 +101,3 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
-
-

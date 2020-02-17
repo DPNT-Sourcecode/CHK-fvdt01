@@ -17,41 +17,46 @@ namespace BeFaster.App.Solutions.TST
                 splitComma.ForEach(c =>
                 {
                     var splitFor = c.Trim().Split(new string[] { "for" }, StringSplitOptions.None).ToList();
+                    var freeItem = splitFor[0].Trim();
+                    var quantity = SplitSkus(freeItem);
                     sku.Offers.Add(new Offer
                     {
-                        Quantity = SplitSkus(splitFor[0].Trim()),
-                        Price = int.Parse(splitFor[1].Trim())
+                        Product = freeItem.Substring(quantity.ToString().Length, freeItem.Length - quantity.ToString().Length),
+                        Quantity = quantity,
+                        Price = int.Parse(splitFor[1].Trim()),
+                        FreeItem = freeItem,
+                        IsOffer = sku.Quantity >= quantity
                     });
                 });
             }
             else if (sku.SpecialOffer.Contains("for"))
             {
                 var splitFor = sku.SpecialOffer.Trim().Split(new string[] { "for" }, StringSplitOptions.None).ToList();
+                var freeItem = splitFor[0].Trim();
+                var quantity = SplitSkus(freeItem);
                 sku.Offers = new List<Offer> {
                 new Offer{
-                    Quantity = SplitSkus(splitFor[0].Trim()),
-                    Price = int.Parse(splitFor[1].Trim())
+                        Product = freeItem.Substring(quantity.ToString().Length, freeItem.Length - quantity.ToString().Length),
+                        Quantity = quantity,
+                        Price = int.Parse(splitFor[1].Trim()),
+                        FreeItem = freeItem,
+                        IsOffer = sku.Quantity >= quantity
                 }};
             }
-            else if (sku.Product.Equals("E") && sku.SpecialOffer.Contains("get one"))
+            else if (sku.SpecialOffer.Contains("get one"))
             {
                 var splitFor = sku.SpecialOffer.Trim().Split(new string[] { "get one" }, StringSplitOptions.None).ToList();
+                var freeItem = splitFor[0].Trim();
+                var quantity = SplitSkus(freeItem);
+                var prod = splitFor[1].Trim().Split(new string[] { "free" }, StringSplitOptions.None).ToList()[0].Trim();
+
                 sku.Offers = new List<Offer> {
                 new Offer{
-                    Quantity = 1, //SplitSkus(splitFor[0].Trim()),
-                    Price = sku.Price,
-                    FreeItem = (SplitSkus(splitFor[0].Trim())) + splitFor[1].Trim().Split(new string[] { "free" }, StringSplitOptions.None).ToList()[0].Trim()
-                    }
-                };
-            }
-            else if (sku.Product.Equals("F") && sku.SpecialOffer.Contains("get one"))
-            {
-                var splitFor = sku.SpecialOffer.Trim().Split(new string[] { "get one" }, StringSplitOptions.None).ToList();
-                sku.Offers = new List<Offer> {
-                new Offer{
-                    Quantity = 1, //SplitSkus(splitFor[0].Trim()),
-                    Price = sku.Price,
-                    FreeItem = SplitSkus(splitFor[0].Trim()) + splitFor[1].Trim().Split(new string[] { "free" }, StringSplitOptions.None).ToList()[0].Trim()
+                    Product = prod,
+                    Quantity = sku.Product.Equals(prod) ? quantity+1  : sku.Quantity/quantity, //sku.Product.Equals(prod) ? quantity+1 :quantity,
+                    Price = sku.Product.Equals(prod) ? quantity * sku.Price : sku.Price,
+                    FreeItem = freeItem,
+                    IsOffer = prod.Equals(sku.Product)
                     }
                 };
             }
@@ -73,27 +78,8 @@ namespace BeFaster.App.Solutions.TST
 
         public static int Calclate(Sku sku)
         {
-            if(sku.Quantity > 0) return Item(sku);
+            if (sku.Quantity > 0) return Item(sku);
             return 0;
-            //switch (sku.Product)
-            //{
-            //    case "A":
-            //    case "B":
-            //    case "C":
-            //    case "D":
-            //        {
-            //            if (sku.Quantity > 0) return Item(sku);
-            //            return 0;
-            //        }
-            //    case "E":
-            //    case "F":
-            //        {
-            //            if (sku.Quantity > 0) return Item(sku);
-            //            return 0;
-            //        }
-            //    default:
-            //        return 0;
-            //}
         }
 
         public static int Item(Sku sku)
@@ -105,50 +91,52 @@ namespace BeFaster.App.Solutions.TST
             {
                 sku.Offers.OrderByDescending(x => x.Quantity).ToList().ForEach(offer =>
                 {
-                if (offer.Quantity == initialQuantity)
-                {
-                    var rem = initialQuantity % offer.Quantity;
-                    if (rem == 0)
+                    if (offer.Quantity == initialQuantity)
                     {
-                        result = result + (initialQuantity / offer.Quantity) * offer.Price;
-                        initialQuantity = 0;
-                    }
-                    else
-                    {
-                        if (sku.Offers.Select(x => x.Quantity <= rem).FirstOrDefault())
+                        var rem = initialQuantity % offer.Quantity;
+                        if (rem == 0)
                         {
                             result = result + (initialQuantity / offer.Quantity) * offer.Price;
-                        }
-                        else
-                        {
-                            result = result + ((initialQuantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
-                        }
-                        initialQuantity = rem;
-                    }
-
-                }
-                else if (initialQuantity > offer.Quantity && offer.Quantity != 0)
-                {
-                    var rem = initialQuantity % offer.Quantity;
-                    if (rem == 0)
-                    {
-                        result = result + (initialQuantity / offer.Quantity) * offer.Price;
-                        initialQuantity = 0;
-                    }
-                    else
-                    {
-                        if (sku.Offers.Select(x => x.Quantity <= rem).FirstOrDefault())
-                        {
-                            result = result + (initialQuantity / offer.Quantity) * offer.Price;
-                            initialQuantity = rem;
-                        }
-                        else
-                        {
-                            result = result + ((initialQuantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
                             initialQuantity = 0;
                         }
+                        else
+                        {
+                            if (sku.Offers.Select(x => x.Quantity <= rem).FirstOrDefault())
+                            {
+                                result = result + (initialQuantity / offer.Quantity) * offer.Price;
+                            }
+                            else
+                            {
+                                result = result + ((initialQuantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
+                            }
+                            initialQuantity = rem;
+                        }
+
                     }
-                } else if (initialQuantity != 0 && !sku.Offers.Any(x => x.Quantity <= initialQuantity)) {
+                    else if (initialQuantity > offer.Quantity && offer.Quantity != 0)
+                    {
+                        var rem = initialQuantity % offer.Quantity;
+                        if (rem == 0)
+                        {
+                            result = result + (initialQuantity / offer.Quantity) * offer.Price;
+                            initialQuantity = 0;
+                        }
+                        else
+                        {
+                            if (sku.Offers.Select(x => x.Quantity <= rem).FirstOrDefault())
+                            {
+                                result = result + (initialQuantity / offer.Quantity) * offer.Price;
+                                initialQuantity = rem;
+                            }
+                            else
+                            {
+                                result = result + ((initialQuantity / offer.Quantity) * offer.Price) + (rem * sku.Price);
+                                initialQuantity = 0;
+                            }
+                        }
+                    }
+                    else if (initialQuantity != 0 && !sku.Offers.Any(x => x.Quantity <= initialQuantity))
+                    {
                         result = sku.Quantity * sku.Price;
                     }
                     //else if (initialQuantity == 1 || initialQuantity == 2)
@@ -171,75 +159,105 @@ namespace BeFaster.App.Solutions.TST
 
         public static void ProcessFreeItemOffer(List<Sku> skuList)
         {
-            var freeOfferItem = skuList.ToList()
-                .Where(x => x.Offers != null)
-                .Where(x => x.Offers.Any(t => t.FreeItem != null)).ToList();
+            skuList.ForEach(prod => {
+                prod.TotalPrice = Item1(prod);
+            });
 
-            freeOfferItem.ToList()
-                .ForEach(x =>
+            var otherOfferItems = skuList.ToList()
+                .Where(x => x.Offers != null && x.Quantity > 0 && x.Offers.Any(o => !o.Product.Equals(x.Product)));
+            otherOfferItems.ToList().ForEach(offer =>
+            {
+                var foundOffer = skuList.ToList().Find(p => offer.Offers.Any(o => o.Product == p.Product));
+                var currentOffer = offer.Offers.Where(x => x.Product.Equals(foundOffer.Product)).First();
+                if (currentOffer.Quantity > 0)
                 {
-                    skuList.ToList().ForEach(p =>
+                    if (foundOffer.Quantity == 0)
                     {
-                        var offer = x.Offers.Where(t => t.FreeItem.Contains(p.Product)).FirstOrDefault();
-                        if (offer != null)
+                        foundOffer.Quantity += 1;
+                    }
+                    else if (foundOffer.Offers.Any(x => foundOffer.Quantity >= x.Quantity))
+                    {
+                        var offerQty = offer.Offers.Select(x => x.Quantity).First();
+                        var freeItem = foundOffer.Quantity - offerQty;
+                        foundOffer.Quantity = freeItem;
+                        foundOffer.TotalPrice = Item1(foundOffer);
+                        foundOffer.Quantity += freeItem;
+                    }
+                    else if (foundOffer.Offers.Any(x => foundOffer.Quantity < x.Quantity))
+                    {
+                        var offerQty = offer.Offers.Select(x => x.Quantity).First();
+                        foundOffer.Quantity -= 1;
+                        foundOffer.TotalPrice = Item1(foundOffer);
+                        foundOffer.Quantity += 1;
+                    }
+                }
+
+            });
+        }
+
+
+        public static int Item1(Sku sku)
+        {
+            var result = 0;
+            var initialQuantity = sku.Quantity;
+            //A2BCD4E
+            if (sku.Offers != null)
+            {
+                sku.Offers.OrderByDescending(x => x.Quantity).ToList().ForEach(offer =>
+                {
+                    if (sku.Quantity > 0)
+                    {
+                        
+
+                        if (initialQuantity >= offer.Quantity && sku.Product.Equals(offer.Product))
                         {
-                            if (x.Quantity != 0 && x.Product == "E")
-                            {
-                                var discountOn = x.Quantity / OfferPrice.SplitSkus(offer.FreeItem);
-                                if (discountOn == x.Quantity) return;
-                                if (p.Quantity != 0)
-                                    p.Quantity = discountOn > p.Quantity ? discountOn - p.Quantity : p.Quantity - discountOn;
-                            }
-                            if (x.Quantity != 0 && x.Product == "F")
-                            {
+                            initialQuantity = initialQuantity - offer.Quantity;
 
-                                var discountOn = (x.Quantity / 2)+1;
-                                if (discountOn == x.Quantity) return;
-                                if (p.Quantity != 0)
-                                    p.Quantity = discountOn;
+                            if (initialQuantity >= offer.Quantity)
+                            {
+                                result = result + offer.Price * (sku.Quantity / offer.Quantity);
+                                initialQuantity = initialQuantity % offer.Quantity;
                             }
-
+                            else {
+                                result = result + offer.Price; 
+                            }
 
                         }
-                    });
-
+                        else if (initialQuantity >= offer.Quantity && !sku.Product.Equals(offer.Product))
+                        {
+                            result = sku.Quantity * offer.Price;
+                            initialQuantity = 0;
+                        }
+                    }
 
                 });
+            }
 
+            result += initialQuantity * sku.Price;
+
+            return result;
         }
+
     }
+
+
 
     public class Sku
     {
-        private string specialOffer;
-        private int quantity;
         public string Product { get; set; }
         public int Price { get; set; }
-        public int Quantity
-        {
-            get { return quantity; }
-            set
-            {
-                quantity = value;
-                this.TotalPrice = OfferPrice.Calclate(this);
-            }
-        }
-        public string SpecialOffer
-        {
-            get { return specialOffer; }
-            set
-            {
-                specialOffer = value;
-                if (specialOffer.Length > 0)
-                {
-                    OfferPrice.SpecialOfferFormatter(this);
-                }
-            }
-        }
+        public int Quantity { get; set; }
+        public string SpecialOffer { get; set; }
         public List<Offer> Offers { get; set; }
-        public int TotalPrice
+        public int TotalPrice { get; set; }
+
+        public void CalculatePriceAndOffers()
         {
-            get; set;
+            if (this.Price > 0 && this.Quantity > 0) TotalPrice = OfferPrice.Calclate(this);
+            if (SpecialOffer.Length > 0)
+            {
+                OfferPrice.SpecialOfferFormatter(this);
+            }
         }
     }
 
@@ -248,8 +266,7 @@ namespace BeFaster.App.Solutions.TST
         public int Quantity { get; set; }
         public int Price { get; set; }
         public string FreeItem { get; internal set; }
+        public string Product { get; internal set; }
+        public bool IsOffer { get; internal set; }
     }
 }
-
-
-
