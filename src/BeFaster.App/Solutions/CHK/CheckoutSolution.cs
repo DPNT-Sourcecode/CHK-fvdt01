@@ -200,7 +200,7 @@ namespace BeFaster.App.Solutions.CHK
             //    new { product = "D", price = 20, quantity = 1, specialoffer = "" },
             //    new { product = "E", price = 20, quantity = 4, specialoffer = "2E get one B free" }
             //});
-
+            if (!skus.Any()) return 0;
             var skuList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Sku>>(skus);
             OfferPrice.ProcessFreeItemOffer(skuList);
 
@@ -214,4 +214,5 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
