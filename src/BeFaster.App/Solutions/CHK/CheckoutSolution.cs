@@ -69,11 +69,13 @@ namespace BeFaster.App.Solutions.CHK
                 case "C":
                 case "D":
                     {
-                        return Item(sku);
+                        if(sku.Quantity>0) return Item(sku);
+                        return 0;
                     }
                 case "E":
                     {
-                        return Item(sku);
+                        if (sku.Quantity > 0) return Item(sku);
+                        return 0;
                     }
                 default:
                     return 0;
@@ -110,7 +112,7 @@ namespace BeFaster.App.Solutions.CHK
                             initialQuantity = rem;
                         }
                     }
-                    else if (offer.FreeItem != null)
+                    else if (offer.FreeItem != null || sku.Quantity < offer.Quantity)
                     {
                         result = sku.Quantity * sku.Price;
                     }
@@ -257,3 +259,4 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
