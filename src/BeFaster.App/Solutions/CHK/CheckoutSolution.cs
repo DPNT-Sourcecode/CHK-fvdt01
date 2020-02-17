@@ -210,10 +210,8 @@ namespace BeFaster.App.Solutions.CHK
 
             skuList.ForEach(o =>
             {
-                o.Quantity = skuSplit[o.Product];
+                o.Quantity = skuSplit[o.Product] == null ? 0 : skuSplit[o.Product];
             });
-
-
 
             OfferPrice.ProcessFreeItemOffer(skuList);
 
@@ -252,3 +250,4 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
