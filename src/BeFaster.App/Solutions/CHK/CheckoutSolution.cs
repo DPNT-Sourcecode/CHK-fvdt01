@@ -210,7 +210,7 @@ namespace BeFaster.App.Solutions.CHK
 
             OfferPrice.ProcessFreeItemOffer(skuList);
 
-            //var ItemA = skuList[0].TotalPrice;
+            var ItemA = skuList[0].TotalPrice;
             var ItemB = skuList[1].TotalPrice;
             var ItemC = skuList[2].TotalPrice;
             var ItemD = skuList[3].TotalPrice;
@@ -245,6 +245,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
