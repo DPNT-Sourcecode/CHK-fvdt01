@@ -139,7 +139,7 @@ namespace BeFaster.App.Solutions.CHK
                         if (offer != null)
                         {
 
-                            p.TotalPrice = OfferPrice.SplitSkus(offer.FreeItem) == 0 ? 0 :(x.Quantity % OfferPrice.SplitSkus(offer.FreeItem)) * p.Price;
+                            p.TotalPrice = OfferPrice.SplitSkus(offer.FreeItem) == 0 ? 0 : (x.Quantity % OfferPrice.SplitSkus(offer.FreeItem)) * p.Price;
                         }
                     });
 
@@ -152,9 +152,18 @@ namespace BeFaster.App.Solutions.CHK
     public class Sku
     {
         private string specialOffer;
+        private int quantity;
         public string Product { get; set; }
         public int Price { get; set; }
-        public int Quantity { get; set; }
+        public int Quantity
+        {
+            get { return quantity; }
+            set
+            {
+                quantity = value;
+                this.TotalPrice = OfferPrice.Calclate(this);
+            }
+        }
         public string SpecialOffer
         {
             get { return specialOffer; }
@@ -165,8 +174,6 @@ namespace BeFaster.App.Solutions.CHK
                 {
                     OfferPrice.SpecialOfferFormatter(this);
                 }
-                this.TotalPrice = OfferPrice.Calclate(this);
-
             }
         }
         public List<Offer> Offers { get; set; }
@@ -203,7 +210,7 @@ namespace BeFaster.App.Solutions.CHK
 
             skuList.ForEach(o =>
             {
-                o.Quantity =skuSplit[o.Product];
+                o.Quantity = skuSplit[o.Product];
             });
 
 
@@ -236,7 +243,7 @@ namespace BeFaster.App.Solutions.CHK
                     item.Add(prod, quantity == string.Empty ? 1 : int.Parse(quantity));
                     quantity = string.Empty;
 
-                    skus = skus.Substring(i+1, skus.Length - (i+1));
+                    skus = skus.Substring(i + 1, skus.Length - (i + 1));
                     i = -1;
                 }
             }
@@ -245,6 +252,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
