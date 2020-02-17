@@ -191,7 +191,6 @@ namespace BeFaster.App.Solutions.CHK
             //3A2BCD2E it should produce 3A,2B.C,D,2E
             //if contains 33AB44C should ehave 33A,B,44C and should work for other patterns
             if (!skus.Any()) return 0;
-            skus = "3A2BCD2E";
             var skuSplit = SplitSkus(skus);
 
             var skuList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Sku>>(Newtonsoft.Json.JsonConvert.SerializeObject(new[] {
@@ -246,5 +245,6 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
