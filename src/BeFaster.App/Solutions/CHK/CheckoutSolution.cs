@@ -32,7 +32,7 @@ namespace BeFaster.App.Solutions.CHK
                 new { product = "H", price = 10, quantity = 0, specialoffer = "5H for 45, 10H for 80" },
                 new { product = "I", price = 35, quantity = 0, specialoffer = "" },
                 new { product = "J", price = 60, quantity = 0, specialoffer = "" },
-                new { product = "K", price = 80, quantity = 0, specialoffer = "2K for 150" },
+                new { product = "K", price = 70, quantity = 0, specialoffer = "2K for 120" },
                 new { product = "L", price = 90, quantity = 0, specialoffer = "" },
                 new { product = "M", price = 15, quantity = 0, specialoffer = "" },
                 new { product = "N", price = 40, quantity = 0, specialoffer = "3N get one M free" },
@@ -40,15 +40,17 @@ namespace BeFaster.App.Solutions.CHK
                 new { product = "P", price = 50, quantity = 0, specialoffer = "5P for 200" },
                 new { product = "Q", price = 30, quantity = 0, specialoffer = "3Q for 80" },
                 new { product = "R", price = 50, quantity = 0, specialoffer = "3R get one Q free" },
-                new { product = "S", price = 30, quantity = 0, specialoffer = "" },
+                new { product = "S", price = 20, quantity = 0, specialoffer = "" },
                 new { product = "T", price = 20, quantity = 0, specialoffer = "" },
                 new { product = "U", price = 40, quantity = 0, specialoffer = "3U get one U free" },
                 new { product = "V", price = 50, quantity = 0, specialoffer = "2V for 90, 3V for 130" },
                 new { product = "W", price = 20, quantity = 0, specialoffer = "" },
-                new { product = "X", price = 90, quantity = 0, specialoffer = "" },
-                new { product = "Y", price = 10, quantity = 0, specialoffer = "" },
-                new { product = "Z", price = 50, quantity = 0, specialoffer = "" },
+                new { product = "X", price = 17, quantity = 0, specialoffer = "" },
+                new { product = "Y", price = 20, quantity = 0, specialoffer = "" },
+                new { product = "Z", price = 21, quantity = 0, specialoffer = "" },
             })).ToList();
+
+
 
             skuList.ForEach(o =>
                         {
@@ -101,4 +103,5 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
