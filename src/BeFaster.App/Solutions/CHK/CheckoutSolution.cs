@@ -190,7 +190,9 @@ namespace BeFaster.App.Solutions.CHK
             //SplitSkus from string
             //3A2BCD2E it should produce 3A,2B.C,D,2E
             //if contains 33AB44C should ehave 33A,B,44C and should work for other patterns
-            var skuSplit = OfferPrice.SplitSkus(skus);
+            if (!skus.Any()) return 0;
+            skus = "3A2BCD2E";
+            var skuSplit = SplitSkus(skus);
 
 
 
@@ -203,7 +205,6 @@ namespace BeFaster.App.Solutions.CHK
             //    new { product = "D", price = 20, quantity = 1, specialoffer = "" },
             //    new { product = "E", price = 20, quantity = 4, specialoffer = "2E get one B free" }
             //});
-            if (!skus.Any()) return 0;
             var skuList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Sku>>(skus);
             OfferPrice.ProcessFreeItemOffer(skuList);
 
@@ -216,7 +217,8 @@ namespace BeFaster.App.Solutions.CHK
             return skuList.Sum(x => x.TotalPrice);
         }
 
-        private static void SplitSkus(string skus) {
+        private static Dictionary<string, int> SplitSkus(string skus)
+        {
 
             string quantity = string.Empty;
             var item = new Dictionary<string, int>();
@@ -226,19 +228,22 @@ namespace BeFaster.App.Solutions.CHK
                 {
                     quantity = quantity + skus[i];
                 }
-                else {
+                else
+                {
                     var prod = skus[i].ToString();
                     item.Add(prod, int.Parse(quantity));
                     quantity = string.Empty;
 
-                    skus = skus.Substring(i, skus.Length - i);
+                    skus = skus.Substring(i+1, skus.Length - i+1);
                     i = -1;
                 }
             }
 
+            return item;
         }
     }
 }
+
 
 
 
