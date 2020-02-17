@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BeFaster.App.Solutions.TST
 {
-     public static class OfferPrice
+    public static class OfferPrice
     {
         public static void SpecialOfferFormatter(Sku sku)
         {
@@ -51,7 +51,7 @@ namespace BeFaster.App.Solutions.TST
                 new Offer{
                     Quantity = 1, //SplitSkus(splitFor[0].Trim()),
                     Price = sku.Price,
-                    FreeItem = 1 + splitFor[1].Trim().Split(new string[] { "free" }, StringSplitOptions.None).ToList()[0].Trim()
+                    FreeItem = SplitSkus(splitFor[0].Trim()) + splitFor[1].Trim().Split(new string[] { "free" }, StringSplitOptions.None).ToList()[0].Trim()
                     }
                 };
             }
@@ -189,10 +189,10 @@ namespace BeFaster.App.Solutions.TST
                             if (x.Quantity != 0 && x.Product == "F")
                             {
 
-                                var discountOn = x.Quantity / OfferPrice.SplitSkus(offer.FreeItem);
+                                var discountOn = x.Quantity > OfferPrice.SplitSkus(offer.FreeItem) ? x.Quantity - 1 : x.Quantity;
                                 if (discountOn == x.Quantity) return;
                                 if (p.Quantity != 0)
-                                    p.Quantity = discountOn > p.Quantity ? discountOn - p.Quantity : p.Quantity - discountOn;
+                                    p.Quantity = discountOn;
                             }
 
 
@@ -246,3 +246,4 @@ namespace BeFaster.App.Solutions.TST
         public string FreeItem { get; internal set; }
     }
 }
+
