@@ -239,7 +239,13 @@ namespace BeFaster.App.Solutions.CHK
                 else
                 {
                     var prod = skus[i].ToString().ToUpper();
-                    item.Add(prod, quantity == string.Empty ? 1 : int.Parse(quantity));
+                    if (item.ContainsKey(prod))
+                    {
+                        item[prod] = item[prod] + 1;
+                    }
+                    else {
+                        item.Add(prod, quantity == string.Empty ? 1 : int.Parse(quantity));
+                    }
                     quantity = string.Empty;
 
                     skus = skus.Substring(i + 1, skus.Length - (i + 1));
@@ -251,6 +257,7 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
+
 
 
 
