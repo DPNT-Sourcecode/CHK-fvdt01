@@ -321,8 +321,3 @@ namespace BeFaster.App.Solutions.TST
         public bool IsOffer { get; internal set; }
     }
 }
-
-
-
-
-
