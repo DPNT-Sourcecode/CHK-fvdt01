@@ -58,32 +58,22 @@ namespace BeFaster.Domain
                             this.Cart.Itemised.Items.Remove(x);                          
                         });
 
-                        if (recalculatedQuantity >= forOffer.AtQuantity && forOffer != null)
+                        if (forOffer != null)
                         {
-                            var test = new CartItemisedItem
+                            while (recalculatedQuantity >= forOffer.AtQuantity && forOffer != null)
                             {
-                                AtPrice = forOffer.AtPrice,
-                                AtQuantity = forOffer.AtQuantity,
-                                Total = forOffer.AtPrice,
-                                Product = forOffer.Product,
-                                Free = false
-                            };
-                            this.Cart.Itemised.Add(test);
-                            //int q = recalculatedQuantity - forOffer.AtQuantity.Value;                          
-                        }
-
-                        //if (recalculatedQuantity > 0)
-                        //{
-                        //    var test = new CartItemisedItem
-                        //    {
-                        //        AtPrice = summaryItem.Product.Price,
-                        //        AtQuantity = recalculatedQuantity,
-                        //        Total = summaryItem.Product.Price * recalculatedQuantity,
-                        //        Product = forOffer.Product,
-                        //        Free = false
-                        //    };
-                        //    this.Cart.Itemised.Add(test);
-                        //}
+                                var test = new CartItemisedItem
+                                {
+                                    AtPrice = forOffer.AtPrice,
+                                    AtQuantity = forOffer.AtQuantity,
+                                    Total = forOffer.AtPrice,
+                                    Product = forOffer.Product,
+                                    Free = false
+                                };
+                                this.Cart.Itemised.Add(test);
+                                recalculatedQuantity = recalculatedQuantity - forOffer.AtQuantity.Value;
+                            }
+                        }                        
                     }
 
                     var freeItemItemised = new CartItemisedItem
@@ -92,7 +82,7 @@ namespace BeFaster.Domain
                         Offer = this,
                         AtPrice = this.FreeOfferProduct.Price,
                         AtQuantity = this.FreeOfferQuantity,
-                        Total = this.FreeOfferQuantity * this.FreeOfferProduct.Price,
+                        Total = this.FreeOfferQuantity * -this.FreeOfferProduct.Price,
                         Free = true
                     };                    
                     this.Cart.Itemised.Add(freeItemItemised);
