@@ -40,14 +40,14 @@ namespace BeFaster.App.Solutions.CHK
                 new { product = "P", price = 50, quantity = 0, specialoffer = "5P for 200" },
                 new { product = "Q", price = 30, quantity = 0, specialoffer = "3Q for 80" },
                 new { product = "R", price = 50, quantity = 0, specialoffer = "3R get one Q free" },
-                new { product = "S", price = 20, quantity = 0, specialoffer = "" },
-                new { product = "T", price = 20, quantity = 0, specialoffer = "" },
+                new { product = "S", price = 20, quantity = 0, specialoffer = "buy any 3 of (S,T,X,Y,Z) for 45" },
+                new { product = "T", price = 20, quantity = 0, specialoffer = "buy any 3 of (S,T,X,Y,Z) for 45" },
                 new { product = "U", price = 40, quantity = 0, specialoffer = "3U get one U free" },
                 new { product = "V", price = 50, quantity = 0, specialoffer = "2V for 90, 3V for 130" },
                 new { product = "W", price = 20, quantity = 0, specialoffer = "" },
-                new { product = "X", price = 17, quantity = 0, specialoffer = "" },
-                new { product = "Y", price = 20, quantity = 0, specialoffer = "" },
-                new { product = "Z", price = 21, quantity = 0, specialoffer = "" },
+                new { product = "X", price = 17, quantity = 0, specialoffer = "buy any 3 of (S,T,X,Y,Z) for 45" },
+                new { product = "Y", price = 20, quantity = 0, specialoffer = "buy any 3 of (S,T,X,Y,Z) for 45" },
+                new { product = "Z", price = 21, quantity = 0, specialoffer = "buy any 3 of (S,T,X,Y,Z) for 45" },
             })).ToList();
 
 
@@ -103,5 +103,3 @@ namespace BeFaster.App.Solutions.CHK
         }
     }
 }
-
-

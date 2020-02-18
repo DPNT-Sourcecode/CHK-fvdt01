@@ -10,7 +10,42 @@ namespace BeFaster.App.Solutions.TST
     {
         public static void SpecialOfferFormatter(Sku sku)
         {
-            if (sku.SpecialOffer.IndexOf(",") > 0 && sku.SpecialOffer.Contains("for"))
+            if (sku.SpecialOffer.Contains("buy any"))
+            {
+                var trimString = sku.SpecialOffer.Substring("buy any".Length, sku.SpecialOffer.Length - "buy any".Length).Trim();
+                var startIdx = trimString.IndexOf('(')+1;
+                var lastIdx = trimString.IndexOf(')');
+
+                var prodsArray = trimString.Substring(startIdx, lastIdx - startIdx).Split(',').ToList();
+
+                var prodString= string.Empty ;
+                prodsArray.ForEach(p => {
+                    prodString += "3" + p + " for 45, ";
+                });
+
+                sku.SpecialOffer = prodString.Remove(prodString.Length - 2, 2);
+
+                sku.Offers = new List<Offer>();
+                var splitComma = sku.SpecialOffer.Split(',').ToList();
+                splitComma.ForEach(c =>
+                {
+                    var splitFor = c.Trim().Split(new string[] { "for" }, StringSplitOptions.None).ToList();
+                    var freeItem = splitFor[0].Trim();
+                    var quantity = SplitSkus(freeItem);
+                    sku.Offers.Add(new Offer
+                    {
+                        Product = freeItem.Substring(quantity.ToString().Length, freeItem.Length - quantity.ToString().Length),
+                        Quantity = quantity,
+                        Price = int.Parse(splitFor[1].Trim()),
+                        FreeItem = freeItem,
+                        IsOffer = sku.Quantity >= quantity
+                    });
+                });
+
+
+
+            }
+            else if (!sku.SpecialOffer.Contains("buy any") && sku.SpecialOffer.IndexOf(",") > 0 && sku.SpecialOffer.Contains("for"))
             {
                 sku.Offers = new List<Offer>();
                 var splitComma = sku.SpecialOffer.Split(',').ToList();
@@ -194,7 +229,7 @@ namespace BeFaster.App.Solutions.TST
                 }
                 else
                 {
-                    if (currentOffer.Quantity > 0 )
+                    if (currentOffer.Quantity > 0)
                     {
                         foundOffer.Quantity -= currentOffer.Quantity;
                         if (foundOffer.Quantity < 0) foundOffer.Quantity = 0;
@@ -283,6 +318,3 @@ namespace BeFaster.App.Solutions.TST
         public bool IsOffer { get; internal set; }
     }
 }
-
-
-
