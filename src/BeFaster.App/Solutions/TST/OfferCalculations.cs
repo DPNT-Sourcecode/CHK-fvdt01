@@ -219,7 +219,7 @@ namespace BeFaster.App.Solutions.TST
                         foundOffer.TotalPrice = Item1(foundOffer);
                         foundOffer.Quantity += freeItem;
                     }
-                    else if (foundOffer.Offers.Any(x => foundOffer.Quantity < x.Quantity))
+                    else if (foundOffer.Quantity < currentOffer.Quantity)
                     {
                         if (currentOffer.Quantity > 0)
                         {
@@ -321,4 +321,5 @@ namespace BeFaster.App.Solutions.TST
         public bool IsOffer { get; internal set; }
     }
 }
+
 
