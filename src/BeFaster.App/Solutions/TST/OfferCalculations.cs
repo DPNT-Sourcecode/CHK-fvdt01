@@ -221,7 +221,7 @@ namespace BeFaster.App.Solutions.TST
                     }
                     else if (foundOffer.Quantity < currentOffer.Quantity)
                     {
-                        if (currentOffer.Quantity > 0)
+                        if (currentOffer.Quantity < foundOffer.Quantity)
                         {
                             //var offerQty = currentOffer.Quantity;
                             foundOffer.Quantity -= currentOffer.Quantity;
@@ -321,5 +321,6 @@ namespace BeFaster.App.Solutions.TST
         public bool IsOffer { get; internal set; }
     }
 }
+
 
 
